@@ -11,7 +11,10 @@
     "build:main": "rollup -c build/rollup.config.js",
     "minify": "uglifyjs dist/ree-validate.js -o dist/ree-validate.min.js -c -m",
     "build:locale": "node build/locale",
-    "build": "npm run build:es && npm run build:main && npm run minify && npm run build:locale"
+    "build": "npm run build:es && npm run build:main && npm run minify && npm run build:locale",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf build/temp"
   },
   "keywords": [
     "ReactJs",
