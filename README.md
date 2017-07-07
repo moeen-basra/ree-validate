@@ -24,7 +24,7 @@ npm install ree-validate --save
 
 In your script entry point:
 ```javascript
-import React from 'vue';
+import React from 'react';
 import ReeValidate from 'ree-validate';
 
 const options = {}
@@ -41,7 +41,17 @@ Now you are all setup to use the plugin.
 ```
 import React, { Component, ReeValidate } from 'react'
 
+```
 
+In case if you don't have entry script, or don't wanna bind it with React, you can simply import and use using following command
+
+```
+import ReeValidate from 'reevalidate'
+```
+
+Now create a new instance and bind errors bag with state.
+
+```
 class Page extends Component {
   constructor(props) {
     super(props)
