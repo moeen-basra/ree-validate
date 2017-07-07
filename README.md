@@ -24,6 +24,7 @@ npm install ree-validate --save
 
 In your script entry point:
 ```javascript
+import React from 'react'
 import ReeValidate from 'ree-validate'
 
 const options = {}
