@@ -22,6 +22,18 @@ npm install ree-validate --save
 
 ### Getting Started
 
+In your script entry point:
+```javascript
+import React from 'react';
+import ReeValidate from 'ree-validate';
+
+const options = {}
+
+ReeValidate.install(options)
+
+React.ReeValidate = ReeValidate
+```
+
 Now you are all setup to use the plugin.
 
 ### Usage
