@@ -1,8 +1,1 @@
-.*
 node_modules
-coverage
-/docs
-/src
-/locale
-/test
-/build
