@@ -171,6 +171,41 @@ export default Page
 
 ```
 
+### Available Validation Rules
+
+[Available Validation Rules](http://vee-validate.logaretm.com/index.html#available-rules)
+
+    after
+    alpha
+    alpha_dash
+    alpha_num
+    alpha_spaces
+    before
+    between
+    confirmed
+    credit_card
+    date_between
+    date_format
+    decimal
+    digits
+    dimensions
+    email
+    ext
+    image
+    in
+    ip
+    max
+    max_value
+    mimes
+    min
+    min_value
+    not_in
+    numeric
+    regex
+    required
+    size
+    url
+
 ### Compatability
 
 This library uses ES6 Promises so be sure to provide a polyfill for it for the browsers that does not support it.
