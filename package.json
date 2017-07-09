@@ -1,6 +1,6 @@
 {
   "name": "ree-validate",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Simple React.js input validation plugin extended from vee-validate",
   "main": "dist/ree-validate.js",
   "repository": "https://github.com/moeen-basra/ree-validate",
