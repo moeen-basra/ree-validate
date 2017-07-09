@@ -21,42 +21,26 @@ npm install ree-validate --save
 ```
 
 ### Getting Started
-
-In your script entry point:
-```javascript
-import React from 'react'
-import ReeValidate from 'ree-validate'
-
-const options = {}
-ReeValidate.install(options)
-
-React.ReeValidate = ReeValidate
+```
+import { Validator } from 'ree-validate'
 ```
 
-Now you are all setup to use the plugin.
-
-### Usage
-
+// install classnames for easily manage the classes
 ```
-import React, { Component, ReeValidate } from 'react'
+npm i -S classnames
+
 import classnames from 'classnames'
 
 ```
 
-In case if you don't have an entry script, or don't wanna bind it with React, you can simply import and use the package with following command
-
-```
-import ReeValidate from 'ree-validate'
-```
-
-Now create a new instance and bind errors bag with state.
+Now create a new class and bind errors bag with state.
 
 ```
 class Page extends Component {
   constructor(props) {
     super(props)
     
-    this.validator = new ReeValidate.Validator({
+    this.validator = new Validator({
       email: 'required|email',
       password: 'required|min:3',
     })
