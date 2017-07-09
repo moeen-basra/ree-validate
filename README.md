@@ -25,7 +25,7 @@ npm install ree-validate --save
 import { Validator } from 'ree-validate'
 ```
 
-// install classnames for easily manage the classes
+install classnames for easily manage the classes
 ```
 npm i -S classnames
 
