@@ -1,5 +1,5 @@
 /**
- * ree-validate v1.0.14
+ * ree-validate v1.0.15
  * Extended from vee-validate
  * (c) 2017 Moeen Basra
  * @license MIT
@@ -2503,7 +2503,7 @@ var index = {
   Validator,
   ErrorBag,
   Rules,
-  version: '1.0.14'
+  version: '1.0.15'
 };
 
 export default index;
