@@ -1,7 +1,8 @@
-export default (value, params) => {
+const validate = (value, params) => {
   const decimals = Array.isArray(params) ? (params[0] || '*') : '*';
+  const separator = Array.isArray(params) ? (params[1] || '.') : '.';
   if (Array.isArray(value)) {
-    return false;
+    return value.every(val => validate(val, params));
   }
 
   if (value === null || value === undefined || value === '') {
@@ -14,7 +15,7 @@ export default (value, params) => {
   }
 
   const regexPart = decimals === '*' ? '+' : `{1,${decimals}}`;
-  const regex = new RegExp(`^-?\\d*(\\.\\d${regexPart})?$`);
+  const regex = new RegExp(`^-?\\d*(\\${separator}\\d${regexPart})?$`);
 
   if (! regex.test(value)) {
     return false;
@@ -25,3 +26,5 @@ export default (value, params) => {
   // eslint-disable-next-line
     return parsedValue === parsedValue;
 };
+
+export default validate;
