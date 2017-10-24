@@ -1,80 +1,93 @@
+import { find, isNullOrUndefined } from './utils';
+
+// @flow
+
 export default class ErrorBag {
+  items: Array<FieldError>
+
   constructor () {
-    this.errors = [];
+    this.items = [];
   }
 
   /**
-     * Adds an error to the internal array.
-     *
-     * @param {string} field The field name.
-     * @param {string} msg The error message.
-     * @param {String} rule The rule that is responsible for the error.
-     * @param {String} scope The Scope name, optional.
-     */
-  add (field, msg, rule, scope = '__global__') {
-    this.errors.push({ field, msg, rule, scope });
-  }
-
-  /**
-     * Gets all error messages from the internal array.
-     *
-     * @param {String} scope The Scope name, optional.
-     * @return {Array} errors Array of all error messages.
-     */
-  all (scope) {
-    if (! scope) {
-      return this.errors.map(e => e.msg);
+   * Adds an error to the internal array.
+   */
+  add (error: FieldError) {
+    // handle old signature.
+    if (arguments.length > 1) {
+      error = {
+        field: arguments[0],
+        msg: arguments[1],
+        rule: arguments[2],
+        scope: !isNullOrUndefined(arguments[3]) ? arguments[3] : null
+      };
     }
 
-    return this.errors.filter(e => e.scope === scope).map(e => e.msg);
+    error.scope = !isNullOrUndefined(error.scope) ? error.scope : null;
+    this.items.push(error);
   }
 
   /**
-     * Checks if there are any errors in the internal array.
-     * @param {String} scope The Scope name, optional.
-     * @return {boolean} result True if there was at least one error, false otherwise.
-     */
-  any (scope) {
-    if (! scope) {
-      return !! this.errors.length;
+   * Updates a field error with the new field scope.
+   */
+  update (id: string, error: FieldError) {
+    const item = find(this.items, i => i.id === id);
+    if (!item) {
+      return;
     }
 
-    return !! this.errors.filter(e => e.scope === scope).length;
+    const idx = this.items.indexOf(item);
+    this.items.splice(idx, 1);
+    item.scope = error.scope;
+    this.items.push(item);
   }
 
   /**
-     * Removes all items from the internal array.
-     *
-     * @param {String} scope The Scope name, optional.
-     */
-  clear (scope) {
-    if (! scope) {
-      scope = '__global__';
+   * Gets all error messages from the internal array.
+   */
+  all (scope: string): Array<string> {
+    if (isNullOrUndefined(scope)) {
+      return this.items.map(e => e.msg);
     }
 
-    const removeCondition = e => e.scope === scope;
+    return this.items.filter(e => e.scope === scope).map(e => e.msg);
+  }
 
-    for (let i = 0; i < this.errors.length; ++i) {
-      if (removeCondition(this.errors[i])) {
-        this.errors.splice(i, 1);
+  /**
+   * Checks if there are any errors in the internal array.
+   */
+  any (scope: ?string): boolean {
+    if (isNullOrUndefined(scope)) {
+      return !!this.items.length;
+    }
+
+    return !!this.items.filter(e => e.scope === scope).length;
+  }
+
+  /**
+   * Removes all items from the internal array.
+   */
+  clear (scope?: ?string) {
+    if (isNullOrUndefined(scope)) {
+      scope = null;
+    }
+
+    for (let i = 0; i < this.items.length; ++i) {
+      if (this.items[i].scope === scope) {
+        this.items.splice(i, 1);
         --i;
       }
     }
   }
 
   /**
-     * Collects errors into groups or for a specific field.
-     *
-     * @param  {string} field The field name.
-     * @param  {string} scope The scope name.
-     * @param {Boolean} map If it should map the errors to strings instead of objects.
-     * @return {Array} errors The errors for the specified field.
-     */
-  collect (field, scope, map = true) {
-    if (! field) {
+   * Collects errors into groups or for a specific field.
+   */
+  collect (field?: string, scope?: string | null, map?: boolean = true) {
+    if (!field) {
       const collection = {};
-      this.errors.forEach(e => {
-        if (! collection[e.field]) {
+      this.items.forEach(e => {
+        if (!collection[e.field]) {
           collection[e.field] = [];
         }
 
@@ -84,29 +97,36 @@ export default class ErrorBag {
       return collection;
     }
 
-    if (! scope) {
-      return this.errors.filter(e => e.field === field).map(e => (map ? e.msg : e));
+    field = !isNullOrUndefined(field) ? String(field) : field;
+    if (isNullOrUndefined(scope)) {
+      return this.items.filter(e => e.field === field).map(e => (map ? e.msg : e));
     }
 
-    return this.errors.filter(e => e.field === field && e.scope === scope)
+    return this.items.filter(e => e.field === field && e.scope === scope)
       .map(e => (map ? e.msg : e));
-  }
-  /**
-     * Gets the internal array length.
-     *
-     * @return {Number} length The internal array length.
-     */
-  count () {
-    return this.errors.length;
   }
 
   /**
-     * Gets the first error message for a specific field.
-     *
-     * @param  {string} field The field name.
-     * @return {string|null} message The error message.
-     */
-  first (field, scope = '__global__') {
+   * Gets the internal array length.
+   */
+  count (): number {
+    return this.items.length;
+  }
+
+  /**
+   * Finds and fetches the first error message for the specified field id.
+   */
+  firstById (id: string): string | null {
+    const error = find(this.items, i => i.id === id);
+
+    return error ? error.msg : null;
+  }
+
+  /**
+   * Gets the first error message for a specific field.
+   */
+  first (field: string, scope ?: ?string = null) {
+    field = !isNullOrUndefined(field) ? String(field) : field;
     const selector = this._selector(field);
     const scoped = this._scope(field);
 
@@ -123,9 +143,9 @@ export default class ErrorBag {
       return this.firstByRule(selector.name, selector.rule, scope);
     }
 
-    for (let i = 0; i < this.errors.length; ++i) {
-      if (this.errors[i].field === field && (this.errors[i].scope === scope)) {
-        return this.errors[i].msg;
+    for (let i = 0; i < this.items.length; ++i) {
+      if (this.items[i].field === field && (this.items[i].scope === scope)) {
+        return this.items[i].msg;
       }
     }
 
@@ -133,84 +153,97 @@ export default class ErrorBag {
   }
 
   /**
-     * Returns the first error rule for the specified field
-     *
-     * @param {string} field The specified field.
-     * @return {string|null} First error rule on the specified field if one is found, otherwise null
-     */
-  firstRule (field, scope) {
+   * Returns the first error rule for the specified field
+   */
+  firstRule (field: string, scope ?: string): string | null {
     const errors = this.collect(field, scope, false);
 
     return (errors.length && errors[0].rule) || null;
   }
 
   /**
-     * Checks if the internal array has at least one error for the specified field.
-     *
-     * @param  {string} field The specified field.
-     * @return {Boolean} result True if at least one error is found, false otherwise.
-     */
-  has (field, scope = '__global__') {
-    return !! this.first(field, scope);
+   * Checks if the internal array has at least one error for the specified field.
+   */
+  has (field: string, scope?: ?string = null): boolean {
+    return !!this.first(field, scope);
   }
 
   /**
-     * Gets the first error message for a specific field and a rule.
-     * @param {String} name The name of the field.
-     * @param {String} rule The name of the rule.
-     * @param {String} scope The name of the scope (optional).
-     */
-  firstByRule (name, rule, scope) {
+   * Gets the first error message for a specific field and a rule.
+   */
+  firstByRule (name: string, rule: string, scope?: string | null = null) {
     const error = this.collect(name, scope, false).filter(e => e.rule === rule)[0];
 
     return (error && error.msg) || null;
   }
 
   /**
-     * Removes all error messages associated with a specific field.
-     *
-     * @param  {string} field The field which messages are to be removed.
-     * @param {String} scope The Scope name, optional.
-     */
-  remove (field, scope) {
-    const removeCondition = scope ? e => e.field === field && e.scope === scope
-      : e => e.field === field && e.scope === '__global__';
+   * Gets the first error message for a specific field that not match the rule.
+   */
+  firstNot (name: string, rule?: string = 'required', scope?: string | null = null) {
+    const error = this.collect(name, scope, false).filter(e => e.rule !== rule)[0];
 
-    for (let i = 0; i < this.errors.length; ++i) {
-      if (removeCondition(this.errors[i])) {
-        this.errors.splice(i, 1);
+    return (error && error.msg) || null;
+  }
+
+  /**
+   * Removes errors by matching against the id.
+   */
+  removeById (id: string) {
+    for (let i = 0; i < this.items.length; ++i) {
+      if (this.items[i].id === id) {
+        this.items.splice(i, 1);
         --i;
       }
     }
   }
 
   /**
-     * Get the field attributes if there's a rule selector.
-     *
-     * @param  {string} field The specified field.
-     * @return {Object|null}
-     */
-  _selector (field) {
+   * Removes all error messages associated with a specific field.
+   */
+  remove (field: string, scope: ?string, id?: string) {
+    field = !isNullOrUndefined(field) ? String(field) : field;
+    const removeCondition = (e: FieldError) => {
+      if (e.id && id) {
+        return e.id === id;
+      }
+
+      if (!isNullOrUndefined(scope)) {
+        return e.field === field && e.scope === scope;
+      }
+
+      return e.field === field && e.scope === null;
+    };
+
+    for (let i = 0; i < this.items.length; ++i) {
+      if (removeCondition(this.items[i])) {
+        this.items.splice(i, 1);
+        --i;
+      }
+    }
+  }
+
+  /**
+   * Get the field attributes if there's a rule selector.
+   */
+  _selector (field: string): { name: string, rule: string } | null {
     if (field.indexOf(':') > -1) {
       const [name, rule] = field.split(':');
 
-      return { name, rule };
+      return {name, rule};
     }
 
     return null;
   }
 
   /**
-     * Get the field scope if specified using dot notation.
-     *
-     * @param {string} field the specifie field.
-     * @return {Object|null}
-     */
-  _scope (field) {
+   * Get the field scope if specified using dot notation.
+   */
+  _scope (field: string): { name: string, scope: string } | null {
     if (field.indexOf('.') > -1) {
-      const [scope, name] = field.split('.');
+      const [scope, ...name] = field.split('.');
 
-      return { name, scope };
+      return {name: name.join('.'), scope};
     }
 
     return null;
