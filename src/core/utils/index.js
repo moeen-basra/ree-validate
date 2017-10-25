@@ -214,13 +214,13 @@ export const normalizeRules = (rules: string | { [string]: boolean | any[] }) =>
  * Emits a warning to the console.
  */
 export const warn = (message: string) => {
-  console.warn(`[vee-validate] ${message}`); // eslint-disable-line
+  console.warn(`[ree-validate] ${message}`); // eslint-disable-line
 };
 
 /**
  * Creates a branded error object.
  */
-export const createError = (message: string): Error => new Error(`[vee-validate] ${message}`);
+export const createError = (message: string): Error => new Error(`[ree-validate] ${message}`);
 
 /**
  * Checks if the value is an object.

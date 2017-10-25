@@ -4,36 +4,40 @@ const buble = require('rollup-plugin-buble');
 const fs = require('fs');
 const UglifyJS = require('uglify-js');
 
-const localesDir = path.join(__dirname, '../locale');
+async function build () {
+  const localesDir = path.join(__dirname, '../locale');
+  const files = fs.readdirSync(localesDir);
+  let cache;
 
-const files = fs.readdirSync(localesDir);
-let cache;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
 
-files.forEach(file => {
-  const entry = path.join(__dirname, '../locale', file);
-  const output = path.join(__dirname, '../dist/locale', file);
-  rollup.rollup({
-    entry,
-    plugins: [
-      buble()
-    ],
-    cache,
-  }).then(bundle => {
-    bundle.write({
-      format: 'umd',
+    // ignore utils file.
+    if (/utils/.test(file)) continue;
+
+    const input = path.join(__dirname, '../locale', file);
+    const output = path.join(__dirname, '../dist/locale', file);
+    const bundle = await rollup.rollup({
+      cache,
+      input,
       external: ['ReeValidate'],
-      moduleName: `__ree_validate_locale__${file}`,
-      dest: output
-    }).then(() => {
-      fs.readFile(output, (err, data) => {
-        if (err) throw err;
-
-        const result = UglifyJS.minify(data.toString(), {
-          mangle: true,
-          compress: true
-        });
-        fs.writeFile(output, result.code, () => {});
-      });
+      plugins: [
+        buble()
+      ],
     });
-  });
-});
+
+    const { code } = await bundle.generate({
+      format: 'umd',
+      name: `__ree_validate_locale__${file}`,
+    });
+
+    const result = UglifyJS.minify(code, {
+      compress: true,
+      mangle: true,
+    });
+
+    fs.writeFileSync(output, result.code);
+  }
+}
+
+build();

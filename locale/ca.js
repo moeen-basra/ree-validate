@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   _default: (field) => `El camp ${field} no és vàlid.`,
   after: (field, [target]) => `El camp ${field} ha de ser posterior a ${target}.`,
@@ -28,7 +30,7 @@ const messages = {
   numeric: (field) => `El camp ${field} ha de contenir només caràcters numèrics.`,
   regex: (field) => `El format del camp ${field} no és vàlid.`,
   required: (field) => `El camp ${field} és obligatori.`,
-  size: (field, [size]) => `El camp ${field} ha de ser menor a ${size} KB.`,
+  size: (field, [size]) => `El camp ${field} ha de ser menor a ${formatFileSize(size)}.`,
   url: (field) => `El camp ${field} no és un URL vàlid.`
 };
 
@@ -38,8 +40,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;

@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   _default: (field) => `${field} ist ungültig.`,
   after: (field, [target]) => `${field} muss nach ${target} liegen.`,
@@ -24,7 +26,7 @@ const messages = {
   numeric: (field) => `${field} darf nur numerische Zeichen enthalten.`,
   regex: (field) => `Das Format von ${field} ist ungültig.`,
   required: (field) => `${field} ist ein Pflichtfeld.`,
-  size: (field, [size]) => `${field} muss kleiner als ${size} KB sein.`,
+  size: (field, [size]) => `${field} muss kleiner als ${formatFileSize(size)} sein.`,
   url: (field) => `${field} ist keine gültige URL.`,
 };
 
@@ -34,8 +36,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;

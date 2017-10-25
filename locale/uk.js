@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   after: (field, [target]) => `В полі ${field} повинна бути дата після ${target}.`,
   alpha_dash: (field) => `Поле ${field} може містити буквено-цифрові символи, а також тире та підкреслення.`,
@@ -11,7 +13,7 @@ const messages = {
   date_between: (field, [min, max]) => `В полі ${field} повинна бути дата між ${min} та ${max}.`,
   date_format: (field, [format]) => `В полі ${field} повинна бути дата в форматі ${format}.`,
   decimal: (field, [decimals] = ['*']) => `Поле ${field} повинно бути числовим та може містити ${decimals === '*' ? 'знакі' : decimals + ' знаків'} після коми.`,
-  digits: (field, [length]) => `Поле ${field} повинно бути числовими та точно містити ${length} цифри.`,
+  digits: (field, [length]) => `Поле ${field} повинно бути числовим та точно містити ${length} цифри.`,
   dimensions: (field, [width, height]) => `Поле ${field} повинно бути ${width} пікселів на ${height} пікселів.`,
   email: (field) => `В полі ${field} повинна бути адреса електронної пошти.`,
   ext: (field) => `Поле ${field} повинно бути дійсним файлом.`,
@@ -27,7 +29,7 @@ const messages = {
   numeric: (field) => `Поле ${field} може містить лише цифри.`,
   regex: (field) => `Поле ${field} має невірний формат.`,
   required: (field) => `Поле ${field} повинно мати значення.`,
-  size: (field, [size]) => `Поле ${field} повинно бути менше ${size} KB.`,
+  size: (field, [size]) => `Поле ${field} повинно бути менше ${formatFileSize(size)}.`,
   url: (field) => `В полі ${field} повиннен бути URL.`
 };
 
@@ -37,8 +39,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;

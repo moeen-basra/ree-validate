@@ -1,6 +1,6 @@
-import { getPath } from './utils';
+// @flow
 
-const normalize = (fields) => {
+const normalize = (fields: Array<any> | Object): Object => {
   if (Array.isArray(fields)) {
     return fields.reduce((prev, curr) => {
       if (~curr.indexOf('.')) {
@@ -18,25 +18,32 @@ const normalize = (fields) => {
 
 /**
  * Maps fields to computed functions.
- *
- * @param {Array|Object} fields
  */
-const mapFields = (fields) => {
+const mapFields = (fields: Array<any> | Object): Object => {
   const normalized = normalize(fields);
   return Object.keys(normalized).reduce((prev, curr) => {
     const field = normalized[curr];
     prev[curr] = function mappedField () {
-      if (this.$validator.fieldBag[field]) {
-        return this.$validator.fieldBag[field];
+      // if field exists
+      if (this.$validator.flags[field]) {
+        return this.$validator.flags[field];
       }
 
+      // if it has a scope defined
       const index = field.indexOf('.');
       if (index <= 0) {
         return {};
       }
-      const [scope, name] = field.split('.');
 
-      return getPath(`$${scope}.${name}`, this.$validator.fieldBag, {});
+      let [scope, ...name] = field.split('.');
+      scope = this.$validator.flags[`$${scope}`];
+      name = name.join('.');
+
+      if (scope && scope[name]) {
+        return scope[name];
+      }
+
+      return {};
     };
 
     return prev;

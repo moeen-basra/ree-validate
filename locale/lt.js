@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   _default: (field) => `${field} reikšmė netinkama.`,
   after: (field, [target]) => `Laukelyje ${field} turi būti po ${target}.`,
@@ -28,7 +30,7 @@ const messages = {
   numeric: (field) => `${field} turi būti tik skaitmenys.`,
   regex: (field) => `Laukelio ${field} formatas netinkamas.`,
   required: (field) => `Laukelis ${field} privalomas.`,
-  size: (field, [size]) => `${field} turi būti mažesnis nei ${size} KB.`,
+  size: (field, [size]) => `${field} turi būti mažesnis nei ${formatFileSize(size)}.`,
   url: (field) => `${field} turi būti internetinis adresas.`
 };
 
@@ -38,8 +40,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;

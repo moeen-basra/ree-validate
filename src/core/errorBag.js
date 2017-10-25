@@ -1,4 +1,4 @@
-import { find, isNullOrUndefined } from './utils';
+import { find, isNullOrUndefined } from './utils/index';
 
 // @flow
 

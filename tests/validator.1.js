@@ -1,12 +1,12 @@
-import Validator from './../src/validator';
-import moment from 'moment';
+import plugin from './../src/index';
+
+const Validator = plugin.Validator;
 
 // some tests are required to be run serially.
 // since jest does not have test.serial yet
 // creating seperate files seems to work.
 
 test('uses the locale date format if none are specified', async () => {
-  expect(Validator.installDateTimeValidators(moment)).toBe(true);
   const v = new Validator({
     birthday: 'after:01/12/2008'
   });

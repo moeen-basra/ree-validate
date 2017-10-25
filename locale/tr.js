@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   after: (field, [target]) => `${field} ${target} alanından ileri bir tarih olmalıdır.`,
   alpha_dash: (field) => `${field} alanı harf ve tire (-) yada alttan tire (_) içerebilir.`,
@@ -11,7 +13,7 @@ const messages = {
   date_between: (field, [min, max]) => `${field} ${min} ile ${max} tarihleri arasında olmalıdır.`,
   date_format: (field, [format]) => `${field} ${format} formatında olmalıdır.`,
   decimal: (field, [decimals] = ['*']) => `${field} sayısal${decimals !== '*' ? `ve noktadan sonra ${decimals} basamaklı` : ''} olmalıdır.`,
-  digits: (field, [length]) => `${field} sayısal ve en fazla ${length} basamaklı olmalıdır.`,
+  digits: (field, [length]) => `${field} sayısal ve ${length} basamaklı olmalıdır.`,
   dimensions: (field, [width, height]) => `${field} alanı ${width} piksel ile ${height} piksel arasında olmalıdır.`,
   email: (field) => `${field} alanının geçerli bir e-posta olması gerekir.`,
   ext: (field) => `${field} alanı geçerli bir dosya olmalıdır.`,
@@ -27,7 +29,7 @@ const messages = {
   numeric: (field) => `${field} alanına sayısal bir değer giriniz.`,
   regex: (field) => `${field} formatı geçersiz.`,
   required: (field) => `${field} alanı gereklidir.`,
-  size: (field, [size]) => `${field} alanı ${size} KB'dan daha az olmalıdır.`,
+  size: (field, [size]) => `${field} alanı ${formatFileSize(size)}'dan daha az olmalıdır.`,
   url: (field) => `${field} geçersiz URL.`
 };
 
@@ -37,8 +39,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;

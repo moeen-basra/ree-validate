@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   after: (field, [target]) => ` ${field}必须在${target}之后`,
   alpha_dash: (field) => ` ${field}能够包含字母数字字符，包括破折号、下划线`,
@@ -18,13 +20,15 @@ const messages = {
   in: (field) => ` ${field} 必须是一个有效值.`,
   ip: (field) => ` ${field} 必须是一个有效的地址.`,
   max: (field, [length]) => ` ${field} 不能大于${length}字符.`,
+  max_value: (field, [max]) => ` ${field} 必须小于或等于${max}.`,  
   mimes: (field) => ` ${field} 必须是有效的文件类型.`,
   min: (field, [length]) => ` ${field} 必须至少有 ${length} 字符.`,
+  min_value: (field, [min]) => ` ${field} 必须大于或等于${min}.`,
   not_in: (field) => ` ${field}必须是一个有效值.`,
   numeric: (field) => ` ${field} 只能包含数字字符.`,
   regex: (field) => ` ${field} 格式无效.`,
   required: (field) => `${field} 是必须的.`,
-  size: (field, [size]) => ` ${field} 必须小于 ${size} KB.`,
+  size: (field, [size]) => ` ${field} 必须小于 ${formatFileSize(size)}.`,
   url: (field) => ` ${field}不是有效的url.`
 };
 
@@ -34,8 +38,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;

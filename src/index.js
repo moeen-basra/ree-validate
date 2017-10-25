@@ -1,26 +1,22 @@
-import Validator from './validator';
-import ErrorBag from './errorBag';
 import Rules from './rules';
-import { assign } from './utils';
-import defaultOptions from './config';
-import mapFields from './helpers';
+import { messages } from '../locale/en';
+import minimal from './index.minimal';
 
-// eslint-disable-next-line
-const install = (options) => {
-  const config = assign({}, defaultOptions, options);
-  if (config.dictionary) {
-    Validator.updateDictionary(config.dictionary);
-  }
+// rules plugin definition.
+const rulesPlugin = ({ Validator }) => {
+  Object.keys(Rules).forEach(rule => {
+    Validator.extend(rule, Rules[rule]);
+  });
 
-  Validator.setLocale(config.locale);
-  Validator.setStrictMode(config.strict);
+  // Merge the english messages.
+  Validator.localize('en', {
+    messages
+  });
 };
 
-export default {
-  install,
-  mapFields,
-  Validator,
-  ErrorBag,
-  Rules,
-  version: '__VERSION__'
-};
+// install the rules via the plugin API.
+minimal.use(rulesPlugin);
+
+minimal.Rules = Rules;
+
+export default minimal;

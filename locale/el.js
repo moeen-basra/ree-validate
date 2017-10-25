@@ -1,3 +1,5 @@
+import { formatFileSize, isDefinedGlobally } from './utils';
+
 const messages = {
   after: (field, [target]) => `${field} πρέπει να είναι μετά ${target}.`,
   alpha_dash: (field) => `${field} μπορεί να περιέχει αλφαριθμητικούς χαρακτήρες, παύλες και κάτω παύλες.`,
@@ -27,7 +29,7 @@ const messages = {
   numeric: (field) => `${field} πρέπει να περιέχει μόνο αριθμούς.`,
   regex: (field) => `${field} δεν είναι έγκυρο.`,
   required: (field) => `${field} δεν έχει συμπληρωθεί.`,
-  size: (field, [size]) => `${field} πρέπει να μην υπερβαίνει τα ${size} KB.`,
+  size: (field, [size]) => `${field} πρέπει να μην υπερβαίνει τα ${formatFileSize(size)}.`,
   url: (field) => `${field} πρέπει να είναι έγκυρη διεύθυνση URL.`
 };
 
@@ -37,8 +39,8 @@ const locale = {
   attributes: {}
 };
 
-if (typeof VeeValidate !== 'undefined' && VeeValidate && typeof VeeValidate.Validator) {
-  VeeValidate.Validator.addLocale(locale);
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.addLocale(locale);
 }
 
 export default locale;
