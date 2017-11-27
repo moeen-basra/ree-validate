@@ -50,7 +50,7 @@ class Page extends Component {
         email: '',
         password: '',
       },
-      errors: this.validator.errorBag,
+      errors: this.validator.errors,
     }
     
     this.onChange = this.onChange.bind(this)
@@ -60,15 +60,17 @@ class Page extends Component {
   onChange(e) {
     const name = e.target.name
     const value = e.target.value
+    const { errors } = this.validator
     
-    const { formData } = this.state
+    // reset errors for url field
+    errors.remove(name)
     
-    formData[name] = value
+    // update form data
+    this.setState({ formData: { ...this.state.formData, [name]: value } })
     
     this.validator.validate(name, value)
       .then(() => {
-        const { errorBag } = this.validator
-        this.setState({ errors: errorBag, formData })
+        this.setState({ errors })
       })
   }
   
@@ -77,14 +79,17 @@ class Page extends Component {
   }
   
   validateAndSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
     
     const { formData } = this.state
-    
+    const { errors } = this.validator.errors
+
     this.validator.validateAll(formData)
       .then(success => {
         if (success) {
           this.submit(formData)
+        } else {
+          this.setState({ errors })
         }
       })
     
