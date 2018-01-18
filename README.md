@@ -82,7 +82,7 @@ class Page extends Component {
     e.preventDefault()
     
     const { formData } = this.state
-    const { errors } = this.validator.errors
+    const { errors } = this.validator
 
     this.validator.validateAll(formData)
       .then(success => {
