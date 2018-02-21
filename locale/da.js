@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `${field} er ikke gyldig.`,
@@ -12,7 +12,7 @@ const messages = {
   confirmed: (field, [confirmedField]) => `${field} skal matche ${confirmedField}.`,
   date_between: (field, [min, max]) => `${field} skal være mellem ${min} og ${max}.`,
   date_format: (field, [format]) => `${field} skal være i formatet: ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `${field} skal være numerisk og må maksimalt indeholde ${decimals === '*' ? '' : decimals} decimaler.`,
+  decimal: (field, [decimals = '*'] = []) => `${field} skal være numerisk og må maksimalt indeholde ${decimals === '*' ? '' : decimals} decimaler.`,
   digits: (field, [length]) => `${field} skal være et tal på ${length} cifre.`,
   dimensions: (field, [width, height]) => `${field} skal være ${width} pixels gange ${height} pixels.`,
   email: (field) => `${field} skal være en gyldig email.`,
@@ -28,17 +28,17 @@ const messages = {
   regex: (field) => `${field} skal have et gyldigt format.`,
   required: (field) => `${field} skal udfyldes.`,
   size: (field, [size]) => `${field} må maksimalt have en størrelse på ${formatFileSize(size)}.`,
-  url: (field) => `${field} skal være en gyldig URL.`
-};
+  url: (field) => `${field} skal være en gyldig URL.`,
+}
 
 const locale = {
   name: 'da',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

@@ -1,7 +1,9 @@
 {
-  "presets": ["es2015"],
+  "presets": ["env", "stage-0"],
   "plugins": [
+    "transform-runtime",
     "transform-async-to-generator",
-    "transform-flow-strip-types"
+    "transform-flow-strip-types",
+    "transform-object-rest-spread"
   ]
 }

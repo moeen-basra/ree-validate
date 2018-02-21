@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `${field} waarde is ongeldig.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `${field} is ongeldig.`,
   date_between: (field, [min, max]) => `${field} moet tussen ${min} en ${max} liggen.`,
   date_format: (field, [format]) => `${field} moet in het volgende formaat zijn: ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `${field} moet een nummer zijn en mag ${decimals === '*' ? '' : decimals} decimalen bevatten.`,
+  decimal: (field, [decimals = '*'] = []) => `${field} moet een nummer zijn en mag ${decimals === '*' ? '' : decimals} decimalen bevatten.`,
   digits: (field, [length]) => `${field} moet een nummer zijn en exact ${length} tekens bevatten.`,
   dimensions: (field, [width, height]) => `${field} moet ${width} pixels breed zijn en ${height} pixels hoog.`,
   email: (field) => `${field} moet een geldig emailadres zijn`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `${field} formaat is ongeldig.`,
   required: (field) => `${field} is verplicht.`,
   size: (field, [size]) => `${field} mag niet groter zijn dan ${formatFileSize(size)}.`,
-  url: (field) => `${field} is geen geldige URL.`
-};
+  url: (field) => `${field} is geen geldige URL.`,
+}
 
 const locale = {
   name: 'nl',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

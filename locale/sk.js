@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target, inclusion]) => `Položka ${field} musí byť vačšia ${inclusion ? 'alebo rovná ' : ''} ako položka ${target}.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `Položka ${field} je neplatná.`,
   date_between: (field, [min, max]) => `${field} musí byť medzi ${min} a ${max}.`,
   date_format: (field, [format]) => `${field} musí byť vo formáte ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Položka ${field} musí byť číselná a smie obsahovať ${decimals === '*' ? '' : decimals} desatinné miesta.`,
+  decimal: (field, [decimals = '*'] = []) => `Položka ${field} musí byť číselná a smie obsahovať ${decimals === '*' ? '' : decimals} desatinné miesta.`,
   digits: (field, [length]) => `Položka ${field} musí obsahovať ${length} ${length < 5 ? 'čísla' : 'čísiel'}.`,
   dimensions: (field, [width, height]) => `Položka ${field} musí mať ${width} x ${height} pixlov.`,
   email: (field) => `Položka ${field} musí obsahovať správnu emailovú adresu.`,
@@ -31,16 +31,16 @@ const messages = {
   required: (field) => `Položka ${field} je povinná.`,
   size: (field, [size]) => `Položka ${field} musí byť menej ako ${formatFileSize(size)}.`,
   url: (field) => `Položka ${field} neobsahuje platnú URL.`,
-};
+}
 
 const locale = {
   name: 'sk',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

@@ -1,3 +1,3 @@
-import isCreditCard from 'validator/lib/isCreditCard';
+import isCreditCard from 'validator/lib/isCreditCard'
 
-export default (value) => isCreditCard(String(value));
+export default (value) => isCreditCard(String(value))

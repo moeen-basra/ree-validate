@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `${field} tidak sah.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `${field} tidak sah.`,
   date_between: (field, [min, max]) => `${field} perlulah di antara ${min} dan ${max}.`,
   date_format: (field, [format]) => `${field} perlulah dalam format ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `${field} perlulah dalam bentuk angka dan boleh mempunyai ${!decimals || decimals === '*' ? '' : decimals} titik perpuluhan.`,
+  decimal: (field, [decimals = '*'] = []) => `${field} perlulah dalam bentuk angka dan boleh mempunyai ${!decimals || decimals === '*' ? '' : decimals} titik perpuluhan.`,
   digits: (field, [length]) => `${field} perlulah dalam bentuk angka dan mempunyai ${length} digit.`,
   dimensions: (field, [width, height]) => `${field} perlulah berdimensi ${width} pixel darab ${height} pixels.`,
   email: (field) => `${field} perlulah dalam format emel yang sah.`,
@@ -24,10 +24,10 @@ const messages = {
   ip: (field) => `${field} perlulah dalam format alamat ip yang sah.`,
   length: (field, [length, max]) => {
     if (max) {
-      return `Panjang ${field} perlulah bernilai di antara ${length} dan ${max}.`;
+      return `Panjang ${field} perlulah bernilai di antara ${length} dan ${max}.`
     }
 
-    return `Panjang ${field} perlulah bernilai ${length}.`;
+    return `Panjang ${field} perlulah bernilai ${length}.`
   },
   max: (field, [length]) => `${field} perlulah tidak melebihi ${length} karakter.`,
   max_value: (field, [max]) => `${field} perlulah bernilai ${max} atau kurang.`,
@@ -39,18 +39,18 @@ const messages = {
   regex: (field) => `Format ${field} tidak sah.`,
   required: (field) => `${field} adalah wajib.`,
   size: (field, [size]) => `Saiz ${field} perlulah kurang daripada ${formatFileSize(size)}.`,
-  url: (field) => `${field} bukan URL yang sah.`
-};
+  url: (field) => `${field} bukan URL yang sah.`,
+}
 
 const locale = {
   name: 'ms_MY',
   messages,
-  attributes: {}
-};
+  attributes: {},
+}
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.addLocale(locale);
+  ReeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale;
+export default locale

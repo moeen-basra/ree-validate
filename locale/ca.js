@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `El camp ${field} no és vàlid.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field, [confirmedField]) => `El camp ${field} és invàlid.`,
   date_between: (field, [min, max]) => `El camp ${field} ha d'estar entre ${min} i ${max}.`,
   date_format: (field, [format]) => `El camp ${field} ha de tenir el format ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `El camp ${field} ha de ser numèric i contenir ${decimals === '*' ? '' : decimals} punts decimals.`,
+  decimal: (field, [decimals = '*'] = []) => `El camp ${field} ha de ser numèric i contenir ${decimals === '*' ? '' : decimals} punts decimals.`,
   digits: (field, [length]) => `El camp ${field} ha de ser numèric i contenir exactament ${length} dígits.`,
   dimensions: (field, [width, height]) => `El camp ${field} ha de ser de ${width} píxels per ${height} píxels.`,
   email: (field) => `El camp ${field} ha de ser un correu electrònic vàlid.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `El format del camp ${field} no és vàlid.`,
   required: (field) => `El camp ${field} és obligatori.`,
   size: (field, [size]) => `El camp ${field} ha de ser menor a ${formatFileSize(size)}.`,
-  url: (field) => `El camp ${field} no és un URL vàlid.`
-};
+  url: (field) => `El camp ${field} no és un URL vàlid.`,
+}
 
 const locale = {
   name: 'ca',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `Câmpul ${field} trebuie să fie după ${target}.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `Câmpul ${field} este invalid.`,
   date_between: (field, [min, max]) => `Câmpul ${field} trebuie să fie între ${min} și ${max}.`,
   date_format: (field, [format]) => `Câmpul ${field} trebuie să fie în următorul format ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Câmpul ${field} trebuie să fie numberic și poate conține ${decimals === '*' ? '' : decimale} zecimale.`,
+  decimal: (field, [decimals = '*'] = []) => `Câmpul ${field} trebuie să fie numberic și poate conține ${decimals === '*' ? '' : decimale} zecimale.`,
   digits: (field, [length]) => `Câmpul ${field} trebuie să fie numeric și să conțină exact ${length} caractere.`,
   dimensions: (field, [width, height]) => `Câmpul ${field} trebuie să fie ${width} pixeli lungime și ${height} pixeli înălțime.`,
   email: (field) => `Câmpul ${field} trebuie să conțină un email valid.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `Formatul câmpului ${field} este invalid.`,
   required: (field) => `Câmpul ${field} este necesar.`,
   size: (field, [size]) => `Câmpul ${field} nu trebuie să depășească ${formatFileSize(size)}.`,
-  url: (field) => `Câmpul ${field} nu este un URL valid.`
-};
+  url: (field) => `Câmpul ${field} nu este un URL valid.`,
+}
 
 const locale = {
   name: 'ro',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

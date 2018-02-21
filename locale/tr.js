@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `${field} ${target} alanından ileri bir tarih olmalıdır.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `${field} numarası hatalı.`,
   date_between: (field, [min, max]) => `${field} ${min} ile ${max} tarihleri arasında olmalıdır.`,
   date_format: (field, [format]) => `${field} ${format} formatında olmalıdır.`,
-  decimal: (field, [decimals] = ['*']) => `${field} sayısal${decimals !== '*' ? `ve noktadan sonra ${decimals} basamaklı` : ''} olmalıdır.`,
+  decimal: (field, [decimals = '*'] = []) => `${field} sayısal${decimals !== '*' ? `ve noktadan sonra ${decimals} basamaklı` : ''} olmalıdır.`,
   digits: (field, [length]) => `${field} sayısal ve ${length} basamaklı olmalıdır.`,
   dimensions: (field, [width, height]) => `${field} alanı ${width} piksel ile ${height} piksel arasında olmalıdır.`,
   email: (field) => `${field} alanının geçerli bir e-posta olması gerekir.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field} formatı geçersiz.`,
   required: (field) => `${field} alanı gereklidir.`,
   size: (field, [size]) => `${field} alanı ${formatFileSize(size)}'dan daha az olmalıdır.`,
-  url: (field) => `${field} geçersiz URL.`
-};
+  url: (field) => `${field} geçersiz URL.`,
+}
 
 const locale = {
   name: 'tr',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

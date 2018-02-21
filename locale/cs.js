@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `Pole ${field} není vyplněno správně.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `Pole ${field} není vyplněno správně.`,
   date_between: (field, [min, max]) => `Pole ${field} musí být mezi ${min} a ${max}.`,
   date_format: (field, [format]) => `Pole ${field} musí být ve formátu ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Pole ${field} musí být číslo a může obsahovat ${decimals === '*' ? '' : decimals} desetinných míst.`,
+  decimal: (field, [decimals = '*'] = []) => `Pole ${field} musí být číslo a může obsahovat ${decimals === '*' ? '' : decimals} desetinných míst.`,
   digits: (field, [length]) => `Pole ${field} musí být číslo a musí obshovat přesně ${length} číslic.`,
   dimensions: (field, [width, height]) => `${field} musí mít ${width} pixelů na ${height} pixelů.`,
   email: (field) => `Pole ${field} musí být validní email.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Pole ${field} není vyplněno správně.`,
   required: (field) => `Pole ${field} je povinné.`,
   size: (field, [size]) => `${field} musí být menší než ${formatFileSize(size)}.`,
-  url: (field) => `${field} není platná URL adresa.`
-};
+  url: (field) => `${field} není platná URL adresa.`,
+}
 
 const locale = {
   name: 'cs',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

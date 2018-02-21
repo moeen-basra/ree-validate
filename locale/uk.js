@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `В полі ${field} повинна бути дата після ${target}.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `Поле ${field} не вірне.`,
   date_between: (field, [min, max]) => `В полі ${field} повинна бути дата між ${min} та ${max}.`,
   date_format: (field, [format]) => `В полі ${field} повинна бути дата в форматі ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Поле ${field} повинно бути числовим та може містити ${decimals === '*' ? 'знакі' : decimals + ' знаків'} після коми.`,
+  decimal: (field, [decimals = '*'] = []) => `Поле ${field} повинно бути числовим та може містити ${decimals === '*' ? 'знакі' : decimals + ' знаків'} після коми.`,
   digits: (field, [length]) => `Поле ${field} повинно бути числовим та точно містити ${length} цифри.`,
   dimensions: (field, [width, height]) => `Поле ${field} повинно бути ${width} пікселів на ${height} пікселів.`,
   email: (field) => `В полі ${field} повинна бути адреса електронної пошти.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `Поле ${field} має невірний формат.`,
   required: (field) => `Поле ${field} повинно мати значення.`,
   size: (field, [size]) => `Поле ${field} повинно бути менше ${formatFileSize(size)}.`,
-  url: (field) => `В полі ${field} повиннен бути URL.`
-};
+  url: (field) => `В полі ${field} повиннен бути URL.`,
+}
 
 const locale = {
   name: 'uk',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

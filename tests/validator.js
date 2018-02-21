@@ -155,7 +155,7 @@ test('can set strict mode on specific instances', async () => {
     });
   } catch (error) {
     expect(error.message).toBe(
-      `[vee-validate] Validating a non-existant field: "headless". Use "attach()" first.`
+      `[ree-validate] Validating a non-existant field: "headless". Use "attach()" first.`
     );
   }
 
@@ -174,7 +174,7 @@ test('can set strict mode on specific instances', async () => {
     })); // strict = true because this is a different instance.
   } catch (error) {
     expect(error.message).toBe(
-      `[vee-validate] Validating a non-existant field: "headless". Use "attach()" first.`
+      `[ree-validate] Validating a non-existant field: "headless". Use "attach()" first.`
     );
   }
 });

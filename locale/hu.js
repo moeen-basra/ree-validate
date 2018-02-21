@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `A(z) ${field} legalább ${target} utáni dátum kell, hogy legyen.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `A(z) ${field} nem érvényes.`,
   date_between: (field, [min, max]) => `A(z) ${field} ${min} és ${max} közötti dátum kell, hogy legyen.`,
   date_format: (field, [format]) => `A(z) ${field} nem egyezik az alábbi dátum formátummal ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `The ${field} must be numeric and may contain ${decimals === '*' ? '' : decimals} decimal points.`,
+  decimal: (field, [decimals = '*'] = []) => `The ${field} must be numeric and may contain ${decimals === '*' ? '' : decimals} decimal points.`,
   digits: (field, [length]) => `A(z) ${field} ${length} számjegyű kell, hogy legyen.`,
   dimensions: (field, [width, height]) => `A(z) ${field} felbontása ${width} és ${height} pixel között kell, hogy legyen.`,
   email: (field) => `A(z) ${field} nem érvényes email formátum.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `A(z) ${field} formátuma érvénytelen.`,
   required: (field) => `A(z) ${field} megadása kötelező.`,
   size: (field, [size]) => `A(z) ${field} méretének ${size} kilobájtnál kisebbnek kell lennie.`,
-  url: (field) => `A(z) ${field} érvénytelen link.`
-};
+  url: (field) => `A(z) ${field} érvénytelen link.`,
+}
 
 const locale = {
   name: 'hu',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

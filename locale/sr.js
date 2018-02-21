@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `Поље ${field} није валидно.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `Поље ${field} није валидно.`,
   date_between: (field, [min, max]) => `Поље ${field} мора бити између ${min} и ${max}.`,
   date_format: (field, [format]) => `Поље ${field} мора бити у формату ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Поље ${field} мора бити број и може садржати ${decimals === '*' ? '' : decimals} децималних места.`,
+  decimal: (field, [decimals = '*'] = []) => `Поље ${field} мора бити број и може садржати ${decimals === '*' ? '' : decimals} децималних места.`,
   digits: (field, [length]) => `Поље ${field} мора бити број и садржати тачно ${length} цифара.`,
   dimensions: (field, [width, height]) => `Поље ${field} мора бити ${width} x ${height} пиксела.`,
   email: (field) => `Поље ${field} мора бити валидан имејл.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Формат поља ${field} није валидан.`,
   required: (field) => `Поље ${field} је обавезно.`,
   size: (field, [size]) => `Поље ${field} мора бити мање од ${formatFileSize(size)}.`,
-  url: (field) => `Поље ${field} није валидна веб адреса.`
-};
+  url: (field) => `Поље ${field} није валидна веб адреса.`,
+}
 
 const locale = {
   name: 'sr',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

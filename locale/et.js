@@ -1,8 +1,8 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 // http://stackoverflow.com/a/1026087/1470607
 function capitalizeFirstLetter (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const messages = {
@@ -18,7 +18,7 @@ const messages = {
   credit_card: (field) => `${capitalizeFirstLetter(field)} ei oma sobivat väärtust.`,
   date_between: (field, [min, max]) => `${capitalizeFirstLetter(field)} peab olema vahemikus ${min} kuni ${max}.`,
   date_format: (field, [format]) => `${capitalizeFirstLetter(field)} peab olema kujul ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `${capitalizeFirstLetter(field)} peab olema number ja võib sisaldada ${decimals === '*' ? 'komakohta' : `${decimals} numbrit pärast koma`}.`,
+  decimal: (field, [decimals = '*'] = []) => `${capitalizeFirstLetter(field)} peab olema number ja võib sisaldada ${decimals === '*' ? 'komakohta' : `${decimals} numbrit pärast koma`}.`,
   digits: (field, [length]) => `${capitalizeFirstLetter(field)} peab koosnema täpselt ${length}-st numbrist.`,
   dimensions: (field, [width, height]) => `${capitalizeFirstLetter(field)} peab olema ${width} korda ${height} pikslit suur.`,
   email: (field) => `${capitalizeFirstLetter(field)} peab olema e-maili aadress.`,
@@ -36,17 +36,17 @@ const messages = {
   regex: (field) => `${capitalizeFirstLetter(field)} pole sobival kujul.`,
   required: (field) => `${capitalizeFirstLetter(field)} on nõutud väli.`,
   size: (field, [size]) => `${capitalizeFirstLetter(field)} peab olema väiksem kui ${formatFileSize(size)}.`,
-  url: (field) => `${capitalizeFirstLetter(field)} peab olema URL.`
-};
+  url: (field) => `${capitalizeFirstLetter(field)} peab olema URL.`,
+}
 
 const locale = {
   name: 'et',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

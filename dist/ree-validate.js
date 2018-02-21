@@ -1,8 +1,8 @@
 /**
- * ree-validate v2.0.0
- * (c) 2017 Moeen Basra
- * @license MIT
- */
+  * ree-validate v2.0.3
+  * (c) 2018 Moeen Basra
+  * @license MIT
+  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -2147,7 +2147,7 @@ function setUTCISOWeekYear (dirtyDate, dirtyISOYear, dirtyOptions) {
   return date
 }
 
-var MILLISECONDS_IN_MINUTE$7 = 60000;
+var MILLISECONDS_IN_MINUTE$6 = 60000;
 
 function setTimeOfDay (hours, timeOfDay) {
   var isAM = timeOfDay === 0;
@@ -2311,7 +2311,7 @@ var units = {
   timezone: {
     priority: 110,
     set: function (dateValues, value) {
-      dateValues.date = new Date(dateValues.date.getTime() - value * MILLISECONDS_IN_MINUTE$7);
+      dateValues.date = new Date(dateValues.date.getTime() - value * MILLISECONDS_IN_MINUTE$6);
       return dateValues
     }
   },
@@ -2326,7 +2326,7 @@ var units = {
 };
 
 var TIMEZONE_UNIT_PRIORITY = 110;
-var MILLISECONDS_IN_MINUTE$6 = 60000;
+var MILLISECONDS_IN_MINUTE$7 = 60000;
 
 var longFormattingTokensRegExp$1 = /(\[[^[]*])|(\\)?(LTS|LT|LLLL|LLL|LL|L|llll|lll|ll|l)/g;
 var defaultParsingTokensRegExp = /(\[[^[]*])|(\\)?(x|ss|s|mm|m|hh|h|do|dddd|ddd|dd|d|aa|a|ZZ|Z|YYYY|YY|X|Wo|WW|W|SSS|SS|S|Qo|Q|Mo|MMMM|MMM|MM|M|HH|H|GGGG|GG|E|Do|DDDo|DDDD|DDD|DD|D|A|.)/g;
@@ -2609,10 +2609,10 @@ function dateToSystemTimezone (dateValues) {
   var offset = date.getTimezoneOffset();
 
   // Get the system timezone offset at the exact moment of time
-  offset = new Date(time + offset * MILLISECONDS_IN_MINUTE$6).getTimezoneOffset();
+  offset = new Date(time + offset * MILLISECONDS_IN_MINUTE$7).getTimezoneOffset();
 
   // Convert date in timezone "UTC+00:00" to the system timezone
-  dateValues.date = new Date(time + offset * MILLISECONDS_IN_MINUTE$6);
+  dateValues.date = new Date(time + offset * MILLISECONDS_IN_MINUTE$7);
 
   return dateValues
 }
@@ -2633,7 +2633,7 @@ function cleanEscapedString$1 (input) {
  */
 function parseDate$1 (date, format$$1) {
   if (typeof date !== 'string') {
-    return isValid(date) ? date : null;
+    return isValid(date) ? date : null
   }
 
   var parsed = parse(date, format$$1, new Date());
@@ -2641,13 +2641,13 @@ function parseDate$1 (date, format$$1) {
   // if date is not valid or the formatted output after parsing does not match
   // the string value passed in (avoids overflows)
   if (!isValid(parsed) || format(parsed, format$$1) !== date) {
-    return null;
+    return null
   }
 
-  return parsed;
+  return parsed
 }
 
-var after = function (value, ref) {
+function after (value, ref) {
   var otherValue = ref[0];
   var inclusion = ref[1];
   var format = ref[2];
@@ -2661,18 +2661,18 @@ var after = function (value, ref) {
 
   // if either is not valid.
   if (!value || !otherValue) {
-    return false;
+    return false
   }
 
-  return isAfter(value, otherValue) || (inclusion && isEqual(value, otherValue));
-};
+  return isAfter(value, otherValue) || (inclusion && isEqual(value, otherValue))
+}
 
 /**
  * Some Alpha Regex helpers.
  * https://github.com/chriso/validator.js/blob/master/src/lib/alpha.js
  */
 
-var alpha$1 = {
+var alpha = {
   en: /^[A-Z]*$/i,
   cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
   da: /^[A-ZÆØÅ]*$/i,
@@ -2689,7 +2689,7 @@ var alpha$1 = {
   sr: /^[A-ZČĆŽŠĐ]*$/i,
   tr: /^[A-ZÇĞİıÖŞÜ]*$/i,
   uk: /^[А-ЩЬЮЯЄІЇҐ]*$/i,
-  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
 };
 
 var alphaSpaces = {
@@ -2709,7 +2709,7 @@ var alphaSpaces = {
   sr: /^[A-ZČĆŽŠĐ\s]*$/i,
   tr: /^[A-ZÇĞİıÖŞÜ\s]*$/i,
   uk: /^[А-ЩЬЮЯЄІЇҐ\s]*$/i,
-  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/,
 };
 
 var alphanumeric = {
@@ -2729,7 +2729,7 @@ var alphanumeric = {
   sr: /^[0-9A-ZČĆŽŠĐ]*$/i,
   tr: /^[0-9A-ZÇĞİıÖŞÜ]*$/i,
   uk: /^[0-9А-ЩЬЮЯЄІЇҐ]*$/i,
-  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
 };
 
 var alphaDash = {
@@ -2749,7 +2749,7 @@ var alphaDash = {
   sr: /^[0-9A-ZČĆŽŠĐ_-]*$/i,
   tr: /^[0-9A-ZÇĞİıÖŞÜ_-]*$/i,
   uk: /^[0-9А-ЩЬЮЯЄІЇҐ_-]*$/i,
-  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/,
 };
 
 var validate = function (value, ref) {
@@ -2757,15 +2757,15 @@ var validate = function (value, ref) {
   var locale = ref[0];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate(val, [locale]); });
+    return value.every(function (val) { return validate(val, [locale]); })
   }
 
   // Match at least one locale.
   if (! locale) {
-    return Object.keys(alpha$1).some(function (loc) { return alpha$1[loc].test(value); });
+    return Object.keys(alpha).some(function (loc) { return alpha[loc].test(value); })
   }
 
-  return (alpha$1[locale] || alpha$1.en).test(value);
+  return (alpha[locale] || alpha.en).test(value)
 };
 
 var validate$1 = function (value, ref) {
@@ -2773,15 +2773,15 @@ var validate$1 = function (value, ref) {
   var locale = ref[0];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$1(val, [locale]); });
+    return value.every(function (val) { return validate$1(val, [locale]); })
   }
 
   // Match at least one locale.
   if (! locale) {
-    return Object.keys(alphaDash).some(function (loc) { return alphaDash[loc].test(value); });
+    return Object.keys(alphaDash).some(function (loc) { return alphaDash[loc].test(value); })
   }
 
-  return (alphaDash[locale] || alphaDash.en).test(value);
+  return (alphaDash[locale] || alphaDash.en).test(value)
 };
 
 var validate$2 = function (value, ref) {
@@ -2789,15 +2789,15 @@ var validate$2 = function (value, ref) {
   var locale = ref[0];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$2(val, [locale]); });
+    return value.every(function (val) { return validate$2(val, [locale]); })
   }
 
   // Match at least one locale.
   if (! locale) {
-    return Object.keys(alphanumeric).some(function (loc) { return alphanumeric[loc].test(value); });
+    return Object.keys(alphanumeric).some(function (loc) { return alphanumeric[loc].test(value); })
   }
 
-  return (alphanumeric[locale] || alphanumeric.en).test(value);
+  return (alphanumeric[locale] || alphanumeric.en).test(value)
 };
 
 var validate$3 = function (value, ref) {
@@ -2805,18 +2805,18 @@ var validate$3 = function (value, ref) {
   var locale = ref[0];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$3(val, [locale]); });
+    return value.every(function (val) { return validate$3(val, [locale]); })
   }
 
   // Match at least one locale.
   if (! locale) {
-    return Object.keys(alphaSpaces).some(function (loc) { return alphaSpaces[loc].test(value); });
+    return Object.keys(alphaSpaces).some(function (loc) { return alphaSpaces[loc].test(value); })
   }
 
-  return (alphaSpaces[locale] || alphaSpaces.en).test(value);
+  return (alphaSpaces[locale] || alphaSpaces.en).test(value)
 };
 
-var before = function (value, ref) {
+function before (value, ref) {
   var otherValue = ref[0];
   var inclusion = ref[1];
   var format = ref[2];
@@ -2830,24 +2830,24 @@ var before = function (value, ref) {
 
   // if either is not valid.
   if (!value || !otherValue) {
-    return false;
+    return false
   }
 
-  return isBefore(value, otherValue) || (inclusion && isEqual(value, otherValue));
-};
+  return isBefore(value, otherValue) || (inclusion && isEqual(value, otherValue))
+}
 
 var validate$4 = function (value, ref) {
   var min = ref[0];
   var max = ref[1];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$4(val, [min, max]); });
+    return value.every(function (val) { return validate$4(val, [min, max]); })
   }
 
-  return Number(min) <= value && Number(max) >= value;
+  return Number(min) <= value && Number(max) >= value
 };
 
-var confirmed = function (value, other) { return String(value) === String(other); };
+function confirmed (value, other) { return String(value) === String(other); }
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -2858,8 +2858,6 @@ function createCommonjsModule(fn, module) {
 }
 
 var assertString_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -2877,8 +2875,6 @@ module.exports = exports['default'];
 unwrapExports(assertString_1);
 
 var isCreditCard_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -2926,29 +2922,29 @@ module.exports = exports['default'];
 
 var isCreditCard = unwrapExports(isCreditCard_1);
 
-var credit_card = function (value) { return isCreditCard(String(value)); };
+function credit_card (value) { return isCreditCard(String(value)); }
 
 var validate$5 = function (value, params) {
   var decimals = Array.isArray(params) ? (params[0] || '*') : '*';
   var separator = Array.isArray(params) ? (params[1] || '.') : '.';
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$5(val, params); });
+    return value.every(function (val) { return validate$5(val, params); })
   }
 
   if (value === null || value === undefined || value === '') {
-    return true;
+    return true
   }
 
   // if is 0.
   if (Number(decimals) === 0) {
-    return /^-?\d*$/.test(value);
+    return /^-?\d*$/.test(value)
   }
 
   var regexPart = decimals === '*' ? '+' : ("{1," + decimals + "}");
   var regex = new RegExp(("^-?\\d*(\\" + separator + "\\d" + regexPart + ")?$"));
 
   if (! regex.test(value)) {
-    return false;
+    return false
   }
 
   var parsedValue = parseFloat(value);
@@ -2957,17 +2953,17 @@ var validate$5 = function (value, params) {
     return parsedValue === parsedValue;
 };
 
-var date_between = function (value, params) {
+function date_between (value, params) {
+  var assign, assign$1;
+
   var min;
   var max;
   var format;
   var inclusivity = '()';
 
   if (params.length > 3) {
-    var assign;
     (assign = params, min = assign[0], max = assign[1], inclusivity = assign[2], format = assign[3]);
   } else {
-    var assign$1;
     (assign$1 = params, min = assign$1[0], max = assign$1[1], format = assign$1[2]);
   }
 
@@ -2976,40 +2972,40 @@ var date_between = function (value, params) {
   var dateVal = parseDate$1(value, format);
 
   if (!minDate || !maxDate || !dateVal) {
-    return false;
+    return false
   }
 
   if (inclusivity === '()') {
-    return isAfter(dateVal, minDate) && isBefore(dateVal, maxDate);
+    return isAfter(dateVal, minDate) && isBefore(dateVal, maxDate)
   }
 
   if (inclusivity === '(]') {
-    return isAfter(dateVal, minDate) && (isEqual(dateVal, maxDate) || isBefore(dateVal, maxDate));
+    return isAfter(dateVal, minDate) && (isEqual(dateVal, maxDate) || isBefore(dateVal, maxDate))
   }
 
   if (inclusivity === '[)') {
-    return isBefore(dateVal, maxDate) && (isEqual(dateVal, minDate) || isAfter(dateVal, minDate));
+    return isBefore(dateVal, maxDate) && (isEqual(dateVal, minDate) || isAfter(dateVal, minDate))
   }
 
   return isEqual(dateVal, maxDate) || isEqual(dateVal, minDate) ||
-        (isBefore(dateVal, maxDate) && isAfter(dateVal, minDate));
-};
+        (isBefore(dateVal, maxDate) && isAfter(dateVal, minDate))
+}
 
-var date_format = function (value, ref) {
+function date_format (value, ref) {
   var format = ref[0];
 
-  return !!parseDate$1(value, format);
-};
+  return !!parseDate$1(value, format)
+}
 
 var validate$6 = function (value, ref) {
   var length = ref[0];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$6(val, [length]); });
+    return value.every(function (val) { return validate$6(val, [length]); })
   }
   var strVal = String(value);
 
-  return /^[0-9]*$/.test(strVal) && strVal.length === Number(length);
+  return /^[0-9]*$/.test(strVal) && strVal.length === Number(length)
 };
 
 var validateImage = function (file, width, height) {
@@ -3018,14 +3014,14 @@ var validateImage = function (file, width, height) {
     var image = new Image();
     image.onerror = function () { return resolve({ valid: false }); };
     image.onload = function () { return resolve({
-      valid: image.width === Number(width) && image.height === Number(height)
+      valid: image.width === Number(width) && image.height === Number(height),
     }); };
 
     image.src = URL.createObjectURL(file);
-  });
+  })
 };
 
-var dimensions = function (files, ref) {
+function dimensions (files, ref) {
   var width = ref[0];
   var height = ref[1];
 
@@ -3033,18 +3029,16 @@ var dimensions = function (files, ref) {
   for (var i = 0; i < files.length; i++) {
     // if file is not an image, reject.
     if (! /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(files[i].name)) {
-      return false;
+      return false
     }
 
     list.push(files[i]);
   }
 
-  return Promise.all(list.map(function (file) { return validateImage(file, width, height); }));
-};
+  return Promise.all(list.map(function (file) { return validateImage(file, width, height); }))
+}
 
 var merge_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -3066,8 +3060,6 @@ module.exports = exports['default'];
 unwrapExports(merge_1);
 
 var isByteLength_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -3103,13 +3095,11 @@ module.exports = exports['default'];
 
 unwrapExports(isByteLength_1);
 
-var isFQDN = createCommonjsModule(function (module, exports) {
-'use strict';
-
+var isFQDN_1 = createCommonjsModule(function (module, exports) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = isFDQN;
+exports.default = isFQDN;
 
 
 
@@ -3127,7 +3117,7 @@ var default_fqdn_options = {
   allow_trailing_dot: false
 };
 
-function isFDQN(str, options) {
+function isFQDN(str, options) {
   (0, _assertString2.default)(str);
   options = (0, _merge2.default)(options, default_fqdn_options);
 
@@ -3167,11 +3157,9 @@ function isFDQN(str, options) {
 module.exports = exports['default'];
 });
 
-unwrapExports(isFQDN);
+unwrapExports(isFQDN_1);
 
 var isEmail_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -3191,7 +3179,7 @@ var _isByteLength2 = _interopRequireDefault(isByteLength_1);
 
 
 
-var _isFQDN2 = _interopRequireDefault(isFQDN);
+var _isFQDN2 = _interopRequireDefault(isFQDN_1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3265,24 +3253,24 @@ var isEmail = unwrapExports(isEmail_1);
 
 var validate$7 = function (value) {
   if (Array.isArray(value)) {
-    return value.every(function (val) { return isEmail(String(val)); });
+    return value.every(function (val) { return isEmail(String(val)); })
   }
 
-  return isEmail(String(value));
+  return isEmail(String(value))
 };
 
-var ext = function (files, extensions) {
+function ext (files, extensions) {
   var regex = new RegExp((".(" + (extensions.join('|')) + ")$"), 'i');
 
-  return files.every(function (file) { return regex.test(file.name); });
-};
+  return files.every(function (file) { return regex.test(file.name); })
+}
 
-var image = function (files) { return files.every(function (file) { return /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name); }
-); };
+function image (files) { return files.every(function (file) { return /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name); }
+); }
 
 var validate$8 = function (value, options) {
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$8(val, options); });
+    return value.every(function (val) { return validate$8(val, options); })
   }
 
   // eslint-disable-next-line
@@ -3290,8 +3278,6 @@ var validate$8 = function (value, options) {
 };
 
 var isIP_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -3375,40 +3361,35 @@ module.exports = exports['default'];
 
 var isIP = unwrapExports(isIP_1);
 
-var ip = function (value, ref) {
+function ip (value, ref) {
   if ( ref === void 0 ) ref = [4];
   var version = ref[0];
 
   if (Array.isArray(value)) {
-    return value.every(function (val) { return isIP(val, [version]); });
+    return value.every(function (val) { return isIP(val, [version]); })
   }
 
-  return isIP(value, version);
-};
+  return isIP(value, version)
+}
 
 // 
 
 /**
  * Gets the data attribute. the name must be kebab-case.
  */
-
+var getDataAttribute = function (el, name) { return el.getAttribute(("data-vv-" + name)); };
 
 /**
  * Checks if the value is either null or undefined.
  */
 var isNullOrUndefined = function (value) {
-  return value === null || value === undefined;
+  return value === null || value === undefined
 };
 
 /**
  * Sets the data attribute.
  */
 var setDataAttribute = function (el, name, value) { return el.setAttribute(("data-vv-" + name), value); };
-
-/**
- * Creates a proxy object if available in the environment.
- */
-
 
 /**
  * Creates the default flags object.
@@ -3422,7 +3403,7 @@ var createFlags = function () { return ({
   invalid: null,
   validated: false,
   pending: false,
-  required: false
+  required: false,
 }); };
 
 /**
@@ -3441,22 +3422,22 @@ var createFlags = function () { return ({
 var getPath = function (path, target, def) {
   if ( def === void 0 ) def = undefined;
 
-  if (!path || !target) { return def; }
+  if (!path || !target) { return def }
 
   var value = target;
   path.split('.').every(function (prop) {
     if (! Object.prototype.hasOwnProperty.call(value, prop) && value[prop] === undefined) {
       value = def;
 
-      return false;
+      return false
     }
 
     value = value[prop];
 
-    return true;
+    return true
   });
 
-  return value;
+  return value
 };
 
 /**
@@ -3475,7 +3456,7 @@ var parseRule = function (rule) {
     params = rule.split(':').slice(1).join(':').split(',');
   }
 
-  return { name: name, params: params };
+  return { name: name, params: params }
 };
 
 /**
@@ -3486,7 +3467,7 @@ var debounce = function (fn, wait, immediate) {
   if ( immediate === void 0 ) immediate = false;
 
   if (wait === 0) {
-    return fn;
+    return fn
   }
 
   var timeout;
@@ -3505,7 +3486,7 @@ var debounce = function (fn, wait, immediate) {
     timeout = setTimeout(later, wait);
     /* istanbul ignore next */
     if (callNow) { fn.apply(void 0, args); }
-  };
+  }
 };
 
 /**
@@ -3514,7 +3495,7 @@ var debounce = function (fn, wait, immediate) {
 var normalizeRules = function (rules) {
   // if falsy value return an empty object.
   if (!rules) {
-    return {};
+    return {}
   }
 
   if (isObject(rules)) {
@@ -3535,24 +3516,24 @@ var normalizeRules = function (rules) {
         prev[curr] = params;
       }
 
-      return prev;
-    }, {});
+      return prev
+    }, {})
   }
 
   if (typeof rules !== 'string') {
     warn('rules must be either a string or an object.');
-    return {};
+    return {}
   }
 
   return rules.split('|').reduce(function (prev, rule) {
     var parsedRule = parseRule(rule);
     if (!parsedRule.name) {
-      return prev;
+      return prev
     }
 
     prev[parsedRule.name] = parsedRule.params;
-    return prev;
-  }, {});
+    return prev
+  }, {})
 };
 
 /**
@@ -3582,10 +3563,10 @@ var isCallable = function (func) { return typeof func === 'function'; };
  */
 var hasClass = function (el, className) {
   if (el.classList) {
-    return el.classList.contains(className);
+    return el.classList.contains(className)
   }
 
-  return !!el.className.match(new RegExp(("(\\s|^)" + className + "(\\s|$)")));
+  return !!el.className.match(new RegExp(("(\\s|^)" + className + "(\\s|$)")))
 };
 
 /**
@@ -3594,7 +3575,7 @@ var hasClass = function (el, className) {
 var addClass = function (el, className) {
   if (el.classList) {
     el.classList.add(className);
-    return;
+    return
   }
 
   if (!hasClass(el, className)) {
@@ -3608,7 +3589,7 @@ var addClass = function (el, className) {
 var removeClass = function (el, className) {
   if (el.classList) {
     el.classList.remove(className);
-    return;
+    return
   }
 
   if (hasClass(el, className)) {
@@ -3621,10 +3602,10 @@ var removeClass = function (el, className) {
  * Adds or removes a class name on the input depending on the status flag.
  */
 var toggleClass = function (el, className, status) {
-  if (!el || !className) { return; }
+  if (!el || !className) { return }
 
   if (status) {
-    return addClass(el, className);
+    return addClass(el, className)
   }
 
   removeClass(el, className);
@@ -3635,7 +3616,7 @@ var toggleClass = function (el, className, status) {
  */
 var toArray = function (arrayLike) {
   if (isCallable(Array.from)) {
-    return Array.from(arrayLike);
+    return Array.from(arrayLike)
   }
 
   var array = [];
@@ -3644,7 +3625,7 @@ var toArray = function (arrayLike) {
     array.push(arrayLike[i]);
   }
 
-  return array;
+  return array
 };
 
 /**
@@ -3656,12 +3637,12 @@ var assign = function (target) {
 
   /* istanbul ignore else */
   if (isCallable(Object.assign)) {
-    return Object.assign.apply(Object, [ target ].concat( others ));
+    return Object.assign.apply(Object, [ target ].concat( others ))
   }
 
   /* istanbul ignore next */
   if (target == null) {
-    throw new TypeError('Cannot convert undefined or null to object');
+    throw new TypeError('Cannot convert undefined or null to object')
   }
 
   /* istanbul ignore next */
@@ -3676,35 +3657,41 @@ var assign = function (target) {
     }
   });
   /* istanbul ignore next */
-  return to;
+  return to
 };
+
+var id = 0;
+var idTemplate = '{id}';
 
 /**
  * Generates a unique id.
  */
-var uniqId = function () { return ("_" + (Math.random().toString(36).substr(2, 9))); };
+var uniqId = function () {
+  // handle too many uses of uniqId, although unlikely.
+  if (id >= 9999) {
+    id = 0;
+    // shift the template.
+    idTemplate = idTemplate.replace('{id}', '_{id}');
+  }
+
+  id++;
+  var newId = idTemplate.replace('{id}', String(id));
+
+  return newId
+};
 
 /**
  * finds the first element that satisfies the predicate callback, polyfills array.find
  */
 var find = function (arrayLike, predicate) {
-  var array = toArray(arrayLike);
-
-  if (isCallable(array.find)) {
-    return array.find(predicate);
+  var array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike);
+  for (var i = 0; i < array.length; i++) {
+    if (predicate(array[i])) {
+      return array[i]
+    }
   }
 
-  var result;
-  array.some(function (item) {
-    if (predicate(item)) {
-      result = item;
-      return true;
-    }
-
-    return false;
-  });
-
-  return result;
+  return undefined
 };
 
 /**
@@ -3712,35 +3699,91 @@ var find = function (arrayLike, predicate) {
  */
 var getInputEventName = function (el) {
   if (el && (el.tagName === 'SELECT' || ~['radio', 'checkbox', 'file'].indexOf(el.type))) {
-    return 'change';
+    return 'change'
   }
 
-  return 'input';
+  return 'input'
+};
+
+
+
+var makeEventsArray = function (events) {
+  return (typeof events === 'string' && events.length) ? events.split('|') : []
+};
+
+var makeDelayObject = function (events, delay, delayConfig) {
+  if (typeof delay === 'number') {
+    return events.reduce(function (prev, e) {
+      prev[e] = delay;
+      return prev
+    }, {})
+  }
+
+  return events.reduce(function (prev, e) {
+    if (typeof delay === 'object' && e in delay) {
+      prev[e] = delay[e];
+      return prev
+    }
+
+    if (typeof delayConfig === 'number') {
+      prev[e] = delayConfig;
+      return prev
+    }
+
+    prev[e] = (delayConfig && delayConfig[e]) || 0;
+
+    return prev
+  }, {})
+};
+
+
+
+var merge$1 = function (target, source) {
+  if (! (isObject(target) && isObject(source))) {
+    return target
+  }
+
+  Object.keys(source).forEach(function (key) {
+    var obj, obj$1;
+
+    if (isObject(source[key])) {
+      if (! target[key]) {
+        assign(target, ( obj = {}, obj[key] = {}, obj));
+      }
+
+      merge$1(target[key], source[key]);
+      return
+    }
+
+    assign(target, ( obj$1 = {}, obj$1[key] = source[key], obj$1));
+  });
+
+  return target
 };
 
 /**
- * @param {Array|String} value 
+ * @param {Array|String} value
  * @param {Number} length
- * @param {Number} max 
+ * @param {Number} max
  */
 var compare = function (value, length, max) {
   if (max === undefined) {
-    return value.length === length;
+    return value.length === length
   }
 
   // cast to number.
   max = Number(max);
 
-  return value.length >= length && value.length <= max;
+  return value.length >= length && value.length <= max
 };
 
-var length = function (value, ref) {
+function length (value, ref) {
   var length = ref[0];
   var max = ref[1]; if ( max === void 0 ) max = undefined;
 
   length = Number(length);
   if (value === undefined || value === null) {
-    return false;
+    return false
   }
 
   if (typeof value === 'number') {
@@ -3751,130 +3794,128 @@ var length = function (value, ref) {
     value = toArray(value);
   }
 
-  return compare(value, length, max);
-};
+  return compare(value, length, max)
+}
 
-var integer = function (value) {
+function integer (value) {
   if (Array.isArray(value)) {
-    return value.every(function (val) { return /^-?[0-9]+$/.test(String(val)); });
+    return value.every(function (val) { return /^-?[0-9]+$/.test(String(val)); })
   }
 
-  return /^-?[0-9]+$/.test(String(value));
-};
+  return /^-?[0-9]+$/.test(String(value))
+}
 
-var max$1 = function (value, ref) {
+function max$1 (value, ref) {
   var length = ref[0];
 
   if (value === undefined || value === null) {
-    return length >= 0;
+    return length >= 0
   }
 
-  return String(value).length <= length;
-};
+  return String(value).length <= length
+}
 
-var max_value = function (value, ref) {
+function max_value (value, ref) {
   var max = ref[0];
 
   if (Array.isArray(value) || value === null || value === undefined || value === '') {
-    return false;
+    return false
   }
 
-  return Number(value) <= max;
-};
+  return Number(value) <= max
+}
 
-var mimes = function (files, mimes) {
+function mimes (files, mimes) {
   var regex = new RegExp(((mimes.join('|').replace('*', '.+')) + "$"), 'i');
 
-  return files.every(function (file) { return regex.test(file.type); });
-};
+  return files.every(function (file) { return regex.test(file.type); })
+}
 
-var min$1 = function (value, ref) {
+function min$1 (value, ref) {
   var length = ref[0];
 
   if (value === undefined || value === null) {
-    return false;
+    return false
   }
-  return String(value).length >= length;
-};
+  return String(value).length >= length
+}
 
-var min_value = function (value, ref) {
+function min_value (value, ref) {
   var min = ref[0];
 
   if (Array.isArray(value) || value === null || value === undefined || value === '') {
-    return false;
+    return false
   }
 
-  return Number(value) >= min;
-};
+  return Number(value) >= min
+}
 
 var validate$9 = function (value, options) {
   if (Array.isArray(value)) {
-    return value.every(function (val) { return validate$9(val, options); });
+    return value.every(function (val) { return validate$9(val, options); })
   }
 
   // eslint-disable-next-line
   return ! options.filter(function (option) { return option == value; }).length;
 };
 
-var numeric = function (value) {
+function numeric (value) {
   if (Array.isArray(value)) {
-    return value.every(function (val) { return /^[0-9]+$/.test(String(val)); });
+    return value.every(function (val) { return /^[0-9]+$/.test(String(val)); })
   }
 
-  return /^[0-9]+$/.test(String(value));
-};
+  return /^[0-9]+$/.test(String(value))
+}
 
-var regex = function (value, ref) {
+function regex (value, ref) {
   var regex = ref[0];
   var flags = ref.slice(1);
 
   if (regex instanceof RegExp) {
-    return regex.test(value);
+    return regex.test(value)
   }
 
-  return new RegExp(regex, flags).test(String(value));
-};
+  return new RegExp(regex, flags).test(String(value))
+}
 
-var required = function (value, params) {
+function required (value, params) {
   if ( params === void 0 ) params = [false];
 
   if (Array.isArray(value)) {
-    return !! value.length;
+    return !! value.length
   }
 
   // incase a field considers `false` as an empty value like checkboxes.
   var invalidateFalse = params[0];
   if (value === false && invalidateFalse) {
-    return false;
+    return false
   }
 
   if (value === undefined || value === null) {
-    return false;
+    return false
   }
 
-  return !! String(value).trim().length;
-};
+  return !! String(value).trim().length
+}
 
-var size = function (files, ref) {
+function size (files, ref) {
   var size = ref[0];
 
   if (isNaN(size)) {
-    return false;
+    return false
   }
 
   var nSize = Number(size) * 1024;
   for (var i = 0; i < files.length; i++) {
     if (files[i].size > nSize) {
-      return false;
+      return false
     }
   }
 
-  return true;
-};
+  return true
+}
 
 var isURL_1 = createCommonjsModule(function (module, exports) {
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -3886,7 +3927,7 @@ var _assertString2 = _interopRequireDefault(assertString_1);
 
 
 
-var _isFQDN2 = _interopRequireDefault(isFQDN);
+var _isFQDN2 = _interopRequireDefault(isFQDN_1);
 
 
 
@@ -4024,17 +4065,17 @@ module.exports = exports['default'];
 
 var isURL = unwrapExports(isURL_1);
 
-var url = function (value, ref) {
+function url (value, ref) {
   if ( ref === void 0 ) ref = [true];
   var requireProtocol = ref[0];
 
   var options = { require_protocol: !!requireProtocol, allow_underscores: true };
   if (Array.isArray(value)) {
-    return value.every(function (val) { return isURL(val, options); });
+    return value.every(function (val) { return isURL(val, options); })
   }
 
-  return isURL(value, options);
-};
+  return isURL(value, options)
+}
 
 /* eslint-disable camelcase */
 var Rules = {
@@ -4069,8 +4110,8 @@ var Rules = {
   regex: regex,
   required: required,
   size: size,
-  url: url
-};
+  url: url,
+}
 
 /**
  * Formates file size.
@@ -4082,16 +4123,17 @@ var formatFileSize = function (size) {
   var threshold = 1024;
   size = Number(size) * threshold;
   var i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(threshold));
-  return (((size / Math.pow(threshold, i)).toFixed(2) * 1) + " " + (units[i]));
+  return (((size / Math.pow(threshold, i)).toFixed(2) * 1) + " " + (units[i]))
 };
 
 /**
  * Checks if ree-validate is defined globally.
  */
 var isDefinedGlobally = function () {
-  return typeof ReeValidate !== 'undefined';
+  return typeof ReeValidate !== 'undefined'
 };
 
+var obj;
 var messages = {
   _default: function (field) { return ("The " + field + " value is not valid."); },
   after: function (field, ref) {
@@ -4130,8 +4172,8 @@ var messages = {
     return ("The " + field + " must be in the format " + format + ".");
 },
   decimal: function (field, ref) {
-    if ( ref === void 0 ) ref = ['*'];
-    var decimals = ref[0];
+    if ( ref === void 0 ) ref = [];
+    var decimals = ref[0]; if ( decimals === void 0 ) decimals = '*';
 
     return ("The " + field + " field must be numeric and may contain " + (!decimals || decimals === '*' ? '' : decimals) + " decimal points.");
 },
@@ -4157,10 +4199,10 @@ var messages = {
     var max = ref[1];
 
     if (max) {
-      return ("The " + field + " length be between " + length + " and " + max + ".");
+      return ("The " + field + " length be between " + length + " and " + max + ".")
     }
 
-    return ("The " + field + " length must be " + length + ".");
+    return ("The " + field + " length must be " + length + ".")
   },
   max: function (field, ref) {
     var length = ref[0];
@@ -4192,18 +4234,18 @@ var messages = {
 
     return ("The " + field + " size must be less than " + (formatFileSize(size)) + ".");
 },
-  url: function (field) { return ("The " + field + " field is not a valid URL."); }
+  url: function (field) { return ("The " + field + " field is not a valid URL."); },
 };
 
 var locale$1 = {
   name: 'en',
   messages: messages,
-  attributes: {}
+  attributes: {},
 };
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.addLocale(locale$1);
+  ReeValidate.Validator.localize(( obj = {}, obj[locale$1.name] = locale$1, obj));
 }
 
 // 
@@ -4222,7 +4264,8 @@ ErrorBag.prototype.add = function add (error) {
       field: arguments[0],
       msg: arguments[1],
       rule: arguments[2],
-      scope: !isNullOrUndefined(arguments[3]) ? arguments[3] : null
+      scope: !isNullOrUndefined(arguments[3]) ? arguments[3] : null,
+      regenerate: null,
     };
   }
 
@@ -4231,12 +4274,21 @@ ErrorBag.prototype.add = function add (error) {
 };
 
 /**
+ * Regenrates error messages if they have a generator function.
+ */
+ErrorBag.prototype.regenerate = function regenerate () {
+  this.items.forEach(function (i) {
+    i.msg = isCallable(i.regenerate) ? i.regenerate() : i.msg;
+  });
+};
+
+/**
  * Updates a field error with the new field scope.
  */
 ErrorBag.prototype.update = function update (id, error) {
   var item = find(this.items, function (i) { return i.id === id; });
   if (!item) {
-    return;
+    return
   }
 
   var idx = this.items.indexOf(item);
@@ -4250,10 +4302,10 @@ ErrorBag.prototype.update = function update (id, error) {
  */
 ErrorBag.prototype.all = function all (scope) {
   if (isNullOrUndefined(scope)) {
-    return this.items.map(function (e) { return e.msg; });
+    return this.items.map(function (e) { return e.msg; })
   }
 
-  return this.items.filter(function (e) { return e.scope === scope; }).map(function (e) { return e.msg; });
+  return this.items.filter(function (e) { return e.scope === scope; }).map(function (e) { return e.msg; })
 };
 
 /**
@@ -4261,10 +4313,10 @@ ErrorBag.prototype.all = function all (scope) {
  */
 ErrorBag.prototype.any = function any (scope) {
   if (isNullOrUndefined(scope)) {
-    return !!this.items.length;
+    return !!this.items.length
   }
 
-  return !!this.items.filter(function (e) { return e.scope === scope; }).length;
+  return !!this.items.filter(function (e) { return e.scope === scope; }).length
 };
 
 /**
@@ -4301,23 +4353,23 @@ ErrorBag.prototype.collect = function collect (field, scope, map) {
       collection[e.field].push(map ? e.msg : e);
     });
 
-    return collection;
+    return collection
   }
 
   field = !isNullOrUndefined(field) ? String(field) : field;
   if (isNullOrUndefined(scope)) {
-    return this.items.filter(function (e) { return e.field === field; }).map(function (e) { return (map ? e.msg : e); });
+    return this.items.filter(function (e) { return e.field === field; }).map(function (e) { return (map ? e.msg : e); })
   }
 
   return this.items.filter(function (e) { return e.field === field && e.scope === scope; })
-    .map(function (e) { return (map ? e.msg : e); });
+    .map(function (e) { return (map ? e.msg : e); })
 };
 
 /**
  * Gets the internal array length.
  */
 ErrorBag.prototype.count = function count () {
-  return this.items.length;
+  return this.items.length
 };
 
 /**
@@ -4326,7 +4378,7 @@ ErrorBag.prototype.count = function count () {
 ErrorBag.prototype.firstById = function firstById (id) {
   var error = find(this.items, function (i) { return i.id === id; });
 
-  return error ? error.msg : null;
+  return error ? error.msg : null
 };
 
 /**
@@ -4345,21 +4397,21 @@ ErrorBag.prototype.first = function first (field, scope) {
     // if such result exist, return it. otherwise it could be a field.
     // with dot in its name.
     if (result) {
-      return result;
+      return result
     }
   }
 
   if (selector) {
-    return this.firstByRule(selector.name, selector.rule, scope);
+    return this.firstByRule(selector.name, selector.rule, scope)
   }
 
   for (var i = 0; i < this.items.length; ++i) {
     if (this$1.items[i].field === field && (this$1.items[i].scope === scope)) {
-      return this$1.items[i].msg;
+      return this$1.items[i].msg
     }
   }
 
-  return null;
+  return null
 };
 
 /**
@@ -4368,7 +4420,7 @@ ErrorBag.prototype.first = function first (field, scope) {
 ErrorBag.prototype.firstRule = function firstRule (field, scope) {
   var errors = this.collect(field, scope, false);
 
-  return (errors.length && errors[0].rule) || null;
+  return (errors.length && errors[0].rule) || null
 };
 
 /**
@@ -4377,7 +4429,7 @@ ErrorBag.prototype.firstRule = function firstRule (field, scope) {
 ErrorBag.prototype.has = function has (field, scope) {
     if ( scope === void 0 ) scope = null;
 
-  return !!this.first(field, scope);
+  return !!this.first(field, scope)
 };
 
 /**
@@ -4388,7 +4440,7 @@ ErrorBag.prototype.firstByRule = function firstByRule (name, rule, scope) {
 
   var error = this.collect(name, scope, false).filter(function (e) { return e.rule === rule; })[0];
 
-  return (error && error.msg) || null;
+  return (error && error.msg) || null
 };
 
 /**
@@ -4400,7 +4452,7 @@ ErrorBag.prototype.firstNot = function firstNot (name, rule, scope) {
 
   var error = this.collect(name, scope, false).filter(function (e) { return e.rule !== rule; })[0];
 
-  return (error && error.msg) || null;
+  return (error && error.msg) || null
 };
 
 /**
@@ -4426,14 +4478,14 @@ ErrorBag.prototype.remove = function remove (field, scope, id) {
   field = !isNullOrUndefined(field) ? String(field) : field;
   var removeCondition = function (e) {
     if (e.id && id) {
-      return e.id === id;
+      return e.id === id
     }
 
     if (!isNullOrUndefined(scope)) {
-      return e.field === field && e.scope === scope;
+      return e.field === field && e.scope === scope
     }
 
-    return e.field === field && e.scope === null;
+    return e.field === field && e.scope === null
   };
 
   for (var i = 0; i < this.items.length; ++i) {
@@ -4453,10 +4505,10 @@ ErrorBag.prototype._selector = function _selector (field) {
       var name = ref[0];
       var rule = ref[1];
 
-    return {name: name, rule: rule};
+    return { name: name, rule: rule }
   }
 
-  return null;
+  return null
 };
 
 /**
@@ -4468,148 +4520,10 @@ ErrorBag.prototype._scope = function _scope (field) {
       var scope = ref[0];
       var name = ref.slice(1);
 
-    return {name: name.join('.'), scope: scope};
+    return { name: name.join('.'), scope: scope }
   }
 
-  return null;
-};
-
-// 
-
-var Dictionary = function Dictionary (dictionary) {
-  if ( dictionary === void 0 ) dictionary = {};
-
-  this.container = {};
-  this.merge(dictionary);
-};
-
-Dictionary.prototype.hasLocale = function hasLocale (locale) {
-  return !!this.container[locale];
-};
-
-Dictionary.prototype.setDateFormat = function setDateFormat (locale, format) {
-  if (!this.container[locale]) {
-    this.container[locale] = {};
-  }
-
-  this.container[locale].dateFormat = format;
-};
-
-Dictionary.prototype.getDateFormat = function getDateFormat (locale) {
-  if (!this.container[locale]) {
-    return undefined;
-  }
-
-  return this.container[locale].dateFormat;
-};
-
-Dictionary.prototype.getMessage = function getMessage (locale, key, fallback) {
-  if (!this.hasMessage(locale, key)) {
-    return fallback || this._getDefaultMessage(locale);
-  }
-
-  return this.container[locale].messages[key];
-};
-
-/**
- * Gets a specific message for field. falls back to the rule message.
- */
-Dictionary.prototype.getFieldMessage = function getFieldMessage (locale, field, key) {
-  if (!this.hasLocale(locale)) {
-    return this.getMessage(locale, key);
-  }
-
-  var dict = this.container[locale].custom && this.container[locale].custom[field];
-  if (!dict || !dict[key]) {
-    return this.getMessage(locale, key);
-  }
-
-  return dict[key];
-};
-
-Dictionary.prototype._getDefaultMessage = function _getDefaultMessage (locale) {
-  if (this.hasMessage(locale, '_default')) {
-    return this.container[locale].messages._default;
-  }
-
-  return this.container.en.messages._default;
-};
-
-Dictionary.prototype.getAttribute = function getAttribute (locale, key, fallback) {
-    if ( fallback === void 0 ) fallback = '';
-
-  if (!this.hasAttribute(locale, key)) {
-    return fallback;
-  }
-
-  return this.container[locale].attributes[key];
-};
-
-Dictionary.prototype.hasMessage = function hasMessage (locale, key) {
-  return !! (
-    this.hasLocale(locale) &&
-    this.container[locale].messages &&
-    this.container[locale].messages[key]
-  );
-};
-
-Dictionary.prototype.hasAttribute = function hasAttribute (locale, key) {
-  return !! (
-    this.hasLocale(locale) &&
-    this.container[locale].attributes &&
-    this.container[locale].attributes[key]
-  );
-};
-
-Dictionary.prototype.merge = function merge (dictionary) {
-  this._merge(this.container, dictionary);
-};
-
-Dictionary.prototype.setMessage = function setMessage (locale, key, message) {
-  if (! this.hasLocale(locale)) {
-    this.container[locale] = {
-      messages: {},
-      attributes: {}
-    };
-  }
-
-  this.container[locale].messages[key] = message;
-};
-
-Dictionary.prototype.setAttribute = function setAttribute (locale, key, attribute) {
-  if (! this.hasLocale(locale)) {
-    this.container[locale] = {
-      messages: {},
-      attributes: {}
-    };
-  }
-
-  this.container[locale].attributes[key] = attribute;
-};
-
-Dictionary.prototype._merge = function _merge (target, source) {
-    var this$1 = this;
-
-  if (! (isObject(target) && isObject(source))) {
-    return target;
-  }
-
-  Object.keys(source).forEach(function (key) {
-    if (isObject(source[key])) {
-      if (! target[key]) {
-        assign(target, ( obj = {}, obj[key] = {}, obj ));
-          var obj;
-      }
-
-      this$1._merge(target[key], source[key]);
-      return;
-    }
-
-    assign(target, ( obj$1 = {}, obj$1[key] = source[key], obj$1 ));
-      var obj$1;
-  });
-
-  return target;
+  return null
 };
 
 // 
@@ -4620,8 +4534,6 @@ var DEFAULT_OPTIONS = {
   scope: null,
   listen: true,
   name: null,
-  active: true,
-  required: false,
   rules: {},
   vm: null,
   classes: false,
@@ -4635,8 +4547,8 @@ var DEFAULT_OPTIONS = {
     valid: 'valid', // model is valid
     invalid: 'invalid', // model is invalid
     pristine: 'pristine', // control has not been interacted with
-    dirty: 'dirty' // control has been interacted with
-  }
+    dirty: 'dirty', // control has been interacted with
+  },
 };
 
 var Field = function Field (el, options) {
@@ -4648,11 +4560,12 @@ var Field = function Field (el, options) {
   this.dependencies = [];
   this.watchers = [];
   this.events = [];
+  this.delay = 0;
   this.rules = {};
-  if (!this.isHeadless && !options.targetOf) {
-    setDataAttribute(this.el, 'id', this.id); // cache field id if it is independent and has a root element.
-  }
+  this._cacheId(options);
+  this.classNames = assign({}, DEFAULT_OPTIONS.classNames);
   options = assign({}, DEFAULT_OPTIONS, options);
+  this._delay = !isNullOrUndefined(options.delay) ? options.delay : 0; // cache initial delay
   this.validity = options.validity;
   this.aria = options.aria;
   this.flags = createFlags();
@@ -4663,67 +4576,74 @@ var Field = function Field (el, options) {
   this.updated = false;
 };
 
-var prototypeAccessors$1 = { isVue: { configurable: true },validator: { configurable: true },isRequired: { configurable: true },isDisabled: { configurable: true },isHeadless: { configurable: true },displayName: { configurable: true },value: { configurable: true },rejectsFalse: { configurable: true } };
+var prototypeAccessors = { validator: { configurable: true },isRequired: { configurable: true },isDisabled: { configurable: true },alias: { configurable: true },value: { configurable: true },rejectsFalse: { configurable: true } };
 
-prototypeAccessors$1.isVue.get = function () {
-  return !!this.component;
-};
-
-prototypeAccessors$1.validator.get = function () {
+prototypeAccessors.validator.get = function () {
   if (!this.vm || !this.vm.$validator) {
     warn('No validator instance detected.');
-    return { validate: function () {} };
+    return {
+      validate: function () {
+      },
+    }
   }
 
-  return this.vm.$validator;
+  return this.vm.$validator
 };
 
-prototypeAccessors$1.isRequired.get = function () {
-  return !!this.rules.required;
+prototypeAccessors.isRequired.get = function () {
+  return !!this.rules.required
 };
 
-prototypeAccessors$1.isDisabled.get = function () {
-  return !!(this.component && this.component.disabled) || !!(this.el && this.el.disabled);
-};
-
-prototypeAccessors$1.isHeadless.get = function () {
-  return !this.el;
+prototypeAccessors.isDisabled.get = function () {
+  return !!(this.component && this.component.disabled) || !!(this.el && this.el.disabled)
 };
 
 /**
  * Gets the display name (user-friendly name).
  */
+prototypeAccessors.alias.get = function () {
+  if (this._alias) {
+    return this._alias
+  }
 
-prototypeAccessors$1.displayName.get = function () {
-  return isCallable(this.alias) ? this.alias() : this.alias;
+  var alias = null;
+  if (this.el) {
+    alias = getDataAttribute(this.el, 'as');
+  }
+
+  if (!alias && this.component) {
+    return this.component.$attrs && this.component.$attrs['data-vv-as']
+  }
+
+  return alias
 };
 
 /**
  * Gets the input value.
  */
 
-prototypeAccessors$1.value.get = function () {
+prototypeAccessors.value.get = function () {
   if (!isCallable(this.getter)) {
-    return undefined;
+    return undefined
   }
 
-  return this.getter();
+  return this.getter()
 };
 
 /**
  * If the field rejects false as a valid value for the required rule.
  */
 
-prototypeAccessors$1.rejectsFalse.get = function () {
-  if (this.isVue && this.ctorConfig) {
-    return !!this.ctorConfig.rejectsFalse;
+prototypeAccessors.rejectsFalse.get = function () {
+  if (this.component && this.ctorConfig) {
+    return !!this.ctorConfig.rejectsFalse
   }
 
-  if (this.isHeadless) {
-    return false;
+  if (!this.el) {
+    return false
   }
 
-  return this.el.type === 'checkbox';
+  return this.el.type === 'checkbox'
 };
 
 /**
@@ -4731,22 +4651,31 @@ prototypeAccessors$1.rejectsFalse.get = function () {
  */
 Field.prototype.matches = function matches (options) {
   if (options.id) {
-    return this.id === options.id;
+    return this.id === options.id
   }
 
   if (options.name === undefined && options.scope === undefined) {
-    return true;
+    return true
   }
 
   if (options.scope === undefined) {
-    return this.name === options.name;
+    return this.name === options.name
   }
 
   if (options.name === undefined) {
-    return this.scope === options.scope;
+    return this.scope === options.scope
   }
 
-  return options.name === this.name && options.scope === this.scope;
+  return options.name === this.name && options.scope === this.scope
+};
+
+/**
+ * Caches the field id.
+ */
+Field.prototype._cacheId = function _cacheId (options) {
+  if (this.el && !options.targetOf) {
+    setDataAttribute(this.el, 'id', this.id); // cache field id if it is independent and has a root element.
+  }
 };
 
 /**
@@ -4757,7 +4686,7 @@ Field.prototype.update = function update (options) {
   this.initial = options.initial || this.initial || false;
 
   // update errors scope if the field scope was changed.
-  if (this.updated && !isNullOrUndefined(options.scope) && options.scope !== this.scope && isCallable(this.validator.update)) {
+  if (!isNullOrUndefined(options.scope) && options.scope !== this.scope && isCallable(this.validator.update)) {
     this.validator.update(this.id, { scope: options.scope });
   }
   this.scope = !isNullOrUndefined(options.scope) ? options.scope
@@ -4766,12 +4695,13 @@ Field.prototype.update = function update (options) {
   this.rules = options.rules !== undefined ? normalizeRules(options.rules) : this.rules;
   this.model = options.model || this.model;
   this.listen = options.listen !== undefined ? options.listen : this.listen;
-  this.classes = options.classes || this.classes || false;
-  this.classNames = options.classNames || this.classNames || DEFAULT_OPTIONS.classNames;
-  this.alias = options.alias || this.alias;
+  this.classes = (options.classes || this.classes || false) && !this.component;
+  this.classNames = isObject(options.classNames) ? merge$1(this.classNames, options.classNames) : this.classNames;
   this.getter = isCallable(options.getter) ? options.getter : this.getter;
-  this.delay = options.delay || this.delay || 0;
-  this.events = typeof options.events === 'string' && options.events.length ? options.events.split('|') : this.events;
+  this._alias = options.alias || this._alias;
+  this.events = (options.events) ? makeEventsArray(options.events) : this.events;
+  this.delay = (options.delay) ? makeDelayObject(this.events, options.delay, this._delay) : makeDelayObject(this.events, this.delay, this._delay);
+  this.updateDependencies();
   this.addActionListeners();
 
   // update required flag flags
@@ -4785,14 +4715,14 @@ Field.prototype.update = function update (options) {
   }
 
   this.updated = true;
+  this.addValueListeners();
 
   // no need to continue.
-  if (this.isHeadless) {
-    return;
+  if (!this.el) {
+    return
   }
 
   this.updateClasses();
-  this.addValueListeners();
   this.updateAriaAttrs();
 };
 
@@ -4802,9 +4732,9 @@ Field.prototype.update = function update (options) {
 Field.prototype.reset = function reset () {
     var this$1 = this;
 
-  var def = createFlags();
-  Object.keys(this.flags).forEach(function (flag) {
-    this$1.flags[flag] = def[flag];
+  var defaults = createFlags();
+  Object.keys(this.flags).filter(function (flag) { return flag !== 'required'; }).forEach(function (flag) {
+    this$1.flags[flag] = defaults[flag];
   });
 
   this.addActionListeners();
@@ -4825,7 +4755,7 @@ Field.prototype.setFlags = function setFlags (flags) {
     valid: 'invalid',
     invalid: 'valid',
     touched: 'untouched',
-    untouched: 'touched'
+    untouched: 'touched',
   };
 
   Object.keys(flags).forEach(function (flag) {
@@ -4850,6 +4780,78 @@ Field.prototype.setFlags = function setFlags (flags) {
 };
 
 /**
+ * Determines if the field requires references to target fields.
+ */
+Field.prototype.updateDependencies = function updateDependencies () {
+    var this$1 = this;
+
+  // reset dependencies.
+  this.dependencies.forEach(function (d) { return d.field.destroy(); });
+  this.dependencies = [];
+
+  // we get the selectors for each field.
+  var fields = Object.keys(this.rules).reduce(function (prev, r) {
+    if (Validator.isTargetRule(r)) {
+      var selector = this$1.rules[r][0];
+      if (r === 'confirmed' && !selector) {
+        selector = (this$1.name) + "_confirmation";
+      }
+
+      prev.push({ selector: selector, name: r });
+    }
+
+    return prev
+  }, []);
+
+  if (!fields.length || !this.vm || !this.vm.$el) { return }
+
+  // must be contained within the same component, so we use the vm root element constrain our dom search.
+  fields.forEach(function (ref) {
+      var selector = ref.selector;
+      var name = ref.name;
+
+    var el = null;
+    // vue ref selector.
+    if (selector[0] === '$') {
+      var ref$1 = this$1.vm.$refs[selector.slice(1)];
+      el = Array.isArray(ref$1) ? ref$1[0] : ref$1;
+    } else {
+      try {
+        // try query selector
+        el = this$1.vm.$el.querySelector(selector);
+      } catch (err) {
+        el = null;
+      }
+    }
+
+    if (!el) {
+      try {
+        el = this$1.vm.$el.querySelector(("input[name=\"" + selector + "\"]"));
+      } catch (err) {
+        el = null;
+      }
+    }
+
+    if (!el) {
+      return
+    }
+
+    var options = {
+      vm: this$1.vm,
+      classes: this$1.classes,
+      classNames: this$1.classNames,
+      delay: this$1.delay,
+      scope: this$1.scope,
+      events: this$1.events.join('|'),
+      initial: this$1.initial,
+      targetOf: this$1.id,
+    };
+
+    this$1.dependencies.push({ name: name, field: new Field(options.el, options) });
+  });
+};
+
+/**
  * Removes listeners.
  */
 Field.prototype.unwatch = function unwatch (tag) {
@@ -4858,7 +4860,7 @@ Field.prototype.unwatch = function unwatch (tag) {
   if (!tag) {
     this.watchers.forEach(function (w) { return w.unwatch(); });
     this.watchers = [];
-    return;
+    return
   }
 
   this.watchers.filter(function (w) { return tag.test(w.tag); }).forEach(function (w) { return w.unwatch(); });
@@ -4869,14 +4871,20 @@ Field.prototype.unwatch = function unwatch (tag) {
  * Updates the element classes depending on each field flag status.
  */
 Field.prototype.updateClasses = function updateClasses () {
-  if (!this.classes) { return; }
+  if (!this.classes || this.isDisabled) { return }
 
   toggleClass(this.el, this.classNames.dirty, this.flags.dirty);
   toggleClass(this.el, this.classNames.pristine, this.flags.pristine);
-  toggleClass(this.el, this.classNames.valid, !!this.flags.valid);
-  toggleClass(this.el, this.classNames.invalid, !!this.flags.invalid);
   toggleClass(this.el, this.classNames.touched, this.flags.touched);
   toggleClass(this.el, this.classNames.untouched, this.flags.untouched);
+  // make sure we don't set any classes if the state is undetermined.
+  if (!isNullOrUndefined(this.flags.valid) && this.flags.validated) {
+    toggleClass(this.el, this.classNames.valid, this.flags.valid);
+  }
+
+  if (!isNullOrUndefined(this.flags.invalid) && this.flags.validated) {
+    toggleClass(this.el, this.classNames.invalid, this.flags.invalid);
+  }
 };
 
 /**
@@ -4913,25 +4921,25 @@ Field.prototype.addActionListeners = function addActionListeners () {
     this$1.unwatch(/^class_input$/);
   };
 
-  if (this.isVue && isCallable(this.component.$once)) {
+  if (this.component && isCallable(this.component.$once)) {
     this.component.$once('input', onInput);
     this.component.$once('blur', onBlur);
     this.watchers.push({
       tag: 'class_input',
       unwatch: function () {
         this$1.component.$off('input', onInput);
-      }
+      },
     });
     this.watchers.push({
       tag: 'class_blur',
       unwatch: function () {
         this$1.component.$off('blur', onBlur);
-      }
+      },
     });
-    return;
+    return
   }
 
-  if (this.isHeadless) { return; }
+  if (!this.el) { return }
 
   this.el.addEventListener(inputEvent, onInput);
   // Checkboxes and radio buttons on Mac don't emit blur naturally, so we listen on click instead.
@@ -4941,14 +4949,14 @@ Field.prototype.addActionListeners = function addActionListeners () {
     tag: 'class_input',
     unwatch: function () {
       this$1.el.removeEventListener(inputEvent, onInput);
-    }
+    },
   });
 
   this.watchers.push({
     tag: 'class_blur',
     unwatch: function () {
       this$1.el.removeEventListener(blurEvent, onBlur);
-    }
+    },
   });
 };
 
@@ -4959,7 +4967,7 @@ Field.prototype.addValueListeners = function addValueListeners () {
     var this$1 = this;
 
   this.unwatch(/^input_.+/);
-  if (!this.listen) { return; }
+  if (!this.listen) { return }
 
   var fn = this.targetOf ? function () {
     this$1.validator.validate(("#" + (this$1.targetOf)));
@@ -4974,19 +4982,25 @@ Field.prototype.addValueListeners = function addValueListeners () {
     this$1.validator.validate(("#" + (this$1.id)), args[0]);
   };
 
-  var validate = debounce(fn, this.delay);
   var inputEvent = getInputEventName(this.el);
   // replace input event with suitable one.
   var events = this.events.map(function (e) {
-    return e === 'input' ? inputEvent : e;
+    return e === 'input' ? inputEvent : e
   });
 
   // if there is a watchable model and an on input validation is requested.
   if (this.model && events.indexOf(inputEvent) !== -1) {
-    var unwatch = this.vm.$watch(this.model, validate);
+    var debouncedFn = debounce(fn, this.delay[inputEvent]);
+    var unwatch = this.vm.$watch(this.model, function () {
+        var args = [], len = arguments.length;
+        while ( len-- ) args[ len ] = arguments[ len ];
+
+      this$1.flags.pending = true;
+      debouncedFn.apply(void 0, args);
+    });
     this.watchers.push({
       tag: 'input_model',
-      unwatch: unwatch
+      unwatch: unwatch,
     });
     // filter out input event as it is already handled by the watcher API.
     events = events.filter(function (e) { return e !== inputEvent; });
@@ -4994,39 +5008,60 @@ Field.prototype.addValueListeners = function addValueListeners () {
 
   // Add events.
   events.forEach(function (e) {
-    if (this$1.isVue) {
-      this$1.component.$on(e, validate);
+    var debouncedFn = debounce(fn, this$1.delay[e]);
+    var validate = function () {
+        var args = [], len = arguments.length;
+        while ( len-- ) args[ len ] = arguments[ len ];
+
+      this$1.flags.pending = true;
+      debouncedFn.apply(void 0, args);
+    };
+
+    this$1._addComponentEventListener(e, validate);
+    this$1._addHTMLEventListener(e, validate);
+  });
+};
+
+Field.prototype._addComponentEventListener = function _addComponentEventListener (evt, validate) {
+    var this$1 = this;
+
+  if (!this.component) { return }
+
+  this.component.$on(evt, validate);
+  this.watchers.push({
+    tag: 'input_vue',
+    unwatch: function () {
+      this$1.component.$off(evt, validate);
+    },
+  });
+};
+
+Field.prototype._addHTMLEventListener = function _addHTMLEventListener (evt, validate) {
+    var this$1 = this;
+
+  if (!this.el) { return }
+
+  if (~['radio', 'checkbox'].indexOf(this.el.type)) {
+    var els = document.querySelectorAll(("input[name=\"" + (this.el.name) + "\"]"));
+    toArray(els).forEach(function (el) {
+      el.addEventListener(evt, validate);
       this$1.watchers.push({
-        tag: 'input_vue',
+        tag: 'input_native',
         unwatch: function () {
-          this$1.component.$off(e, validate);
-        }
+          el.removeEventListener(evt, validate);
+        },
       });
-      return;
-    }
-
-    if (~['radio', 'checkbox'].indexOf(this$1.el.type)) {
-      var els = document.querySelectorAll(("input[name=\"" + (this$1.el.name) + "\"]"));
-      toArray(els).forEach(function (el) {
-        el.addEventListener(e, validate);
-        this$1.watchers.push({
-          tag: 'input_native',
-          unwatch: function () {
-            el.removeEventListener(e, validate);
-          }
-        });
-      });
-
-      return;
-    }
-
-    this$1.el.addEventListener(e, validate);
-    this$1.watchers.push({
-      tag: 'input_native',
-      unwatch: function () {
-        this$1.el.removeEventListener(e, validate);
-      }
     });
+
+    return
+  }
+
+  this.el.addEventListener(evt, validate);
+  this.watchers.push({
+    tag: 'input_native',
+    unwatch: function () {
+      this$1.el.removeEventListener(evt, validate);
+    },
   });
 };
 
@@ -5034,7 +5069,7 @@ Field.prototype.addValueListeners = function addValueListeners () {
  * Updates aria attributes on the element.
  */
 Field.prototype.updateAriaAttrs = function updateAriaAttrs () {
-  if (!this.aria || this.isHeadless || !isCallable(this.el.setAttribute)) { return; }
+  if (!this.aria || !this.el || !isCallable(this.el.setAttribute)) { return }
 
   this.el.setAttribute('aria-required', this.isRequired ? 'true' : 'false');
   this.el.setAttribute('aria-invalid', this.flags.invalid ? 'true' : 'false');
@@ -5044,7 +5079,7 @@ Field.prototype.updateAriaAttrs = function updateAriaAttrs () {
  * Updates the custom validity for the field.
  */
 Field.prototype.updateCustomValidity = function updateCustomValidity () {
-  if (!this.validity || this.isHeadless || !isCallable(this.el.setCustomValidity)) { return; }
+  if (!this.validity || !this.el || !isCallable(this.el.setCustomValidity)) { return }
 
   this.el.setCustomValidity(this.flags.valid ? '' : (this.validator.errors.firstById(this.id) || ''));
 };
@@ -5053,13 +5088,12 @@ Field.prototype.updateCustomValidity = function updateCustomValidity () {
  * Removes all listeners.
  */
 Field.prototype.destroy = function destroy () {
-  this.watchers.forEach(function (w) { return w.unwatch(); });
-  this.watchers = [];
+  this.unwatch();
   this.dependencies.forEach(function (d) { return d.field.destroy(); });
   this.dependencies = [];
 };
 
-Object.defineProperties( Field.prototype, prototypeAccessors$1 );
+Object.defineProperties( Field.prototype, prototypeAccessors );
 
 // 
 
@@ -5067,21 +5101,21 @@ var FieldBag = function FieldBag () {
   this.items = [];
 };
 
-var prototypeAccessors$2 = { length: { configurable: true } };
+var prototypeAccessors$1 = { length: { configurable: true } };
 
 /**
  * Gets the current items length.
  */
 
-prototypeAccessors$2.length.get = function () {
-  return this.items.length;
+prototypeAccessors$1.length.get = function () {
+  return this.items.length
 };
 
 /**
  * Finds the first field that matches the provided matcher object.
  */
 FieldBag.prototype.find = function find$1 (matcher) {
-  return find(this.items, function (item) { return item.matches(matcher); });
+  return find(this.items, function (item) { return item.matches(matcher); })
 };
 
 /**
@@ -5090,17 +5124,17 @@ FieldBag.prototype.find = function find$1 (matcher) {
 FieldBag.prototype.filter = function filter (matcher) {
   // multiple matchers to be tried.
   if (Array.isArray(matcher)) {
-    return this.items.filter(function (item) { return matcher.some(function (m) { return item.matches(m); }); });
+    return this.items.filter(function (item) { return matcher.some(function (m) { return item.matches(m); }); })
   }
 
-  return this.items.filter(function (item) { return item.matches(matcher); });
+  return this.items.filter(function (item) { return item.matches(matcher); })
 };
 
 /**
  * Maps the field items using the mapping function.
  */
 FieldBag.prototype.map = function map (mapper) {
-  return this.items.map(mapper);
+  return this.items.map(mapper)
 };
 
 /**
@@ -5114,12 +5148,12 @@ FieldBag.prototype.remove = function remove (matcher) {
     item = this.find(matcher);
   }
 
-  if (!item) { return null; }
+  if (!item) { return null }
 
   var index = this.items.indexOf(item);
   this.items.splice(index, 1);
 
-  return item;
+  return item
 };
 
 /**
@@ -5127,41 +5161,361 @@ FieldBag.prototype.remove = function remove (matcher) {
  */
 FieldBag.prototype.push = function push (item) {
   if (! (item instanceof Field)) {
-    throw createError('FieldBag only accepts instances of Field that has an id defined.');
+    throw createError('FieldBag only accepts instances of Field that has an id defined.')
   }
 
   if (!item.id) {
-    throw createError('Field id must be defined.');
+    throw createError('Field id must be defined.')
   }
 
   if (this.find({ id: item.id })) {
-    throw createError(("Field with id " + (item.id) + " is already added."));
+    throw createError(("Field with id " + (item.id) + " is already added."))
   }
 
   this.items.push(item);
 };
 
-Object.defineProperties( FieldBag.prototype, prototypeAccessors$2 );
+Object.defineProperties( FieldBag.prototype, prototypeAccessors$1 );
+
+// 
+
+var LOCALE = 'en';
+
+var Dictionary = function Dictionary (dictionary) {
+  if ( dictionary === void 0 ) dictionary = {};
+
+  this.container = {};
+  this.merge(dictionary);
+};
+
+var prototypeAccessors$2 = { locale: { configurable: true } };
+
+prototypeAccessors$2.locale.get = function () {
+  return LOCALE
+};
+
+prototypeAccessors$2.locale.set = function (value) {
+  LOCALE = value || 'en';
+};
+
+Dictionary.prototype.hasLocale = function hasLocale (locale) {
+  return !!this.container[locale]
+};
+
+Dictionary.prototype.setDateFormat = function setDateFormat (locale, format) {
+  if (!this.container[locale]) {
+    this.container[locale] = {};
+  }
+
+  this.container[locale].dateFormat = format;
+};
+
+Dictionary.prototype.getDateFormat = function getDateFormat (locale) {
+  if (!this.container[locale] || !this.container[locale].dateFormat) {
+    return null
+  }
+
+  return this.container[locale].dateFormat
+};
+
+Dictionary.prototype.getMessage = function getMessage (locale, key, data) {
+  var message = null;
+  if (!this.hasMessage(locale, key)) {
+    message = this._getDefaultMessage(locale);
+  } else {
+    message = this.container[locale].messages[key];
+  }
+
+  return isCallable(message) ? message.apply(void 0, data) : message
+};
+
+/**
+ * Gets a specific message for field. falls back to the rule message.
+ */
+Dictionary.prototype.getFieldMessage = function getFieldMessage (locale, field, key, data) {
+  if (!this.hasLocale(locale)) {
+    return this.getMessage(locale, key, data)
+  }
+
+  var dict = this.container[locale].custom && this.container[locale].custom[field];
+  if (!dict || !dict[key]) {
+    return this.getMessage(locale, key, data)
+  }
+
+  var message = dict[key];
+  return isCallable(message) ? message.apply(void 0, data) : message
+};
+
+Dictionary.prototype._getDefaultMessage = function _getDefaultMessage (locale) {
+  if (this.hasMessage(locale, '_default')) {
+    return this.container[locale].messages._default
+  }
+
+  return this.container.en.messages._default
+};
+
+Dictionary.prototype.getAttribute = function getAttribute (locale, key, fallback) {
+    if ( fallback === void 0 ) fallback = '';
+
+  if (!this.hasAttribute(locale, key)) {
+    return fallback
+  }
+
+  return this.container[locale].attributes[key]
+};
+
+Dictionary.prototype.hasMessage = function hasMessage (locale, key) {
+  return !! (
+    this.hasLocale(locale) &&
+          this.container[locale].messages &&
+          this.container[locale].messages[key]
+  )
+};
+
+Dictionary.prototype.hasAttribute = function hasAttribute (locale, key) {
+  return !! (
+    this.hasLocale(locale) &&
+          this.container[locale].attributes &&
+          this.container[locale].attributes[key]
+  )
+};
+
+Dictionary.prototype.merge = function merge$1$$1 (dictionary) {
+  merge$1(this.container, dictionary);
+};
+
+Dictionary.prototype.setMessage = function setMessage (locale, key, message) {
+  if (! this.hasLocale(locale)) {
+    this.container[locale] = {
+      messages: {},
+      attributes: {},
+    };
+  }
+
+  this.container[locale].messages[key] = message;
+};
+
+Dictionary.prototype.setAttribute = function setAttribute (locale, key, attribute) {
+  if (! this.hasLocale(locale)) {
+    this.container[locale] = {
+      messages: {},
+      attributes: {},
+    };
+  }
+
+  this.container[locale].attributes[key] = attribute;
+};
+
+Object.defineProperties( Dictionary.prototype, prototypeAccessors$2 );
+
+// 
+
+var normalizeValue = function (value) {
+  if (isObject(value)) {
+    return Object.keys(value).reduce(function (prev, key) {
+      prev[key] = normalizeValue(value[key]);
+
+      return prev
+    }, {})
+  }
+
+  if (isCallable(value)) {
+    return value('{0}', ['{1}', '{2}', '{3}'])
+  }
+
+  return value
+};
+
+var normalizeFormat = function (locale) {
+  // normalize messages
+  var messages = normalizeValue(locale.messages);
+  var custom = normalizeValue(locale.custom);
+
+  return {
+    messages: messages,
+    custom: custom,
+    attributes: locale.attributes,
+    dateFormat: locale.dateFormat,
+  }
+};
+
+var I18nDictionary = function I18nDictionary (i18n, rootKey) {
+  this.i18n = i18n;
+  this.rootKey = rootKey;
+};
+
+var prototypeAccessors$3 = { locale: { configurable: true } };
+
+prototypeAccessors$3.locale.get = function () {
+  return this.i18n.locale
+};
+
+prototypeAccessors$3.locale.set = function (value) {
+  warn('Cannot set locale from the validator when using vue-i18n, use i18n.locale setter instead');
+};
+
+I18nDictionary.prototype.getDateFormat = function getDateFormat (locale) {
+  return this.i18n.getDateTimeFormat(locale || this.locale)
+};
+
+I18nDictionary.prototype.setDateFormat = function setDateFormat (locale, value) {
+  this.i18n.setDateTimeFormat(locale || this.locale, value);
+};
+
+I18nDictionary.prototype.getMessage = function getMessage (locale, key, data) {
+  var path = (this.rootKey) + ".messages." + key;
+  if (!this.i18n.te(path)) {
+    return this.i18n.t(((this.rootKey) + ".messages._default"), locale, data)
+  }
+
+  return this.i18n.t(path, locale, data)
+};
+
+I18nDictionary.prototype.getAttribute = function getAttribute (locale, key, fallback) {
+    if ( fallback === void 0 ) fallback = '';
+
+  var path = (this.rootKey) + ".attributes." + key;
+  if (!this.i18n.te(path)) {
+    return fallback
+  }
+
+  return this.i18n.t(path, locale)
+};
+
+I18nDictionary.prototype.getFieldMessage = function getFieldMessage (locale, field, key, data) {
+  var path = (this.rootKey) + ".custom." + field + "." + key;
+  if (this.i18n.te(path)) {
+    return this.i18n.t(path)
+  }
+
+  return this.getMessage(locale, key, data)
+};
+
+I18nDictionary.prototype.merge = function merge$1$$1 (dictionary) {
+    var this$1 = this;
+
+  Object.keys(dictionary).forEach(function (localeKey) {
+      var obj;
+
+    // i18n doesn't deep merge
+    // first clone the existing locale (avoid mutations to locale)
+    var clone = merge$1({}, getPath((localeKey + "." + (this$1.rootKey)), this$1.i18n.messages, {}));
+    // Merge cloned locale with new one
+    var locale = merge$1(clone, normalizeFormat(dictionary[localeKey]));
+    this$1.i18n.mergeLocaleMessage(localeKey, ( obj = {}, obj[this$1.rootKey] = locale, obj));
+    if (locale.dateFormat) {
+      this$1.i18n.setDateTimeFormat(localeKey, locale.dateFormat);
+    }
+  });
+};
+
+I18nDictionary.prototype.setMessage = function setMessage (locale, key, value) {
+    var obj, obj$1;
+
+  this.merge(( obj$1 = {}, obj$1[locale] = {
+      messages: ( obj = {}, obj[key] = value, obj),
+    }, obj$1));
+};
+
+I18nDictionary.prototype.setAttribute = function setAttribute (locale, key, value) {
+    var obj, obj$1;
+
+  this.merge(( obj$1 = {}, obj$1[locale] = {
+      attributes: ( obj = {}, obj[key] = value, obj),
+    }, obj$1));
+};
+
+Object.defineProperties( I18nDictionary.prototype, prototypeAccessors$3 );
+
+// 
+
+var defaultConfig = {
+  locale: 'en',
+  delay: 0,
+  errorBagName: 'errors',
+  dictionary: null,
+  strict: true,
+  fieldsBagName: 'fields',
+  classes: false,
+  classNames: null,
+  events: 'input|blur',
+  inject: true,
+  fastExit: true,
+  aria: true,
+  validity: false,
+  i18n: null,
+  i18nRootKey: 'validation',
+};
+
+var currentConfig = assign({}, defaultConfig);
+var dependencies = {
+  dictionary: new Dictionary({
+    en: {
+      messages: {},
+      attributes: {},
+      custom: {},
+    },
+  }),
+};
+
+var Config = function Config () {};
+
+var staticAccessors = { default: { configurable: true },current: { configurable: true } };
+
+staticAccessors.default.get = function () {
+  return defaultConfig
+};
+
+staticAccessors.current.get = function () {
+  return currentConfig
+};
+
+Config.dependency = function dependency (key) {
+  return dependencies[key]
+};
+
+/**
+ * Merges the config with a new one.
+ */
+Config.merge = function merge (config) {
+  currentConfig = assign({}, currentConfig, config);
+  if (currentConfig.i18n) {
+    Config.register('dictionary', new I18nDictionary(currentConfig.i18n, currentConfig.i18nRootKey));
+  }
+};
+
+/**
+ * Registers a dependency.
+ */
+Config.register = function register (key, value) {
+  dependencies[key] = value;
+};
+
+/**
+ * Resolves the working config from a Vue instance.
+ */
+Config.resolve = function resolve (context) {
+  var selfConfig = getPath('$options.$_reeValidate', context, {});
+
+  return assign({}, Config.current, selfConfig)
+};
+
+Object.defineProperties( Config, staticAccessors );
 
 // 
 
 var RULES = {};
-var LOCALE = 'en';
 var STRICT_MODE = true;
-var DICTIONARY = new Dictionary({
-  en: {
-    messages: {},
-    attributes: {},
-    custom: {}
-  }
-});
+var TARGET_RULES = ['confirmed', 'after', 'before'];
+var ERRORS = []; // HOLD errors references to trigger regeneration.
 
-var Validator = function Validator (validations, options) {
+var Validator = function Validator(validations, options) {
   var this$1 = this;
   if ( options === void 0 ) options = { vm: null, fastExit: true };
 
   this.strict = STRICT_MODE;
   this.errors = new ErrorBag();
+  ERRORS.push(this.errors);
   this.fields = new FieldBag();
   this.flags = {};
   this._createFields(validations);
@@ -5169,100 +5523,105 @@ var Validator = function Validator (validations, options) {
   this.fastExit = options.fastExit || false;
   this.ownerId = options.vm && options.vm._uid;
   // create it statically since we don't need constant access to the vm.
-  this.reset = options.vm && isCallable(options.vm.$nextTick) ? function () {
-    options.vm.$nextTick(function () {
-      this$1.fields.items.forEach(function (i) { return i.reset(); });
-      this$1.errors.clear();
-    });
-  } : function () {
-    this$1.fields.items.forEach(function (i) { return i.reset(); });
-    this$1.errors.clear();
-  };
-  /* istanbul ignore next */
-  this.clean = function () {
-    warn('validator.clean is marked for deprecation, please use validator.reset instead.');
-    this$1.reset();
-  };
+  this.reset = options.vm && isCallable(options.vm.$nextTick) ? function (matcher) {
+    return new Promise(function (resolve) {
+      options.vm.$nextTick(function () {
+        options.vm.$nextTick(function () {
+          resolve(this$1._reset(matcher));
+        });
+      });
+    })
+  } : this._reset;
 };
 
-var prototypeAccessors = { dictionary: { configurable: true },locale: { configurable: true },rules: { configurable: true } };
-var staticAccessors = { dictionary: { configurable: true },locale: { configurable: true },rules: { configurable: true } };
+var prototypeAccessors$4 = { dictionary: { configurable: true },locale: { configurable: true },rules: { configurable: true } };
+var staticAccessors$1 = { dictionary: { configurable: true },locale: { configurable: true },rules: { configurable: true } };
 
 /**
  * Getter for the dictionary.
  */
-prototypeAccessors.dictionary.get = function () {
-  return DICTIONARY;
+prototypeAccessors$4.dictionary.get = function () {
+  return Config.dependency('dictionary')
 };
 
 /**
  * Static Getter for the dictionary.
  */
-staticAccessors.dictionary.get = function () {
-  return DICTIONARY;
+staticAccessors$1.dictionary.get = function () {
+  return Config.dependency('dictionary')
 };
 
 /**
  * Getter for the current locale.
  */
-prototypeAccessors.locale.get = function () {
-  return LOCALE;
+prototypeAccessors$4.locale.get = function () {
+  return this.dictionary.locale
 };
 
 /**
  * Setter for the validator locale.
  */
-prototypeAccessors.locale.set = function (value) {
+prototypeAccessors$4.locale.set = function (value) {
   Validator.locale = value;
 };
 
 /**
  * Static getter for the validator locale.
  */
-staticAccessors.locale.get = function () {
-  return LOCALE;
+staticAccessors$1.locale.get = function () {
+  return Validator.dictionary.locale
 };
 
 /**
  * Static setter for the validator locale.
  */
-staticAccessors.locale.set = function (value) {
-  /* istanbul ignore if */
-  if (!DICTIONARY.hasLocale(value)) {
-    // eslint-disable-next-line
-    warn('You are setting the validator locale to a locale that is not defined in the dictionary. English messages may still be generated.');
+staticAccessors$1.locale.set = function (value) {
+  var hasChanged = value !== Validator.dictionary.locale;
+  Validator.dictionary.locale = value;
+  if (hasChanged) {
+    Validator.regenerate();
   }
-
-  LOCALE = value;
 };
 
 /**
  * Getter for the rules object.
  */
-prototypeAccessors.rules.get = function () {
-  return RULES;
+prototypeAccessors$4.rules.get = function () {
+  return RULES
 };
 
 /**
  * Static Getter for the rules object.
  */
-staticAccessors.rules.get = function () {
-  return RULES;
+staticAccessors$1.rules.get = function () {
+  return RULES
 };
 
 /**
  * Static constructor.
  */
 Validator.create = function create (validations, options) {
-  return new Validator(validations, options);
+  return new Validator(validations, options)
 };
 
 /**
  * Adds a custom validator to the list of validation rules.
  */
-Validator.extend = function extend (name, validator) {
+Validator.extend = function extend (name, validator, options) {
+    if ( options === void 0 ) options = {};
+
   Validator._guardExtend(name, validator);
   Validator._merge(name, validator);
+  if (options && options.hasTarget) {
+    TARGET_RULES.push(name);
+  }
+};
+
+/**
+ * Regenerates error messages across all validators.
+ */
+Validator.regenerate = function regenerate () {
+  ERRORS.forEach(function (errorBag) { return errorBag.regenerate(); });
 };
 
 /**
@@ -5270,32 +5629,17 @@ Validator.extend = function extend (name, validator) {
  */
 Validator.remove = function remove (name) {
   delete RULES[name];
+  var idx = TARGET_RULES.indexOf(name);
+  if (idx === -1) { return }
+
+  TARGET_RULES.splice(idx, 1);
 };
 
 /**
- * Sets the default locale for all validators.
- * @deprecated
+ * Checks if the given rule name is a rule that targets other fields.
  */
-Validator.setLocale = function setLocale (language) {
-    if ( language === void 0 ) language = 'en';
-
-  Validator.locale = language;
-};
-
-/**
- * @deprecated
- */
-Validator.installDateTimeValidators = function installDateTimeValidators () {
-  /* istanbul ignore next */
-  warn('Date validations are now installed by default, you no longer need to install it.');
-};
-
-/**
- * @deprecated
- */
-Validator.prototype.installDateTimeValidators = function installDateTimeValidators () {
-  /* istanbul ignore next */
-  warn('Date validations are now installed by default, you no longer need to install it.');
+Validator.isTargetRule = function isTargetRule (name) {
+  return TARGET_RULES.indexOf(name) !== -1
 };
 
 /**
@@ -5310,37 +5654,6 @@ Validator.setStrictMode = function setStrictMode (strictMode) {
 };
 
 /**
- * Updates the dictionary, overwriting existing values and adding new ones.
- * @deprecated
- */
-Validator.updateDictionary = function updateDictionary (data) {
-  DICTIONARY.merge(data);
-};
-
-/**
- * Adds a locale object to the dictionary.
- * @deprecated
- */
-Validator.addLocale = function addLocale (locale) {
-  if (! locale.name) {
-    warn('Your locale must have a name property');
-    return;
-  }
-
-  this.updateDictionary(( obj = {}, obj[locale.name] = locale, obj ));
-    var obj;
-};
-
-/**
- * Adds a locale object to the dictionary.
- * @deprecated
- * @param {Object} locale
- */
-Validator.prototype.addLocale = function addLocale (locale) {
-  Validator.addLocale(locale);
-};
-
-/**
  * Adds and sets the current locale for the validator.
  */
 Validator.prototype.localize = function localize (lang, dictionary) {
@@ -5351,14 +5664,24 @@ Validator.prototype.localize = function localize (lang, dictionary) {
  * Adds and sets the current locale for the validator.
  */
 Validator.localize = function localize (lang, dictionary) {
-  // merge the dictionary.
-  if (dictionary) {
-    dictionary = assign({}, dictionary, { name: lang });
-    Validator.addLocale(dictionary);
+    var obj;
+
+  if (isObject(lang)) {
+    Validator.dictionary.merge(lang);
+    return
   }
 
-  // set the locale.
-  Validator.locale = lang;
+  // merge the dictionary.
+  if (dictionary) {
+    var locale = lang || dictionary.name;
+    dictionary = assign({}, dictionary);
+    Validator.dictionary.merge(( obj = {}, obj[locale] = dictionary, obj));
+  }
+
+  if (lang) {
+    // set the locale.
+    Validator.locale = lang;
+  }
 };
 
 /**
@@ -5367,9 +5690,10 @@ Validator.localize = function localize (lang, dictionary) {
 Validator.prototype.attach = function attach (field) {
   // deprecate: handle old signature.
   if (arguments.length > 1) {
+    warn('This signature of the attach method has been deprecated, please consult the docs.');
     field = assign({}, {
       name: arguments[0],
-      rules: arguments[1]
+      rules: arguments[1],
     }, arguments[2] || { vm: { $validator: this } });
   }
 
@@ -5385,14 +5709,14 @@ Validator.prototype.attach = function attach (field) {
   if (field.initial) {
     this.validate(("#" + (field.id)), value || field.value);
   } else {
-    this._validate(field, value || field.value, true).then(function (valid) {
-      field.flags.valid = valid;
-      field.flags.invalid = !valid;
+    this._validate(field, value || field.value, true).then(function (result) {
+      field.flags.valid = result.valid;
+      field.flags.invalid = !result.valid;
     });
   }
 
   this._addFlag(field, field.scope);
-  return field;
+  return field
 };
 
 /**
@@ -5400,8 +5724,8 @@ Validator.prototype.attach = function attach (field) {
  */
 Validator.prototype.flag = function flag (name, flags) {
   var field = this._resolveField(name);
-  if (! field || !flags) {
-    return;
+  if (!field || !flags) {
+    return
   }
 
   field.setFlags(flags);
@@ -5412,7 +5736,7 @@ Validator.prototype.flag = function flag (name, flags) {
  */
 Validator.prototype.detach = function detach (name, scope) {
   var field = name instanceof Field ? name : this._resolveField(name, scope);
-  if (!field) { return; }
+  if (!field) { return }
 
   field.destroy();
   this.errors.remove(field.name, field.scope, field.id);
@@ -5430,8 +5754,10 @@ Validator.prototype.detach = function detach (name, scope) {
 /**
  * Adds a custom validator to the list of validation rules.
  */
-Validator.prototype.extend = function extend (name, validator) {
-  Validator.extend(name, validator);
+Validator.prototype.extend = function extend (name, validator, options) {
+    if ( options === void 0 ) options = {};
+
+  Validator.extend(name, validator, options);
 };
 
 /**
@@ -5441,9 +5767,10 @@ Validator.prototype.update = function update (id, ref) {
     var scope = ref.scope;
 
   var field = this._resolveField(("#" + id));
-  this.errors.update(id, { scope: scope });
+  if (!field) { return }
 
   // remove old scope.
+  this.errors.update(id, { scope: scope });
   if (!isNullOrUndefined(field.scope) && this.flags[("$" + (field.scope))]) {
     delete this.flags[("$" + (field.scope))][field.name];
   } else if (isNullOrUndefined(field.scope)) {
@@ -5461,51 +5788,35 @@ Validator.prototype.remove = function remove (name) {
 };
 
 /**
- * Sets the validator current language.
- * @deprecated
- */
-Validator.prototype.setLocale = function setLocale (language) {
-  this.locale = language;
-};
-
-/**
- * Updates the messages dictionary, overwriting existing values and adding new ones.
- * @deprecated
- */
-Validator.prototype.updateDictionary = function updateDictionary (data) {
-  Validator.updateDictionary(data);
-};
-
-/**
  * Validates a value against a registered field validations.
  */
 Validator.prototype.validate = function validate (name, value, scope) {
+    var this$1 = this;
     if ( scope === void 0 ) scope = null;
 
-  if (this.paused) { return Promise.resolve(true); }
+  if (this.paused) { return Promise.resolve(true) }
 
   // overload to validate all.
   if (arguments.length === 0) {
-    return this.validateScopes();
+    return this.validateScopes()
   }
 
   // overload to validate scope-less fields.
   if (arguments.length === 1 && arguments[0] === '*') {
-    return this.validateAll();
+    return this.validateAll()
   }
 
   // overload to validate a scope.
   if (arguments.length === 1 && typeof arguments[0] === 'string' && /^(.+)\.\*$/.test(arguments[0])) {
     var matched = arguments[0].match(/^(.+)\.\*$/)[1];
-    return this.validateAll(matched);
+    return this.validateAll(matched)
   }
 
   var field = this._resolveField(name, scope);
   if (!field) {
-    return this._handleFieldNotFound(name, scope);
+    return this._handleFieldNotFound(name, scope)
   }
 
-  this.errors.remove(field.name, field.scope, field.id);
   field.flags.pending = true;
   if (arguments.length === 1) {
     value = field.value;
@@ -5514,18 +5825,21 @@ Validator.prototype.validate = function validate (name, value, scope) {
   var silentRun = field.isDisabled;
 
   return this._validate(field, value, silentRun).then(function (result) {
-    field.setFlags({
-      pending: false,
-      valid: result,
-      validated: true
-    });
-
+    this$1.errors.remove(field.name, field.scope, field.id);
     if (silentRun) {
-      return Promise.resolve(true);
+      return Promise.resolve(true)
+    } else if (result.errors) {
+      result.errors.forEach(function (e) { return this$1.errors.add(e); });
     }
 
-    return result;
-  });
+    field.setFlags({
+      pending: false,
+      valid: result.valid,
+      validated: true,
+    });
+
+    return result.valid
+  })
 };
 
 /**
@@ -5534,7 +5848,7 @@ Validator.prototype.validate = function validate (name, value, scope) {
 Validator.prototype.pause = function pause () {
   this.paused = true;
 
-  return this;
+  return this
 };
 
 /**
@@ -5543,7 +5857,7 @@ Validator.prototype.pause = function pause () {
 Validator.prototype.resume = function resume () {
   this.paused = false;
 
-  return this;
+  return this
 };
 
 /**
@@ -5553,7 +5867,7 @@ Validator.prototype.validateAll = function validateAll (values) {
     var arguments$1 = arguments;
     var this$1 = this;
 
-  if (this.paused) { return Promise.resolve(true); }
+  if (this.paused) { return Promise.resolve(true) }
 
   var matcher = null;
   var providedValues = false;
@@ -5562,14 +5876,14 @@ Validator.prototype.validateAll = function validateAll (values) {
     matcher = { scope: values };
   } else if (isObject(values)) {
     matcher = Object.keys(values).map(function (key) {
-      return { name: key, scope: arguments$1[1] || null };
+      return { name: key, scope: arguments$1[1] || null }
     });
     providedValues = true;
   } else if (arguments.length === 0) {
     matcher = { scope: null }; // global scope.
   } else if (Array.isArray(values)) {
     matcher = values.map(function (key) {
-      return { name: key, scope: arguments$1[1] || null };
+      return { name: key, scope: arguments$1[1] || null }
     });
   }
 
@@ -5578,7 +5892,7 @@ Validator.prototype.validateAll = function validateAll (values) {
     providedValues ? values[field.name] : field.value
   ); });
 
-  return Promise.all(promises).then(function (results) { return results.every(function (t) { return t; }); });
+  return Promise.all(promises).then(function (results) { return results.every(function (t) { return t; }); })
 };
 
 /**
@@ -5587,14 +5901,25 @@ Validator.prototype.validateAll = function validateAll (values) {
 Validator.prototype.validateScopes = function validateScopes () {
     var this$1 = this;
 
-  if (this.paused) { return Promise.resolve(true); }
+  if (this.paused) { return Promise.resolve(true) }
 
   var promises = this.fields.map(function (field) { return this$1.validate(
     ("#" + (field.id)),
     field.value
   ); });
 
-  return Promise.all(promises).then(function (results) { return results.every(function (t) { return t; }); });
+  return Promise.all(promises).then(function (results) { return results.every(function (t) { return t; }); })
+};
+
+/**
+ * Perform cleanup.
+ */
+Validator.prototype.destroy = function destroy () {
+  // Remove ErrorBag instance.
+  var idx = ERRORS.indexOf(this.errors);
+  if (idx === -1) { return }
+
+  ERRORS.splice(idx, 1);
 };
 
 /**
@@ -5603,7 +5928,7 @@ Validator.prototype.validateScopes = function validateScopes () {
 Validator.prototype._createFields = function _createFields (validations) {
     var this$1 = this;
 
-  if (!validations) { return; }
+  if (!validations) { return }
 
   Object.keys(validations).forEach(function (field) {
     var options = assign({}, { name: field, rules: validations[field] });
@@ -5620,14 +5945,14 @@ Validator.prototype._getDateFormat = function _getDateFormat (validations) {
     format = validations.date_format[0];
   }
 
-  return format || this.dictionary.getDateFormat(this.locale);
+  return format || this.dictionary.getDateFormat(this.locale)
 };
 
 /**
  * Checks if the passed rule is a date rule.
  */
 Validator.prototype._isADateRule = function _isADateRule (rule) {
-  return !! ~['after', 'before', 'date_between', 'date_format'].indexOf(rule);
+  return !!~['after', 'before', 'date_between', 'date_format'].indexOf(rule)
 };
 
 /**
@@ -5639,16 +5964,8 @@ Validator.prototype._formatErrorMessage = function _formatErrorMessage (field, r
 
   var name = this._getFieldDisplayName(field);
   var params = this._getLocalizedParams(rule, targetName);
-  // Defaults to english message.
-  if (!this.dictionary.hasLocale(LOCALE)) {
-    var msg$1 = this.dictionary.getFieldMessage('en', field.name, rule.name);
 
-    return isCallable(msg$1) ? msg$1(name, params, data) : msg$1;
-  }
-
-  var msg = this.dictionary.getFieldMessage(LOCALE, field.name, rule.name);
-
-  return isCallable(msg) ? msg(name, params, data) : msg;
+  return this.dictionary.getFieldMessage(this.locale, field.name, rule.name, [name, params, data])
 };
 
 /**
@@ -5657,57 +5974,77 @@ Validator.prototype._formatErrorMessage = function _formatErrorMessage (field, r
 Validator.prototype._getLocalizedParams = function _getLocalizedParams (rule, targetName) {
     if ( targetName === void 0 ) targetName = null;
 
-  if (~['after', 'before', 'confirmed'].indexOf(rule.name) && rule.params && rule.params[0]) {
-    var localizedName = targetName || this.dictionary.getAttribute(LOCALE, rule.params[0], rule.params[0]);
-    return [localizedName].concat(rule.params.slice(1));
+  if (~TARGET_RULES.indexOf(rule.name) && rule.params && rule.params[0]) {
+    var localizedName = targetName || this.dictionary.getAttribute(this.locale, rule.params[0], rule.params[0]);
+    return [localizedName].concat(rule.params.slice(1))
   }
 
-  return rule.params;
+  return rule.params
 };
 
 /**
  * Resolves an appropriate display name, first checking 'data-as' or the registered 'prettyName'
  */
 Validator.prototype._getFieldDisplayName = function _getFieldDisplayName (field) {
-  return field.displayName || this.dictionary.getAttribute(LOCALE, field.name, field.name);
+  return field.alias || this.dictionary.getAttribute(this.locale, field.name, field.name)
 };
 
 /**
  * Adds a field flags to the flags collection.
  */
 Validator.prototype._addFlag = function _addFlag (field, scope) {
-    if ( scope === void 0 ) scope = null;
+    var obj, obj$1, obj$2;
 
+    if ( scope === void 0 ) scope = null;
   if (isNullOrUndefined(scope)) {
-    this.flags = assign({}, this.flags, ( obj = {}, obj[("" + (field.name))] = field.flags, obj ));
-      var obj;
-    return;
+    this.flags = assign({}, this.flags, ( obj = {}, obj[("" + (field.name))] = field.flags, obj));
+    return
   }
 
-  var scopeObj = assign({}, this.flags[("$" + scope)] || {}, ( obj$1 = {}, obj$1[("" + (field.name))] = field.flags, obj$1 ));
-    var obj$1;
-  this.flags = assign({}, this.flags, ( obj$2 = {}, obj$2[("$" + scope)] = scopeObj, obj$2 ));
-    var obj$2;
+  var scopeObj = assign({}, this.flags[("$" + scope)] || {}, ( obj$1 = {}, obj$1[("" + (field.name))] = field.flags, obj$1));
+  this.flags = assign({}, this.flags, ( obj$2 = {}, obj$2[("$" + scope)] = scopeObj, obj$2));
+};
+
+/**
+ * Resets fields that matches the matcher options or all fields if not specified.
+ */
+Validator.prototype._reset = function _reset (matcher) {
+    var this$1 = this;
+
+  return new Promise(function (resolve) {
+    if (matcher) {
+      this$1.fields.filter(matcher).forEach(function (field) {
+        field.reset(); // reset field flags.
+        this$1.errors.remove(field.name, field.scope, field.id);
+      });
+
+      return resolve()
+    }
+
+    this$1.fields.items.forEach(function (i) { return i.reset(); });
+    this$1.errors.clear();
+    resolve();
+  })
 };
 
 /**
  * Tests a single input value against a rule.
  */
-Validator.prototype._test = function _test (field, value, rule, silent) {
+Validator.prototype._test = function _test (field, value, rule) {
     var this$1 = this;
 
   var validator = RULES[rule.name];
   var params = Array.isArray(rule.params) ? toArray(rule.params) : [];
   var targetName = null;
   if (!validator || typeof validator !== 'function') {
-    throw createError(("No such validator '" + (rule.name) + "' exists."));
+    throw createError(("No such validator '" + (rule.name) + "' exists."))
   }
 
   // has field dependencies.
-  if (/(confirmed|after|before)/.test(rule.name)) {
+  if (TARGET_RULES.indexOf(rule.name) !== -1) {
     var target = find(field.dependencies, function (d) { return d.name === rule.name; });
     if (target) {
-      targetName = target.field.displayName;
+      targetName = target.field.alias;
       params = [target.field.value].concat(params.slice(1));
     }
   } else if (rule.name === 'required' && field.rejectsFalse) {
@@ -5736,35 +6073,21 @@ Validator.prototype._test = function _test (field, value, rule, silent) {
         data = values.data;
       }
 
-      if (!allValid && !silent) {
-        this$1.errors.add({
-          id: field.id,
-          field: field.name,
-          msg: this$1._formatErrorMessage(field, rule, data, targetName),
-          rule: rule.name,
-          scope: field.scope
-        });
+      return {
+        valid: allValid,
+        error: allValid ? undefined : this$1._createFieldError(field, rule, data, targetName),
       }
-
-      return allValid;
-    });
+    })
   }
 
   if (!isObject(result)) {
     result = { valid: result, data: {} };
   }
 
-  if (!result.valid && !silent) {
-    this.errors.add({
-      id: field.id,
-      field: field.name,
-      msg: this._formatErrorMessage(field, rule, result.data, targetName),
-      rule: rule.name,
-      scope: field.scope
-    });
+  return {
+    valid: result.valid,
+    error: result.valid ? undefined : this._createFieldError(field, rule, result.data, targetName),
   }
-
-  return result.valid;
 };
 
 /**
@@ -5773,26 +6096,12 @@ Validator.prototype._test = function _test (field, value, rule, silent) {
 Validator._merge = function _merge (name, validator) {
   if (isCallable(validator)) {
     RULES[name] = validator;
-    return;
+    return
   }
 
   RULES[name] = validator.validate;
-  if (isCallable(validator.getMessage)) {
-    DICTIONARY.setMessage(LOCALE, name, validator.getMessage);
-  }
-
-  if (validator.messages) {
-    DICTIONARY.merge(
-      Object.keys(validator.messages).reduce(function (prev, curr) {
-        var dict = prev;
-        dict[curr] = {
-          messages: ( obj = {}, obj[name] = validator.messages[curr], obj )
-        };
-          var obj;
-
-        return dict;
-      }, {})
-    );
+  if (validator.getMessage) {
+    Validator.dictionary.setMessage(this.locale, name, validator.getMessage);
   }
 };
 
@@ -5801,21 +6110,37 @@ Validator._merge = function _merge (name, validator) {
  */
 Validator._guardExtend = function _guardExtend (name, validator) {
   if (isCallable(validator)) {
-    return;
+    return
   }
 
   if (!isCallable(validator.validate)) {
     throw createError(
-      // eslint-disable-next-line
       ("Extension Error: The validator '" + name + "' must be a function or have a 'validate' method.")
-    );
+    )
   }
 
-  if (!isCallable(validator.getMessage) && !isObject(validator.messages)) {
+  if (!isCallable(validator.getMessage) && typeof validator.getMessage !== 'string') {
     throw createError(
-      // eslint-disable-next-line
-      ("Extension Error: The validator '" + name + "' must have a 'getMessage' method or have a 'messages' object.")
-    );
+      ("Extension Error: The validator '" + name + "' object must have a 'getMessage' method or string.")
+    )
+  }
+};
+
+/**
+ * Creates a Field Error Object.
+ */
+Validator.prototype._createFieldError = function _createFieldError (field, rule, data, targetName) {
+    var this$1 = this;
+
+  return {
+    id: field.id,
+    field: field.name,
+    msg: this._formatErrorMessage(field, rule, data, targetName),
+    rule: rule.name,
+    scope: field.scope,
+    regenerate: function () {
+      return this$1._formatErrorMessage(field, rule, data, targetName)
+    },
   }
 };
 
@@ -5824,11 +6149,11 @@ Validator._guardExtend = function _guardExtend (name, validator) {
  */
 Validator.prototype._resolveField = function _resolveField (name, scope) {
   if (!isNullOrUndefined(scope)) {
-    return this.fields.find({ name: name, scope: scope });
+    return this.fields.find({ name: name, scope: scope })
   }
 
   if (name[0] === '#') {
-    return this.fields.find({ id: name.slice(1) });
+    return this.fields.find({ id: name.slice(1) })
   }
 
   if (name.indexOf('.') > -1) {
@@ -5837,23 +6162,23 @@ Validator.prototype._resolveField = function _resolveField (name, scope) {
       var fieldName = ref.slice(1);
     var field = this.fields.find({ name: fieldName.join('.'), scope: fieldScope });
     if (field) {
-      return field;
+      return field
     }
   }
 
-  return this.fields.find({ name: name, scope: null });
+  return this.fields.find({ name: name, scope: null })
 };
 
 /**
  * Handles when a field is not found depending on the strict flag.
  */
 Validator.prototype._handleFieldNotFound = function _handleFieldNotFound (name, scope) {
-  if (!this.strict) { return Promise.resolve(true); }
+  if (!this.strict) { return Promise.resolve(true) }
 
   var fullName = isNullOrUndefined(scope) ? name : ("" + (!isNullOrUndefined(scope) ? scope + '.' : '') + name);
   throw createError(
     ("Validating a non-existent field: \"" + fullName + "\". Use \"attach()\" first.")
-  );
+  )
 };
 
 /**
@@ -5864,36 +6189,57 @@ Validator.prototype._validate = function _validate (field, value, silent) {
     if ( silent === void 0 ) silent = false;
 
   if (!field.isRequired && (isNullOrUndefined(value) || value === '')) {
-    return Promise.resolve(true);
+    return Promise.resolve({ valid: true })
   }
 
   var promises = [];
+  var errors = [];
   var isExitEarly = false;
   // use of '.some()' is to break iteration in middle by returning true
   Object.keys(field.rules).some(function (rule) {
-    var result = this$1._test(field, value, { name: rule, params: field.rules[rule] }, silent);
-
+    var result = this$1._test(field, value, { name: rule, params: field.rules[rule] });
     if (isCallable(result.then)) {
       promises.push(result);
-    } else if (this$1.fastExit && !result) {
+    } else if (this$1.fastExit && !result.valid) {
+      errors.push(result.error);
       isExitEarly = true;
     } else {
-      var resultAsPromise = new Promise(function (resolve) {
+      // promisify the result.
+      promises.push(new Promise(function (resolve) {
         resolve(result);
-      });
-      promises.push(resultAsPromise);
+      }));
     }
 
-    return isExitEarly;
+    return isExitEarly
   });
 
-  if (isExitEarly) { return Promise.resolve(false); }
+  if (isExitEarly) {
+    return Promise.resolve({
+      valid: false,
+      errors: errors,
+    })
+  }
 
-  return Promise.all(promises).then(function (values) { return values.every(function (t) { return t; }); });
+  return Promise.all(promises)
+    .then(function (values) { return values.map(function (v) {
+        if (!v.valid) {
+          errors.push(v.error);
+        }
+
+        return v.valid
+      })
+      .every(function (t) { return t; }); }
+    )
+    .then(function (result) {
+      return {
+        valid: result,
+        errors: errors,
+      }
+    })
 };
 
-Object.defineProperties( Validator.prototype, prototypeAccessors );
-Object.defineProperties( Validator, staticAccessors );
+Object.defineProperties( Validator.prototype, prototypeAccessors$4 );
+Object.defineProperties( Validator, staticAccessors$1 );
 
 // 
 
@@ -5901,7 +6247,7 @@ function use (plugin, options) {
   if ( options === void 0 ) options = {};
 
   if (!isCallable(plugin)) {
-    return warn('The plugin must be a callable function');
+    return warn('The plugin must be a callable function')
   }
 
   plugin({ Validator: Validator, ErrorBag: ErrorBag, Rules: Validator.rules }, options);
@@ -5918,56 +6264,117 @@ var normalize = function (fields) {
         prev[curr] = curr;
       }
 
-      return prev;
-    }, {});
+      return prev
+    }, {})
   }
 
-  return fields;
+  return fields
+};
+
+// Combines two flags using either AND or OR depending on the flag type.
+var combine = function (lhs, rhs) {
+  var mapper = {
+    pristine: function (lhs, rhs) { return lhs && rhs; },
+    dirty: function (lhs, rhs) { return lhs || rhs; },
+    touched: function (lhs, rhs) { return lhs || rhs; },
+    untouched: function (lhs, rhs) { return lhs && rhs; },
+    valid: function (lhs, rhs) { return lhs && rhs; },
+    invalid: function (lhs, rhs) { return lhs || rhs; },
+    pending: function (lhs, rhs) { return lhs || rhs; },
+    required: function (lhs, rhs) { return lhs || rhs; },
+    validated: function (lhs, rhs) { return lhs && rhs; },
+  };
+
+  return Object.keys(mapper).reduce(function (flags, flag) {
+    flags[flag] = mapper[flag](lhs[flag], rhs[flag]);
+
+    return flags
+  }, {})
+};
+
+var mapScope = function (scope, deep) {
+  if ( deep === void 0 ) deep = true;
+
+  return Object.keys(scope).reduce(function (flags, field) {
+    if (!flags) {
+      flags = assign({}, scope[field]);
+      return flags
+    }
+
+    // scope.
+    var isScope = field.indexOf('$') === 0;
+    if (deep && isScope) {
+      return combine(mapScope(scope[field]), flags)
+    } else if (!deep && isScope) {
+      return flags
+    }
+
+    flags = combine(flags, scope[field]);
+
+    return flags
+  }, null)
 };
 
 /**
  * Maps fields to computed functions.
  */
 var mapFields = function (fields) {
+  if (!fields) {
+    return function () {
+      return mapScope(this.$validator.flags)
+    }
+  }
+
   var normalized = normalize(fields);
   return Object.keys(normalized).reduce(function (prev, curr) {
     var field = normalized[curr];
     prev[curr] = function mappedField () {
       // if field exists
       if (this.$validator.flags[field]) {
-        return this.$validator.flags[field];
+        return this.$validator.flags[field]
+      }
+
+      // scopeless fields were selected.
+      if (normalized[curr] === '*') {
+        return mapScope(this.$validator.flags, false)
       }
 
       // if it has a scope defined
       var index = field.indexOf('.');
       if (index <= 0) {
-        return {};
+        return {}
       }
 
       var ref = field.split('.');
       var scope = ref[0];
       var name = ref.slice(1);
+
       scope = this.$validator.flags[("$" + scope)];
       name = name.join('.');
 
-      if (scope && scope[name]) {
-        return scope[name];
+      // an entire scope was selected: scope.*
+      if (name === '*' && scope) {
+        return mapScope(scope)
       }
 
-      return {};
+      if (scope && scope[name]) {
+        return scope[name]
+      }
+
+      return {}
     };
 
-    return prev;
-  }, {});
+    return prev
+  }, {})
 };
 
-var minimal$1 = {
+var minimal = {
   use: use,
   mapFields: mapFields,
   Validator: Validator,
   ErrorBag: ErrorBag,
-  version: '2.0.0'
-};
+  version: '2.0.3',
+}
 
 // rules plugin definition.
 var rulesPlugin = function (ref) {
@@ -5978,16 +6385,14 @@ var rulesPlugin = function (ref) {
   });
 
   // Merge the english messages.
-  Validator.localize('en', {
-    messages: messages
-  });
+  Validator.localize('en', locale$1);
 };
 
 // install the rules via the plugin API.
-minimal$1.use(rulesPlugin);
+minimal.use(rulesPlugin);
 
-minimal$1.Rules = Rules;
+minimal.Rules = Rules;
 
-return minimal$1;
+return minimal;
 
 })));

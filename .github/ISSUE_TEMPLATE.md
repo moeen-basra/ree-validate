@@ -1,6 +1,6 @@
 #### Versions:
-- VueJs: #.#.#
-- Vee-Validate:
+- ReactJs: #.#.#
+- Ree-Validate:
 
 ### Description:
 

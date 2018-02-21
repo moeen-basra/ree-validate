@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `${field} reikšmė netinkama.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `Laukelis ${field} neteisingas.`,
   date_between: (field, [min, max]) => `Laukelio ${field} reikšmė turi būti tarp ${min} ir ${max}.`,
   date_format: (field, [format]) => `Laukelio ${field} formatas privalo būti toks - ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Laukelis ${field} turi būti skaitmuo su ${decimals === '*' ? '' : decimals} skaičium(-ias) po kablelio.`,
+  decimal: (field, [decimals = '*'] = []) => `Laukelis ${field} turi būti skaitmuo su ${decimals === '*' ? '' : decimals} skaičium(-ias) po kablelio.`,
   digits: (field, [length]) => `Lauklio ${field} reikšmė turi buti ${length} ženklų(-o) skaitmuo.`,
   dimensions: (field, [width, height]) => `${field} turi būti ${width} px x ${height} px.`,
   email: (field) => `Laukelis ${field} turi būti teisinga el. pašto adresas.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Laukelio ${field} formatas netinkamas.`,
   required: (field) => `Laukelis ${field} privalomas.`,
   size: (field, [size]) => `${field} turi būti mažesnis nei ${formatFileSize(size)}.`,
-  url: (field) => `${field} turi būti internetinis adresas.`
-};
+  url: (field) => `${field} turi būti internetinis adresas.`,
+}
 
 const locale = {
   name: 'en',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

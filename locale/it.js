@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `Il ${field} deve essere dopo ${target}.`,
@@ -10,7 +10,7 @@ const messages = {
   confirmed: (field, [confirmedField]) => `Il campo ${field} non corrisponde con ${confirmedField}.`,
   date_between: (field, [min, max]) => `La ${field} deve essere compresa tra ${min} e ${max}.`,
   date_format: (field, [format]) => `La ${field} deve essere nel formato ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Il campo ${field} deve essere numerico e può contenere  ${decimals === '*' ? 'cm' : decimals} punti decimali.`,
+  decimal: (field, [decimals = '*'] = []) => `Il campo ${field} deve essere numerico e può contenere  ${decimals === '*' ? 'cm' : decimals} punti decimali.`,
   digits: (field, [length]) => `Il campo ${field} deve essere numerico e contenere esattamente ${length} cifre.`,
   dimensions: (field, [width, height]) => `Il campo ${field} deve essere ${width} x ${height}.`,
   email: (field) => `Il campo ${field} deve essere un indirizzo email valido.`,
@@ -26,17 +26,17 @@ const messages = {
   regex: (field) => `Il campo ${field} non ha un formato valido.`,
   required: (field) => `Il campo ${field} è richiesto.`,
   size: (field, [size]) => `Il campo ${field} deve essere inferiore a ${formatFileSize(size)}.`,
-  url: (field) => `Il campo ${field} non è un URL valido.`
-};
+  url: (field) => `Il campo ${field} non è un URL valido.`,
+}
 
 const locale = {
   name: 'it',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

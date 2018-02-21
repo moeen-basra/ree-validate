@@ -1,4 +1,4 @@
-import { parse, isValid, format as formatDate } from 'date-fns';
+import { parse, isValid, format as formatDate } from 'date-fns'
 
 // @flow
 
@@ -7,16 +7,16 @@ import { parse, isValid, format as formatDate } from 'date-fns';
  */
 export function parseDate (date: string | Date, format: string): ?Date {
   if (typeof date !== 'string') {
-    return isValid(date) ? date : null;
+    return isValid(date) ? date : null
   }
 
-  const parsed = parse(date, format, new Date());
+  const parsed = parse(date, format, new Date())
 
   // if date is not valid or the formatted output after parsing does not match
   // the string value passed in (avoids overflows)
   if (!isValid(parsed) || formatDate(parsed, format) !== date) {
-    return null;
+    return null
   }
 
-  return parsed;
+  return parsed
 };

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `${field}は${target}の後でなければなりません`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `${field}が正しくありません`,
   date_between: (field, [min, max]) => `${field}は${min}から${max}の間でなければなりません`,
   date_format: (field, [format]) => `${field}は${format}形式でなけれななりません`,
-  decimal: (field, [decimals] = ['*']) => `${field}は整数及び小数点以下${decimals === '*' ? '' : decimals}桁までの数字にしてください`,
+  decimal: (field, [decimals = '*'] = []) => `${field}は整数及び小数点以下${decimals === '*' ? '' : decimals}桁までの数字にしてください`,
   digits: (field, [length]) => `${field}は${length}桁の数字でなければなりません`,
   dimensions: (field, [width, height]) => `${field}は幅${width}px、高さ${height}px以内でなければなりません`,
   email: (field) => `${field}は有効なメールアドレスではありません`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field}が正しくありません`,
   required: (field) => `${field}は必須項目です`,
   size: (field, [size]) => `${field}は${formatFileSize(size)}以内でなければなりません`,
-  url: (field) => `${field}が正しくありません`
-};
+  url: (field) => `${field}が正しくありません`,
+}
 
 const locale = {
   name: 'ja',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `Vrednost polja ${field} ni veljavna.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `Polje ${field} ni veljavno.`,
   date_between: (field, [min, max]) => `Datum v polju ${field} mora biti med ${min} in ${max}.`,
   date_format: (field, [format]) => `Datum v polju ${field} mora biti sledečega formata: ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `Polje ${field} mora biti numerično in lahko vsebuje ${decimals === '*' ? '' : decimals} decimalnih mest.`,
+  decimal: (field, [decimals = '*'] = []) => `Polje ${field} mora biti numerično in lahko vsebuje ${decimals === '*' ? '' : decimals} decimalnih mest.`,
   digits: (field, [length]) => `Vrednost polja ${field} mora biti numerična in vsebovati natančno ${length} številk.`,
   dimensions: (field, [width, height]) => `Slika ${field} mora biti široka ${width} slikovnih točk in visoka ${height} slikovnih točk.`,
   email: (field) => `Vrednost polja ${field} mora biti ustrezen e-naslov.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Vrednost polja ${field} ni v ustreznem formatu.`,
   required: (field) => `Polje ${field} je obvezno.`,
   size: (field, [size]) => `Velikost datoteke ${field} mora biti manjša kot ${formatFileSize(size)}.`,
-  url: (field) => `Vrednost polja ${field} ni veljavni URL naslov.`
-};
+  url: (field) => `Vrednost polja ${field} ni veljavni URL naslov.`,
+}
 
 const locale = {
   name: 'sl',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

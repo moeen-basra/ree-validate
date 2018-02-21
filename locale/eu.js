@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `${field} baliogabea da.`,
@@ -13,7 +13,7 @@ const messages = {
   credit_card: (field) => `${field} eremua baliogabea da.`,
   date_between: (field, [min, max]) => `${field}(e)k ${min} eta ${max} artean egon behar du.`,
   date_format: (field, [format]) => `${field}(e)k ${format} formatuan egon behar du.`,
-  decimal: (field, [decimals] = ['*']) => `${field} eremuak zenbakizkoa izan behar du eta ${!decimals || decimals === '*' ? '' : decimals} dezimal izan ditzake.`,
+  decimal: (field, [decimals = '*'] = []) => `${field} eremuak zenbakizkoa izan behar du eta ${!decimals || decimals === '*' ? '' : decimals} dezimal izan ditzake.`,
   digits: (field, [length]) => `${field} eremuak zenbakizkoa izan behar du eta zehazki ${length} digitu izan behar ditu.`,
   dimensions: (field, [width, height]) => `${field} eremuak ${width} pixel bider ${height} pixel izan behar du.`,
   email: (field) => `${field} eremuak baliozko helbide elektroniko bat izan behar du.`,
@@ -24,10 +24,10 @@ const messages = {
   ip: (field) => `${field} eremuak baliozko IP helbide bat izan behar du.`,
   length: (field, [length, max]) => {
     if (max) {
-      return `${field}(r)en luzerak ${length} eta ${max} artean egon behar du.`;
+      return `${field}(r)en luzerak ${length} eta ${max} artean egon behar du.`
     }
 
-    return `${field}(r)en luzerak ${length} izan behar du.`;
+    return `${field}(r)en luzerak ${length} izan behar du.`
   },
   max: (field, [length]) => `${field} eremuak ezin ditu ${length} karaktere baino gehiago izan.`,
   max_value: (field, [max]) => `${field} eremuak ${max} edo gutxiago izan behar du.`,
@@ -39,23 +39,18 @@ const messages = {
   regex: (field) => `${field} eremuaren formatua baliogabea da.`,
   required: (field) => `${field} eremua derrigorrezkoa da.`,
   size: (field, [size]) => `${field}(e)n tamainak ${formatFileSize(size)} baino txikiagoa izan behar du.`,
-  url: (field) => `${field} eremua ez da baliozko URL bat.`
-};
-
-// You can ignore this export, locale maintainer!
-export {
-  messages
-};
+  url: (field) => `${field} eremua ez da baliozko URL bat.`,
+}
 
 const locale = {
   name: 'eu',
   messages,
-  attributes: {}
-};
+  attributes: {},
+}
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.addLocale(locale);
+  ReeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale;
+export default locale

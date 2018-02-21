@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `O campo ${field} deve estar depois do campo ${target}.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `O campo ${field} é inválido.`,
   date_between: (field, [min, max]) => `O campo ${field} deve estar entre ${min} e ${max}.`,
   date_format: (field, [format]) => `O campo ${field} deve estar no formato ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `O campo ${field} deve ser numérico e deve conter ${decimals === '*' ? '' : decimals} casas decimais.`,
+  decimal: (field, [decimals = '*'] = []) => `O campo ${field} deve ser numérico e deve conter ${decimals === '*' ? '' : decimals} casas decimais.`,
   digits: (field, [length]) => `O campo ${field} deve ser numérico e ter ${length} dígitos.`,
   dimensions: (field, [width, height]) => `O campo ${field} deve ter ${width} pixels de largura por ${height} pixels de altura.`,
   email: (field) => `O campo ${field} deve ser um email válido.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `O campo ${field} possui um formato inválido.`,
   required: (field) => `O campo ${field} é obrigatório.`,
   size: (field, [size]) => `O campo ${field} deve ser menor que ${formatFileSize(size)}.`,
-  url: (field) => `O campo ${field} não é um URL válido.`
-};
+  url: (field) => `O campo ${field} não é um URL válido.`,
+}
 
 const locale = {
   name: 'pt_PT',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

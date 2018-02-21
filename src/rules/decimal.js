@@ -1,30 +1,30 @@
 const validate = (value, params) => {
-  const decimals = Array.isArray(params) ? (params[0] || '*') : '*';
-  const separator = Array.isArray(params) ? (params[1] || '.') : '.';
+  const decimals = Array.isArray(params) ? (params[0] || '*') : '*'
+  const separator = Array.isArray(params) ? (params[1] || '.') : '.'
   if (Array.isArray(value)) {
-    return value.every(val => validate(val, params));
+    return value.every(val => validate(val, params))
   }
 
   if (value === null || value === undefined || value === '') {
-    return true;
+    return true
   }
 
   // if is 0.
   if (Number(decimals) === 0) {
-    return /^-?\d*$/.test(value);
+    return /^-?\d*$/.test(value)
   }
 
-  const regexPart = decimals === '*' ? '+' : `{1,${decimals}}`;
-  const regex = new RegExp(`^-?\\d*(\\${separator}\\d${regexPart})?$`);
+  const regexPart = decimals === '*' ? '+' : `{1,${decimals}}`
+  const regex = new RegExp(`^-?\\d*(\\${separator}\\d${regexPart})?$`)
 
   if (! regex.test(value)) {
-    return false;
+    return false
   }
 
-  const parsedValue = parseFloat(value);
+  const parsedValue = parseFloat(value)
 
   // eslint-disable-next-line
     return parsedValue === parsedValue;
-};
+}
 
-export default validate;
+export default validate

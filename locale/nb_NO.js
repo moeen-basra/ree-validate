@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   after: (field, [target]) => `${field}-feltet må være etter ${target}.`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `${field}-feltet er ugyldig.`,
   date_between: (field, [min, max]) => `${field}-feltet må være imellom ${min} og ${max}.`,
   date_format: (field, [format]) => `${field}-feltet må være i følgende format: ${format}.`,
-  decimal: (field, [decimals] = ['*']) => `${field}-feltet må være numerisk samt kan inneholde ${decimals === '*' ? '' : decimals} desimaler.`,
+  decimal: (field, [decimals = '*'] = []) => `${field}-feltet må være numerisk samt kan inneholde ${decimals === '*' ? '' : decimals} desimaler.`,
   digits: (field, [length]) => `${field}-feltet må være numerisk og inneholde nøyaktig ${length} siffer.`,
   dimensions: (field, [width, height]) => `${field}-feltet må være ${width} ganger ${height} piksler.`,
   email: (field) => `${field}-feltet må være en gyldig E-post adresse.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field}-feltet sin formatering er ugyldig.`,
   required: (field) => `${field}-feltet er obligatorisk.`,
   size: (field, [size]) => `${field}-feltet må være mindre enn ${formatFileSize(size)}.`,
-  url: (field) => `${field}-feltet er ikkje en gyldig URL.`
-};
+  url: (field) => `${field}-feltet er ikkje en gyldig URL.`,
+}
 
 const locale = {
   name: 'nb_NO',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.addLocale(locale);
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale
