@@ -10,8 +10,6 @@
 
 - **ree-validate.js**: Is the full default UMD build.
 - **ree-validate.esm.js**: The full default build exported as an ES module.
-- **ree-validate.minimal.js**: The minimal UMD build.
-- **ree-validate.minimal.esm.js**: The minimal build exported as an ES module.
 
 ### Builds
 

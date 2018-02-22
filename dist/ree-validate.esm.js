@@ -6377,14 +6377,5 @@ var rulesPlugin = function (ref) {
 
 use(rulesPlugin);
 
-var index_esm = {
-  use: use,
-  mapFields: mapFields,
-  Validator: Validator,
-  ErrorBag: ErrorBag,
-  Rules: Rules,
-  version: version,
-}
-
-export default index_esm;
-export { use, mapFields, Validator, ErrorBag, Rules, version };
+export default Validator;
+export { use, mapFields, ErrorBag, Rules, version };

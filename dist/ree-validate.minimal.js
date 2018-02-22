@@ -4,10 +4,10 @@
   * @license MIT
   */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.ReeValidate = factory());
-}(this, (function () { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.ReeValidate = {})));
+}(this, (function (exports) { 'use strict';
 
 // 
 
@@ -2518,14 +2518,14 @@ var mapFields = function (fields) {
   }, {})
 };
 
-var index_minimal = {
-  use: use,
-  mapFields: mapFields,
-  Validator: Validator,
-  ErrorBag: ErrorBag,
-  version: '2.0.3',
-}
+var version = '2.0.3';
 
-return index_minimal;
+exports.use = use;
+exports.mapFields = mapFields;
+exports.ErrorBag = ErrorBag;
+exports.version = version;
+exports.default = Validator;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

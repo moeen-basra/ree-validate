@@ -21,17 +21,9 @@ use(rulesPlugin)
 export {
   use,
   mapFields,
-  Validator,
   ErrorBag,
   Rules,
   version,
 }
 
-export default {
-  use,
-  mapFields,
-  Validator,
-  ErrorBag,
-  Rules,
-  version,
-}
+export default Validator

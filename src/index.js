@@ -1,8 +1,12 @@
-import Rules from './rules'
 import en from '../locale/en'
-import minimal from './index.minimal'
+import use from './use'
+import Rules from './rules'
+import mapFields from './core/mapFields'
+import Validator from './core/validator'
+import ErrorBag from './core/errorBag'
 
-// rules plugin definition.
+const version = '__VERSION__'
+
 const rulesPlugin = ({ Validator }) => {
   Object.keys(Rules).forEach(rule => {
     Validator.extend(rule, Rules[rule])
@@ -12,9 +16,14 @@ const rulesPlugin = ({ Validator }) => {
   Validator.localize('en', en)
 }
 
-// install the rules via the plugin API.
-minimal.use(rulesPlugin)
+use(rulesPlugin)
 
-minimal.Rules = Rules
+export {
+  use,
+  mapFields,
+  ErrorBag,
+  Rules,
+  version,
+}
 
-export default minimal
+export default Validator

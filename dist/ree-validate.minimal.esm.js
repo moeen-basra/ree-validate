@@ -2514,13 +2514,5 @@ var mapFields = function (fields) {
 
 var version = '2.0.3';
 
-var index_minimal_esm = {
-  use: use,
-  mapFields: mapFields,
-  Validator: Validator,
-  ErrorBag: ErrorBag,
-  version: version,
-}
-
-export default index_minimal_esm;
-export { use, mapFields, Validator, ErrorBag, version };
+export default Validator;
+export { use, mapFields, ErrorBag, version };

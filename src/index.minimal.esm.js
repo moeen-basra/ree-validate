@@ -8,15 +8,8 @@ const version = '__VERSION__'
 export {
   use,
   mapFields,
-  Validator,
   ErrorBag,
   version,
 }
 
-export default {
-  use,
-  mapFields,
-  Validator,
-  ErrorBag,
-  version,
-}
+export default Validator

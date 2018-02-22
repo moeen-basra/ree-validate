@@ -33,8 +33,7 @@
   ],
   "files": [
     "dist/*.js",
-    "dist/locale/*.js",
-    "types/*.d.ts"
+    "dist/locale/*.js"
   ],
   "eslintIgnore": [
     "tests",
@@ -52,10 +51,8 @@
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/index.*.js",
-      "!src/install.js",
       "!src/use.js",
-      "!src/messages.js",
-      "!src/plugins/date/messages.js"
+      "!src/messages.js"
     ],
     "moduleFileExtensions": [
       "js",
