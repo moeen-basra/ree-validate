@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `O campo ${field} deve estar depois do campo ${target}.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `O campo ${field} possui um formato inválido.`,
   required: (field) => `O campo ${field} é obrigatório.`,
   size: (field, [size]) => `O campo ${field} deve ser menor que ${formatFileSize(size)}.`,
-  url: (field) => `O campo ${field} não é um URL válido.`,
-}
+  url: (field) => `O campo ${field} não é um URL válido.`
+};
 
 const locale = {
   name: 'pt_PT',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

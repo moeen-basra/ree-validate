@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `${field} ist ungültig.`,
@@ -28,16 +28,16 @@ const messages = {
   required: (field) => `${field} ist ein Pflichtfeld.`,
   size: (field, [size]) => `${field} muss kleiner als ${formatFileSize(size)} sein.`,
   url: (field) => `${field} ist keine gültige URL.`,
-}
+};
 
 const locale = {
   name: 'de',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

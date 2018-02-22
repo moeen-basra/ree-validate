@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `${field} baliogabea da.`,
@@ -24,10 +24,10 @@ const messages = {
   ip: (field) => `${field} eremuak baliozko IP helbide bat izan behar du.`,
   length: (field, [length, max]) => {
     if (max) {
-      return `${field}(r)en luzerak ${length} eta ${max} artean egon behar du.`
+      return `${field}(r)en luzerak ${length} eta ${max} artean egon behar du.`;
     }
 
-    return `${field}(r)en luzerak ${length} izan behar du.`
+    return `${field}(r)en luzerak ${length} izan behar du.`;
   },
   max: (field, [length]) => `${field} eremuak ezin ditu ${length} karaktere baino gehiago izan.`,
   max_value: (field, [max]) => `${field} eremuak ${max} edo gutxiago izan behar du.`,
@@ -39,18 +39,18 @@ const messages = {
   regex: (field) => `${field} eremuaren formatua baliogabea da.`,
   required: (field) => `${field} eremua derrigorrezkoa da.`,
   size: (field, [size]) => `${field}(e)n tamainak ${formatFileSize(size)} baino txikiagoa izan behar du.`,
-  url: (field) => `${field} eremua ez da baliozko URL bat.`,
-}
+  url: (field) => `${field} eremua ez da baliozko URL bat.`
+};
 
 const locale = {
   name: 'eu',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.localize({ [locale.name]: locale });
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

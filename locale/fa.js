@@ -1,17 +1,17 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const localizeSize = (size) => {
   const map = {
     Byte: 'بايت',
     KB: 'كيلوبايت',
     GB: 'گیگابايت',
-    PB: 'پتابايت',
-  }
+    PB: 'پتابايت'
+  };
 
   return formatFileSize(size).replace(/(Byte|KB|GB|PB)/, m => {
-    return map[m]
-  })
-}
+    return map[m];
+  });
+};
 
 const messages = {
   after: (field, [target]) => `${field} باید بعد از تاریخ ${target} باشد.`,
@@ -43,17 +43,17 @@ const messages = {
   regex: (field) => `قالب ${field} قابل قبول نیست.`,
   required: (field) => `${field} الزامی است.`,
   size: (field, [size]) => `حجم ${field} کمتر از ${localizeSize(size)} باشد.`,
-  url: (field) => `${field} باید یک تارنمای معتبر باشد.`,
-}
+  url: (field) => `${field} باید یک تارنمای معتبر باشد.`
+};
 
 const locale = {
   name: 'fa',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `O valor do campo ${field} não é válido.`,
@@ -24,10 +24,10 @@ const messages = {
   ip: (field) => `O campo ${field} deve ser um endereço IP válido.`,
   length: (field, [length, max]) => {
     if (max) {
-      return `O tamanho do campo ${field} está entre ${length} e ${max}.`
+      return `O tamanho do campo ${field} está entre ${length} e ${max}.`;
     }
 
-    return `O tamanho do campo ${field} deve ser ${length}.`
+    return `O tamanho do campo ${field} deve ser ${length}.`;
   },
   max: (field, [length]) => `O campo ${field} não deve ter mais que ${length} caracteres.`,
   max_value: (field, [max]) => `O campo ${field} precisa ser ${max} ou menor.`,
@@ -39,17 +39,17 @@ const messages = {
   regex: (field) => `O campo ${field} possui um formato inválido.`,
   required: (field) => `O campo ${field} é obrigatório.`,
   size: (field, [size]) => `O campo ${field} deve ser menor que ${formatFileSize(size)}.`,
-  url: (field) => `O campo ${field} não é uma URL válida.`,
-}
+  url: (field) => `O campo ${field} não é uma URL válida.`
+};
 
 const locale = {
   name: 'pt_BR',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

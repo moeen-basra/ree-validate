@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `${field}は${target}の後でなければなりません`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field}が正しくありません`,
   required: (field) => `${field}は必須項目です`,
   size: (field, [size]) => `${field}は${formatFileSize(size)}以内でなければなりません`,
-  url: (field) => `${field}が正しくありません`,
-}
+  url: (field) => `${field}が正しくありません`
+};
 
 const locale = {
   name: 'ja',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

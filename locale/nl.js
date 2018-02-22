@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `${field} waarde is ongeldig.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `${field} formaat is ongeldig.`,
   required: (field) => `${field} is verplicht.`,
   size: (field, [size]) => `${field} mag niet groter zijn dan ${formatFileSize(size)}.`,
-  url: (field) => `${field} is geen geldige URL.`,
-}
+  url: (field) => `${field} is geen geldige URL.`
+};
 
 const locale = {
   name: 'nl',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

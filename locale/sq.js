@@ -1,9 +1,9 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Fusha ${field} nuk është valide.`,
   after: (field, [target]) => `${field} duhet të jetë pas ${target}.`,
-  alpha_dash: (field) => `${field} mund të përmbaj karaktere alfanumerike, shenja si viza dhe shenja të pikësimit.`,
+  alpha_dash: (field) => `${field} mund të përmbaj karaktere alfanumerike, shenja si viza dhe shenja të pikësimit.`, 
   alpha_num: (field) => `${field} mund të përmbaj vetëm shenja alfanumerike.`,
   alpha_spaces: (field) => `${field} mund të përmbaj vetëm shkronja dhe hapësira.`,
   alpha: (field) => `${field} mund të përmbaj vetëm shkronja.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Formati ${field} nuk është valid.`,
   required: (field) => `Fusha ${field} nuk duhet të jetë e zbrazët.`,
   size: (field, [size]) => `${field} duhet të jetë më e vogël se ${formatFileSize(size)}.`,
-  url: (field) => `${field} nuk është URL valid.`,
-}
+  url: (field) => `${field} nuk është URL valid.`
+};
 
 const locale = {
   name: 'sq',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

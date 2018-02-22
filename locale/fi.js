@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `${field} tulee olla jälkeen ${target}.`,
@@ -26,17 +26,17 @@ const messages = {
   regex: (field) => `${field} tulee olla kelvollinen säännöllinen lauseke.`,
   required: (field) => `${field} on pakollinen kenttä.`,
   size: (field, [size]) => `${field} tulee olla vähemmän kuin ${formatFileSize(size)}.`,
-  url: (field) => `${field} tulee olla kelvollinen URL-osoite.`,
-}
+  url: (field) => `${field} tulee olla kelvollinen URL-osoite.`
+};
 
 const locale = {
   name: 'fi',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

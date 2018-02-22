@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `Pole ${field} musi być po polu ${target}.`,
@@ -27,17 +27,17 @@ const messages = {
   regex: (field) => `Format pola ${field} jest nieodpowiedni.`,
   required: (field) => `Pole ${field} jest wymagane.`,
   size: (field, [size]) => `Plik ${field} musi być mniejszy niż ${formatFileSize(size)}.`,
-  url: (field) => `Pole ${field} nie jest poprawnym URL.`,
-}
+  url: (field) => `Pole ${field} nie jest poprawnym URL.`
+};
 
 const locale = {
   name: 'pl',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `השדה ${field} חייב להכיל תאריך לאחר ${target}.`,
@@ -29,17 +29,17 @@ const messages = {
   regex: (field) => `הפורמט של ${field} אינו תקין.`,
   required: (field) => `חובה למלא את השדה ${field}.`,
   size: (field, [size]) => `השדה ${field} חייב לשקול פחות מ ${formatFileSize(size)}.`,
-  url: (field) => `${field} אינו מכיל כתובת אינטרנט תקינה.`,
-}
+  url: (field) => `${field} אינו מכיל כתובת אינטרנט תקינה.`
+};
 
 const locale = {
   name: 'he',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

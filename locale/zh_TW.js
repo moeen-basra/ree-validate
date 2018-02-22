@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `${field} 必須要晚於 ${target}。`,
@@ -12,7 +12,7 @@ const messages = {
   credit_card: (field) => `${field} 的格式錯誤。`,
   date_between: (field, [min, max]) => `${field} 必須在 ${min} 和 ${max} 之間。`,
   date_format: (field, [format]) => `${field} 不符合 ${format} 的格式。`,
-  decimal: (field, [decimals = '*'] = []) => `${field} 必須是數字，而且包含 ${decimals === '*' ? '' : decimals} 小數點。`,
+  decimal: (field, [decimals = '*'] = []) => `${field} 必須是數字，而且能夠保留 ${decimals === '*' ? '' : decimals} 位小數。`,
   digits: (field, [length]) => `${field} 必須是 ${length} 位數字。`,
   dimensions: (field, [width, height]) => `${field} 圖片尺寸不正確。必須是 ${width} 像素到 ${height} 像素。`,
   email: (field) => `${field} 必須是有效的電子郵件地址。`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field} 的格式錯誤。`,
   required: (field) => `${field} 不能留空。`,
   size: (field, [size]) => `${field} 的大小必須小於 ${formatFileSize(size)}.`,
-  url: (field) => `${field} 的格式錯誤。`,
-}
+  url: (field) => `${field} 的格式錯誤。`
+};
 
 const locale = {
   name: 'zh_TW',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

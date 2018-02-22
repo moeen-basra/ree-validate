@@ -22,10 +22,14 @@ export default class Validator {
   clean: () => void
   reset: (matcher) => Promise<void>
 
-  constructor(validations?: MapObject, options?: MapObject = { vm: null, fastExit: true }) {
+  constructor (validations?: MapObject, options?: MapObject = { vm: null, fastExit: true }) {
     this.strict = STRICT_MODE
     this.errors = new ErrorBag()
-    ERRORS.push(this.errors)
+
+    // We are running in SSR Mode. Do not keep a reference. It prevent garbage collection.
+    if (typeof window !== 'undefined') {
+      ERRORS.push(this.errors)
+    }
     this.fields = new FieldBag()
     this.flags = {}
     this._createFields(validations)
@@ -690,21 +694,18 @@ export default class Validator {
       })
     }
 
-    return Promise.all(promises)
-      .then(values => values.map(v => {
-          if (!v.valid) {
-            errors.push(v.error)
-          }
+    return Promise.all(promises).then(values => values.map(v => {
+      if (!v.valid) {
+        errors.push(v.error)
+      }
 
-          return v.valid
-        })
-        .every(t => t),
-      )
-      .then(result => {
-        return {
-          valid: result,
-          errors,
-        }
-      })
+      return v.valid
+    }).every(t => t)
+    ).then(result => {
+      return {
+        valid: result,
+        errors,
+      }
+    })
   }
 }

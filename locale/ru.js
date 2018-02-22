@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `В поле ${field} должна быть дата после ${target}.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `Поле ${field} имеет ошибочный формат.`,
   required: (field) => `Поле ${field} обязательно для заполнения.`,
   size: (field, [size]) => `Поле ${field} должно быть меньше, чем ${formatFileSize(size)}.`,
-  url: (field) => `Поле ${field} имеет ошибочный формат URL.`,
-}
+  url: (field) => `Поле ${field} имеет ошибочный формат URL.`
+};
 
 const locale = {
   name: 'ru',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

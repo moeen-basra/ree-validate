@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `El camp ${field} no és vàlid.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `El format del camp ${field} no és vàlid.`,
   required: (field) => `El camp ${field} és obligatori.`,
   size: (field, [size]) => `El camp ${field} ha de ser menor a ${formatFileSize(size)}.`,
-  url: (field) => `El camp ${field} no és un URL vàlid.`,
-}
+  url: (field) => `El camp ${field} no és un URL vàlid.`
+};
 
 const locale = {
   name: 'ca',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

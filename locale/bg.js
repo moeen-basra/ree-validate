@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Полето ${field} е с невалидна стойност.`,
@@ -20,10 +20,10 @@ const messages = {
   ip: (field) => `Полето ${field} трябва да е валиден IP адрес.`,
   length: (field, [length, max]) => {
     if (max) {
-      return `Полето ${field} трябва да е между ${length} и ${max}.`
+      return `Полето ${field} трябва да е между ${length} и ${max}.`;
     }
 
-    return `Полето ${field} трябва да е ${length}.`
+    return `Полето ${field} трябва да е ${length}.`;
   },
   max: (field, [length]) => `Полето ${field} не може да бъде по-голямо от ${length} знака.`,
   max_value: (field, [max]) => `Полето ${field} трябва да бъде ${max} или по-малко.`,
@@ -35,18 +35,18 @@ const messages = {
   regex: (field) => `Полето ${field} съдържа невалиден формат.`,
   required: (field) => `Полето ${field} е задължително.`,
   size: (field, [size]) => `Размерът на файла за полето ${field} трябва да е под ${formatFileSize(size)}.`,
-  url: (field) => `Полето ${field} не съдържа валиден URL адрес.`,
-}
+  url: (field) => `Полето ${field} не съдържа валиден URL адрес.`
+};
 
 const locale = {
   name: 'bg',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.localize({ [locale.name]: locale });
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

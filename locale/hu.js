@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `A(z) ${field} legalább ${target} utáni dátum kell, hogy legyen.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `A(z) ${field} formátuma érvénytelen.`,
   required: (field) => `A(z) ${field} megadása kötelező.`,
   size: (field, [size]) => `A(z) ${field} méretének ${size} kilobájtnál kisebbnek kell lennie.`,
-  url: (field) => `A(z) ${field} érvénytelen link.`,
-}
+  url: (field) => `A(z) ${field} érvénytelen link.`
+};
 
 const locale = {
   name: 'hu',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Nilai ${field} tidak sah.`,
@@ -24,10 +24,10 @@ const messages = {
   ip: (field) => `${field} harus berupa alamat ip yang sah.`,
   length: (field, [length, max]) => {
     if (max) {
-      return `Panjang ${field} harus di antara ${length} dan ${max}.`
+      return `Panjang ${field} harus di antara ${length} dan ${max}.`;
     }
 
-    return `Panjang ${field} harus tepat ${length}.`
+    return `Panjang ${field} harus tepat ${length}.`;
   },
   max: (field, [length]) => `${field} tidak boleh lebih dari ${length} karakter.`,
   max_value: (field, [size]) => `Nilai ${field} tidak boleh lebih dari ${size}.`,
@@ -39,17 +39,17 @@ const messages = {
   regex: (field) => `Format ${field} salah.`,
   required: (field) => `${field} harus diisi.`,
   size: (field, [size]) => `${field} harus lebih kecil dari ${formatFileSize(size)}.`,
-  url: (field) => `${field} harus berupa tautan yang benar.`,
-}
+  url: (field) => `${field} harus berupa tautan yang benar.`
+};
 
 const locale = {
   name: 'id',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

@@ -1,8 +1,8 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 // http://stackoverflow.com/a/1026087/1470607
 function capitalizeFirstLetter (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const messages = {
@@ -36,17 +36,17 @@ const messages = {
   regex: (field) => `${capitalizeFirstLetter(field)} pole sobival kujul.`,
   required: (field) => `${capitalizeFirstLetter(field)} on nõutud väli.`,
   size: (field, [size]) => `${capitalizeFirstLetter(field)} peab olema väiksem kui ${formatFileSize(size)}.`,
-  url: (field) => `${capitalizeFirstLetter(field)} peab olema URL.`,
-}
+  url: (field) => `${capitalizeFirstLetter(field)} peab olema URL.`
+};
 
 const locale = {
   name: 'et',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

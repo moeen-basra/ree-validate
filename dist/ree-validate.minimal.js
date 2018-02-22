@@ -239,7 +239,12 @@ var removeClass = function (el, className) {
  * Adds or removes a class name on the input depending on the status flag.
  */
 var toggleClass = function (el, className, status) {
-  if (!el || !className) { return }
+  if (!el || !className) { return; }
+
+  if (Array.isArray(className)) {
+    className.forEach(function (item) { return toggleClass(el, item, status); });
+    return;
+  }
 
   if (status) {
     return addClass(el, className)
@@ -514,7 +519,6 @@ ErrorBag.prototype.collect = function collect (field, scope, map) {
   return this.items.filter(function (e) { return e.field === field && e.scope === scope; })
     .map(function (e) { return (map ? e.msg : e); })
 };
-
 /**
  * Gets the internal array length.
  */
@@ -538,7 +542,11 @@ ErrorBag.prototype.first = function first (field, scope) {
     var this$1 = this;
     if ( scope === void 0 ) scope = null;
 
-  field = !isNullOrUndefined(field) ? String(field) : field;
+  if (isNullOrUndefined(field)) {
+    return null
+  }
+
+  field = String(field);
   var selector = this._selector(field);
   var scoped = this._scope(field);
 
@@ -731,10 +739,7 @@ var prototypeAccessors = { validator: { configurable: true },isRequired: { confi
 prototypeAccessors.validator.get = function () {
   if (!this.vm || !this.vm.$validator) {
     warn('No validator instance detected.');
-    return {
-      validate: function () {
-      },
-    }
+    return { validate: function () {} }
   }
 
   return this.vm.$validator
@@ -1129,19 +1134,20 @@ Field.prototype.addValueListeners = function addValueListeners () {
     if (args.length === 0 || (isCallable(Event) && args[0] instanceof Event) || (args[0] && args[0].srcElement)) {
       args[0] = this$1.value;
     }
+
     this$1.validator.validate(("#" + (this$1.id)), args[0]);
   };
 
-  var inputEvent = getInputEventName(this.el);
+  var inputEvent = this.model && this.model.lazy ? 'change' : getInputEventName(this.el);
   // replace input event with suitable one.
   var events = this.events.map(function (e) {
     return e === 'input' ? inputEvent : e
   });
 
   // if there is a watchable model and an on input validation is requested.
-  if (this.model && events.indexOf(inputEvent) !== -1) {
+  if (this.model && this.model.expression && events.indexOf(inputEvent) !== -1) {
     var debouncedFn = debounce(fn, this.delay[inputEvent]);
-    var unwatch = this.vm.$watch(this.model, function () {
+    var unwatch = this.vm.$watch(this.model.expression, function () {
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
 
@@ -1659,13 +1665,17 @@ var STRICT_MODE = true;
 var TARGET_RULES = ['confirmed', 'after', 'before'];
 var ERRORS = []; // HOLD errors references to trigger regeneration.
 
-var Validator = function Validator(validations, options) {
+var Validator = function Validator (validations, options) {
   var this$1 = this;
   if ( options === void 0 ) options = { vm: null, fastExit: true };
 
   this.strict = STRICT_MODE;
   this.errors = new ErrorBag();
-  ERRORS.push(this.errors);
+
+  // We are running in SSR Mode. Do not keep a reference. It prevent garbage collection.
+  if (typeof window !== 'undefined') {
+    ERRORS.push(this.errors);
+  }
   this.fields = new FieldBag();
   this.flags = {};
   this._createFields(validations);
@@ -2370,22 +2380,19 @@ Validator.prototype._validate = function _validate (field, value, silent) {
     })
   }
 
-  return Promise.all(promises)
-    .then(function (values) { return values.map(function (v) {
-        if (!v.valid) {
-          errors.push(v.error);
-        }
+  return Promise.all(promises).then(function (values) { return values.map(function (v) {
+    if (!v.valid) {
+      errors.push(v.error);
+    }
 
-        return v.valid
-      })
-      .every(function (t) { return t; }); }
-    )
-    .then(function (result) {
-      return {
-        valid: result,
-        errors: errors,
-      }
-    })
+    return v.valid
+  }).every(function (t) { return t; }); }
+  ).then(function (result) {
+    return {
+      valid: result,
+      errors: errors,
+    }
+  })
 };
 
 Object.defineProperties( Validator.prototype, prototypeAccessors$4 );

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `${field}-feltet må være etter ${target}.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field}-feltet sin formatering er ugyldig.`,
   required: (field) => `${field}-feltet er obligatorisk.`,
   size: (field, [size]) => `${field}-feltet må være mindre enn ${formatFileSize(size)}.`,
-  url: (field) => `${field}-feltet er ikkje en gyldig URL.`,
-}
+  url: (field) => `${field}-feltet er ikkje en gyldig URL.`
+};
 
 const locale = {
   name: 'nb_NO',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `ข้อมูล ${field} ไม่ถูกต้อง`,
@@ -24,10 +24,10 @@ const messages = {
   ip: (field) => `${field} ไม่ถูกต้องตามรูปแบบ ip address`,
   length: (field, [length, max]) => {
     if (max) {
-      return `ความยาว ${field} อยู่ระหว่าง ${length} และ ${max}`
+      return `ความยาว ${field} อยู่ระหว่าง ${length} และ ${max}`;
     }
 
-    return `${field} ต้องมีความยาว ${length}`
+    return `${field} ต้องมีความยาว ${length}`;
   },
   max: (field, [length]) => `${field} ต้องมีความยาวไม่เกิน ${length} ตัวอักษร`,
   max_value: (field, [max]) => `${field} ต้องมีค่าไม่เกิน ${max}`,
@@ -39,18 +39,18 @@ const messages = {
   regex: (field) => `รูปแบบ ${field} ไม่ถูกต้อง`,
   required: (field) => `กรุณากรอก ${field}`,
   size: (field, [size]) => `${field} ต้องมีขนาดไม่เกิน ${formatFileSize(size)}`,
-  url: (field) => `${field} ไม่ใช่รูปแบบของ URL ที่ถูกต้อง`,
-}
+  url: (field) => `${field} ไม่ใช่รูปแบบของ URL ที่ถูกต้อง`
+};
 
 const locale = {
   name: 'th',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.localize({ [locale.name]: locale });
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

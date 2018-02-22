@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Pole ${field} není vyplněno správně.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Pole ${field} není vyplněno správně.`,
   required: (field) => `Pole ${field} je povinné.`,
   size: (field, [size]) => `${field} musí být menší než ${formatFileSize(size)}.`,
-  url: (field) => `${field} není platná URL adresa.`,
-}
+  url: (field) => `${field} není platná URL adresa.`
+};
 
 const locale = {
   name: 'cs',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

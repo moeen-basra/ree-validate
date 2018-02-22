@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Giá trị của ${field} không đúng.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `${field} có định dạng không đúng.`,
   required: (field) => `${field} là bắt buộc.`,
   size: (field, [size]) => `${field} chỉ có thể chứa tệp nhỏ hơn ${formatFileSize(size)}.`,
-  url: (field) => `${field} không phải là một địa chỉ URL hợp lệ.`,
-}
+  url: (field) => `${field} không phải là một địa chỉ URL hợp lệ.`
+};
 
 const locale = {
   name: 'vi',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

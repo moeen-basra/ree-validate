@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `${field} reikšmė netinkama.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Laukelio ${field} formatas netinkamas.`,
   required: (field) => `Laukelis ${field} privalomas.`,
   size: (field, [size]) => `${field} turi būti mažesnis nei ${formatFileSize(size)}.`,
-  url: (field) => `${field} turi būti internetinis adresas.`,
-}
+  url: (field) => `${field} turi būti internetinis adresas.`
+};
 
 const locale = {
   name: 'en',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

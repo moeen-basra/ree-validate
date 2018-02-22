@@ -115,7 +115,6 @@ export default class ErrorBag {
     return this.items.filter(e => e.field === field && e.scope === scope)
       .map(e => (map ? e.msg : e))
   }
-
   /**
    * Gets the internal array length.
    */
@@ -136,7 +135,11 @@ export default class ErrorBag {
    * Gets the first error message for a specific field.
    */
   first (field: string, scope ?: ?string = null) {
-    field = !isNullOrUndefined(field) ? String(field) : field
+    if (isNullOrUndefined(field)) {
+      return null
+    }
+
+    field = String(field)
     const selector = this._selector(field)
     const scoped = this._scope(field)
 

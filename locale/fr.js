@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Le champ ${field} n'est pas valide.`,
@@ -31,18 +31,18 @@ const messages = {
   regex: (field) => `Le champ ${field} est invalide.`,
   required: (field) => `Le champ ${field} est obligatoire.`,
   size: (field, [size]) => `Le champ ${field} doit avoir un poids inférieur à ${formatFileSize(size)}.`,
-  url: (field) => `Le champ ${field} n'est pas une URL valide.`,
-}
+  url: (field) => `Le champ ${field} n'est pas une URL valide.`
+};
 
 const locale = {
   name: 'fr',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
   // eslint-disable-next-line
-  ReeValidate.Validator.localize({ [locale.name]: locale });
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

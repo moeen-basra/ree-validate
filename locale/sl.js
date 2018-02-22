@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   _default: (field) => `Vrednost polja ${field} ni veljavna.`,
@@ -31,17 +31,17 @@ const messages = {
   regex: (field) => `Vrednost polja ${field} ni v ustreznem formatu.`,
   required: (field) => `Polje ${field} je obvezno.`,
   size: (field, [size]) => `Velikost datoteke ${field} mora biti manjša kot ${formatFileSize(size)}.`,
-  url: (field) => `Vrednost polja ${field} ni veljavni URL naslov.`,
-}
+  url: (field) => `Vrednost polja ${field} ni veljavni URL naslov.`
+};
 
 const locale = {
   name: 'sl',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

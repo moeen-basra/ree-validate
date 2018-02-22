@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `${field} ${target} alanından ileri bir tarih olmalıdır.`,
@@ -30,17 +30,17 @@ const messages = {
   regex: (field) => `${field} formatı geçersiz.`,
   required: (field) => `${field} alanı gereklidir.`,
   size: (field, [size]) => `${field} alanı ${formatFileSize(size)}'dan daha az olmalıdır.`,
-  url: (field) => `${field} geçersiz URL.`,
-}
+  url: (field) => `${field} geçersiz URL.`
+};
 
 const locale = {
   name: 'tr',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

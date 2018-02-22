@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target]) => `${field} უნდა იყოს ${target}(ი)ს შემდეგ.`,
@@ -29,17 +29,17 @@ const messages = {
   regex: (field) => `${field}-(ი)ს ფორმატი არასწორია.`,
   required: (field) => `${field} აუცილებელია.`,
   size: (field, [size]) => `${field} უნდა იყოს ${formatFileSize(size)}-ზე ნაკლები.`,
-  url: (field) => `${field}-(ი)ს არ აქვს სწორი მისამართის ფორმატი`,
-}
+  url: (field) => `${field}-(ი)ს არ აქვს სწორი მისამართის ფორმატი`
+};
 
 const locale = {
   name: 'ka',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

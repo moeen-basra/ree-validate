@@ -1,4 +1,4 @@
-import { formatFileSize, isDefinedGlobally } from './utils'
+import { formatFileSize, isDefinedGlobally } from './utils';
 
 const messages = {
   after: (field, [target, inclusion]) => `Položka ${field} musí byť vačšia ${inclusion ? 'alebo rovná ' : ''} ako položka ${target}.`,
@@ -31,16 +31,16 @@ const messages = {
   required: (field) => `Položka ${field} je povinná.`,
   size: (field, [size]) => `Položka ${field} musí byť menej ako ${formatFileSize(size)}.`,
   url: (field) => `Položka ${field} neobsahuje platnú URL.`,
-}
+};
 
 const locale = {
   name: 'sk',
   messages,
-  attributes: {},
-}
+  attributes: {}
+};
 
 if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale })
+  VeeValidate.Validator.localize({ [locale.name]: locale });
 }
 
-export default locale
+export default locale;

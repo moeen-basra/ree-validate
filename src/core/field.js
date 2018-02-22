@@ -100,10 +100,7 @@ export default class Field {
   get validator (): any {
     if (!this.vm || !this.vm.$validator) {
       warn('No validator instance detected.')
-      return {
-        validate: () => {
-        },
-      }
+      return { validate: () => {} }
     }
 
     return this.vm.$validator
@@ -480,19 +477,20 @@ export default class Field {
       if (args.length === 0 || (isCallable(Event) && args[0] instanceof Event) || (args[0] && args[0].srcElement)) {
         args[0] = this.value
       }
+
       this.validator.validate(`#${this.id}`, args[0])
     }
 
-    const inputEvent = getInputEventName(this.el)
+    const inputEvent = this.model && this.model.lazy ? 'change' : getInputEventName(this.el)
     // replace input event with suitable one.
     let events = this.events.map(e => {
       return e === 'input' ? inputEvent : e
     })
 
     // if there is a watchable model and an on input validation is requested.
-    if (this.model && events.indexOf(inputEvent) !== -1) {
+    if (this.model && this.model.expression && events.indexOf(inputEvent) !== -1) {
       const debouncedFn = debounce(fn, this.delay[inputEvent])
-      const unwatch = this.vm.$watch(this.model, (...args) => {
+      const unwatch = this.vm.$watch(this.model.expression, (...args) => {
         this.flags.pending = true
         debouncedFn(...args)
       })
