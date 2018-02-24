@@ -22,7 +22,7 @@ npm install ree-validate --save
 
 ### Getting Started
 ```
-import { Validator } from 'ree-validate'
+import ReeValidate from 'ree-validate'
 ```
 
 install classnames for easily manage the classes
@@ -40,7 +40,7 @@ class Page extends Component {
   constructor(props) {
     super(props)
     
-    this.validator = new Validator({
+    this.validator = new ReeValidate({
       email: 'required|email',
       password: 'required|min:3',
     })
@@ -158,6 +158,41 @@ class Page extends Component {
 
 export default Page
 
+```
+
+### Changing the local for ReeValidate
+
+```
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import ReeValidate from 'ree-validate'
+import fr from 'ree-validate/dist/locale/fr'
+```
+
+```
+class Page extends Component {
+    static displayName = 'RegisterPage'
+    static propTypes = {
+        // validate props
+    }
+
+    constructor(props) {
+        super(props)
+
+        this.validator = new ReeValidate({
+            email: 'required|email',
+            password: 'required|min:6'
+        })
+
+        this.validator.localize('fr', fr)
+    }
+
+   render() {
+        // render component
+    }
+}
+
+export default Page
 ```
 
 ### Available Validation Rules
