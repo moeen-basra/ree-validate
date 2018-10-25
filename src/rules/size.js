@@ -1,14 +1,22 @@
-export default (files, [size]) => {
+const validate = (files, [size]) => {
   if (isNaN(size)) {
-    return false
+    return false;
   }
 
-  const nSize = Number(size) * 1024
+  const nSize = Number(size) * 1024;
   for (let i = 0; i < files.length; i++) {
     if (files[i].size > nSize) {
-      return false
+      return false;
     }
   }
 
-  return true
-}
+  return true;
+};
+
+export {
+  validate
+};
+
+export default {
+  validate
+};

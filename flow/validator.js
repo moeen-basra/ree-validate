@@ -1,5 +1,5 @@
-import type Validator from '../src/core/validator'
-import type ErrorBag from '../src/core/errorBag'
+import type Validator from '../src/core/validator';
+import type ErrorBag from '../src/core/errorBag';
 
 declare type ResultObject = {
   valid: boolean,
@@ -9,13 +9,15 @@ declare type ResultObject = {
 declare type Rule = (value: any, params: any[]) => boolean | ResultObject | Promise<boolean | ResultObject>;
 
 declare type ValidationResult = {
+  id: string,
   valid: boolean,
   error: ?MapObject,
   errors: ?Array<FieldError>
 };
 
 declare type ExtendOptions = {
-  hasTarget?: boolean
+  hasTarget?: boolean,
+  initial?: boolean
 };
 
 declare type FieldOptions = {
@@ -44,4 +46,10 @@ declare type FieldOptions = {
   targetOf?: string | null, // the id of the field that targets this one
   validity?: boolean, // if constrained validation API should be used (mdn)
   vm?: any // the vue instance that owns this field
+};
+
+declare type VerifyOptions = {
+  name?: string,
+  values?: MapObject,
+  bails?: boolean
 };

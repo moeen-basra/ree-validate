@@ -12,8 +12,8 @@ export const formatFileSize = (size) => {
 };
 
 /**
- * Checks if vee-validate is defined globally.
+ * Checks if ree-validate is defined globally.
  */
 export const isDefinedGlobally = () => {
-  return typeof VeeValidate !== 'undefined';
+  return typeof ReeValidate !== 'undefined';
 };

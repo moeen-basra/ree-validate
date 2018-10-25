@@ -1,29 +1,19 @@
-import en from '../locale/en'
-import use from './use'
-import Rules from './rules'
-import mapFields from './core/mapFields'
-import Validator from './core/validator'
-import ErrorBag from './core/errorBag'
+import * as Rules from './rules';
+import ReeValidate from './plugin';
+import { assign } from './utils';
+import en from '../locale/en';
 
-const version = '__VERSION__'
-
+// rules plugin definition.
 const rulesPlugin = ({ Validator }) => {
   Object.keys(Rules).forEach(rule => {
-    Validator.extend(rule, Rules[rule])
-  })
+    Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }));
+  });
 
   // Merge the english messages.
-  Validator.localize('en', en)
-}
+  Validator.localize('en', en);
+};
 
-use(rulesPlugin)
+ReeValidate.use(rulesPlugin);
+ReeValidate.Rules = Rules;
 
-export {
-  use,
-  mapFields,
-  ErrorBag,
-  Rules,
-  version,
-}
-
-export default Validator
+export default ReeValidate;

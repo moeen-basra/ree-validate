@@ -1,4 +1,4 @@
-import { toArray } from '../core/utils'
+import { toArray } from '../utils';
 
 /**
  * @param {Array|String} value
@@ -7,28 +7,36 @@ import { toArray } from '../core/utils'
  */
 const compare = (value, length, max) => {
   if (max === undefined) {
-    return value.length === length
+    return value.length === length;
   }
 
   // cast to number.
-  max = Number(max)
+  max = Number(max);
 
-  return value.length >= length && value.length <= max
-}
+  return value.length >= length && value.length <= max;
+};
 
-export default (value, [length, max = undefined]) => {
-  length = Number(length)
+const validate = (value, [length, max = undefined]) => {
+  length = Number(length);
   if (value === undefined || value === null) {
-    return false
+    return false;
   }
 
   if (typeof value === 'number') {
-    value = String(value)
+    value = String(value);
   }
 
   if (!value.length) {
-    value = toArray(value)
+    value = toArray(value);
   }
 
-  return compare(value, length, max)
-}
+  return compare(value, length, max);
+};
+
+export {
+  validate
+};
+
+export default {
+  validate
+};

@@ -1,16 +1,26 @@
-import { alphaSpaces } from './alpha_helper'
+import { alphaSpaces } from './alpha_helper';
 
-const validate = (value, [locale] = [null]) => {
+const validate = (value, { locale } = {}) => {
   if (Array.isArray(value)) {
-    return value.every(val => validate(val, [locale]))
+    return value.every(val => validate(val, [locale]));
   }
 
   // Match at least one locale.
   if (! locale) {
-    return Object.keys(alphaSpaces).some(loc => alphaSpaces[loc].test(value))
+    return Object.keys(alphaSpaces).some(loc => alphaSpaces[loc].test(value));
   }
 
-  return (alphaSpaces[locale] || alphaSpaces.en).test(value)
-}
+  return (alphaSpaces[locale] || alphaSpaces.en).test(value);
+};
 
-export default validate
+const paramNames = ['locale'];
+
+export {
+  validate,
+  paramNames
+};
+
+export default {
+  validate,
+  paramNames
+};

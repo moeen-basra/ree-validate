@@ -1,38 +1,50 @@
-import { isAfter, isBefore, isEqual } from 'date-fns'
-import { parseDate as parse } from '../core/utils/date'
+import { isAfter, isBefore, isEqual } from 'date-fns';
+import { parseDate as parse } from '../utils/date';
 
-export default (value, params) => {
-  let min
-  let max
-  let format
-  let inclusivity = '()'
-
-  if (params.length > 3) {
-    [min, max, inclusivity, format] = params
-  } else {
-    [min, max, format] = params
+const validate = (value, { min, max, inclusivity = '()', format } = {}) => {
+  if (typeof format === 'undefined') {
+    format = inclusivity;
+    inclusivity = '()';
   }
 
-  const minDate = parse(min, format)
-  const maxDate = parse(max, format)
-  const dateVal = parse(value, format)
+  const minDate = parse(String(min), format);
+  const maxDate = parse(String(max), format);
+  const dateVal = parse(String(value), format);
 
   if (!minDate || !maxDate || !dateVal) {
-    return false
+    return false;
   }
 
   if (inclusivity === '()') {
-    return isAfter(dateVal, minDate) && isBefore(dateVal, maxDate)
+    return isAfter(dateVal, minDate) && isBefore(dateVal, maxDate);
   }
 
   if (inclusivity === '(]') {
-    return isAfter(dateVal, minDate) && (isEqual(dateVal, maxDate) || isBefore(dateVal, maxDate))
+    return isAfter(dateVal, minDate) && (isEqual(dateVal, maxDate) || isBefore(dateVal, maxDate));
   }
 
   if (inclusivity === '[)') {
-    return isBefore(dateVal, maxDate) && (isEqual(dateVal, minDate) || isAfter(dateVal, minDate))
+    return isBefore(dateVal, maxDate) && (isEqual(dateVal, minDate) || isAfter(dateVal, minDate));
   }
 
   return isEqual(dateVal, maxDate) || isEqual(dateVal, minDate) ||
-        (isBefore(dateVal, maxDate) && isAfter(dateVal, minDate))
-}
+    (isBefore(dateVal, maxDate) && isAfter(dateVal, minDate));
+};
+
+const options = {
+  isDate: true
+};
+
+const paramNames = ['min', 'max', 'inclusivity', 'format'];
+
+export {
+  validate,
+  options,
+  paramNames
+};
+
+export default {
+  validate,
+  options,
+  paramNames
+};

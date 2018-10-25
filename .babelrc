@@ -1,9 +1,15 @@
 {
-  "presets": ["env", "stage-0"],
+  "presets": [
+    ["@babel/preset-env", { "modules": false }]
+  ],
   "plugins": [
-    "transform-runtime",
-    "transform-async-to-generator",
-    "transform-flow-strip-types",
-    "transform-object-rest-spread"
-  ]
+    "@babel/plugin-transform-flow-strip-types"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/preset-env"
+      ]
+    }
+  }
 }
