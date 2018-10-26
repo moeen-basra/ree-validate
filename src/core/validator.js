@@ -268,7 +268,7 @@ export default class Validator {
 
     const field = this._resolveField(fieldDescriptor);
     if (!field) {
-      return this._handleFieldNotFound(name);
+      return this._handleFieldNotFound('unknown');
     }
 
     if (!silent) field.flags.pending = true;

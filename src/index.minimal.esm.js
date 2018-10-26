@@ -1,6 +1,4 @@
 import ReeValidate from './plugin';
-import directive from './directive';
-import mixin from './mixin';
 import Validator from './core/validator';
 import ErrorBag from './core/errorBag';
 import mapFields from './core/mapFields';
@@ -13,8 +11,6 @@ const use = ReeValidate.use;
 export {
   install,
   use,
-  directive,
-  mixin,
   mapFields,
   Validator,
   ErrorBag,

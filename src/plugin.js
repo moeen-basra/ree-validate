@@ -1,13 +1,10 @@
 import dictionary from './dictionary';
-import mixin from './mixin';
-import directive from './directive';
 import { assign, getPath, warn, isCallable } from './utils';
 import Validator from './core/validator';
 import ErrorBag from './core/errorBag';
 import mapFields from './core/mapFields';
 import { ValidationProvider } from './components';
 import I18nDictionary from './localization/i18n';
-import { detectPassiveSupport } from './utils/events';
 
 // @flow
 
@@ -28,27 +25,17 @@ const defaultConfig = {
   i18nRootKey: 'validation'
 };
 
-let Vue;
-let pendingPlugins;
 export let currentConfig = assign({}, defaultConfig);
-export let pluginInstance;
 
 class ReeValidate {
   static version: string
   static install: () => void
   static Validator: Function<Validator>
-
-  _vm: any
   _validator: Validator
 
-  constructor (config, _Vue) {
+  constructor (config) {
     this.configure(config);
-    pluginInstance = this;
-    if (_Vue) {
-      Vue = _Vue;
-    }
     this._validator = new Validator(null, { fastExit: config && config.fastExit });
-    this._initVM(this.config);
     this._initI18n(this.config);
   }
 
@@ -65,44 +52,8 @@ class ReeValidate {
       return warn('The plugin must be a callable function');
     }
 
-    // Don't install plugins until ree-validate is installed.
-    if (!pluginInstance) {
-      if (!pendingPlugins) {
-        pendingPlugins = [];
-      }
-      pendingPlugins.push({ plugin, options });
-      return;
-    }
-
     plugin({ Validator, ErrorBag, Rules: Validator.rules }, options);
   };
-
-  static install (_Vue, opts) {
-    if (Vue && _Vue === Vue) {
-      if (process.env.NODE_ENV !== 'production') {
-        warn('already installed, Vue.use(ReeValidate) should only be called once.');
-      }
-      return;
-    }
-
-    Vue = _Vue;
-    pluginInstance = new ReeValidate(opts);
-
-    detectPassiveSupport();
-
-    Vue.mixin(mixin);
-    Vue.directive('validate', directive);
-    if (pendingPlugins) {
-      pendingPlugins.forEach(({ plugin, options }) => {
-        ReeValidate.use(plugin, options);
-      });
-      pendingPlugins = null;
-    }
-  }
-
-  static get instance () {
-    return pluginInstance;
-  }
 
   get i18nDriver (): IDictionary {
     return dictionary.getDriver();
@@ -118,15 +69,6 @@ class ReeValidate {
 
   static get config () {
     return currentConfig;
-  }
-
-  _initVM (config) {
-    this._vm = new Vue({
-      data: () => ({
-        errors: this._validator.errors,
-        fields: this._validator.fields
-      })
-    });
   }
 
   _initI18n (config) {
@@ -164,8 +106,6 @@ class ReeValidate {
 }
 
 ReeValidate.version = '__VERSION__';
-ReeValidate.mixin = mixin;
-ReeValidate.directive = directive;
 ReeValidate.Validator = Validator;
 ReeValidate.ErrorBag = ErrorBag;
 ReeValidate.mapFields = mapFields;

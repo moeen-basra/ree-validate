@@ -1,6 +1,4 @@
 import ReeValidate from './plugin';
-import directive from './directive';
-import mixin from './mixin';
 import en from '../locale/en';
 import * as Rules from './rules';
 import mapFields from './core/mapFields';
@@ -25,8 +23,6 @@ ReeValidate.use(rulesPlugin);
 
 export {
   install,
-  directive,
-  mixin,
   mapFields,
   Validator,
   ErrorBag,

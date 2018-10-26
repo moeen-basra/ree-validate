@@ -1,4 +1,3 @@
-import Resolver from './resolver';
 import RuleContainer from './ruleContainer';
 import { isEvent, addEventListener } from '../utils/events';
 import {
@@ -368,16 +367,6 @@ export default class Field {
         immediate: this.immediate,
         targetOf: this.id
       };
-
-      // probably a component.
-      if (isCallable(el.$watch)) {
-        options.component = el;
-        options.el = el.$el;
-        options.getter = Resolver.resolveGetter(el.$el, el.$vnode);
-      } else {
-        options.el = el;
-        options.getter = Resolver.resolveGetter(el, {});
-      }
 
       this.dependencies.push({ name, field: new Field(options) });
     });
