@@ -1,3 +1,4 @@
+// @flow
 import dictionary from './dictionary';
 import { assign, getPath, warn, isCallable } from './utils';
 import Validator from './core/validator';
@@ -5,8 +6,6 @@ import ErrorBag from './core/errorBag';
 import mapFields from './core/mapFields';
 import { ValidationProvider } from './components';
 import I18nDictionary from './localization/i18n';
-
-// @flow
 
 const defaultConfig = {
   locale: 'en',
