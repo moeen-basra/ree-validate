@@ -1,21 +1,21 @@
 // @flow
-import { assign, includes } from '../utils';
+import { assign, includes } from '../utils'
 
 const normalize = (fields: Array<any> | Object): Object => {
   if (Array.isArray(fields)) {
     return fields.reduce((prev, curr) => {
       if (includes(curr, '.')) {
-        prev[curr.split('.')[1]] = curr;
+        prev[curr.split('.')[1]] = curr
       } else {
-        prev[curr] = curr;
+        prev[curr] = curr
       }
 
-      return prev;
-    }, {});
+      return prev
+    }, {})
   }
 
-  return fields;
-};
+  return fields
+}
 
 // Combines two flags using either AND or OR depending on the flag type.
 const combine = (lhs: MapObject, rhs: MapObject): boolean => {
@@ -29,35 +29,35 @@ const combine = (lhs: MapObject, rhs: MapObject): boolean => {
     pending: (lhs, rhs) => lhs || rhs,
     required: (lhs, rhs) => lhs || rhs,
     validated: (lhs, rhs) => lhs && rhs
-  };
+  }
 
   return Object.keys(mapper).reduce((flags, flag) => {
-    flags[flag] = mapper[flag](lhs[flag], rhs[flag]);
+    flags[flag] = mapper[flag](lhs[flag], rhs[flag])
 
-    return flags;
-  }, {});
-};
+    return flags
+  }, {})
+}
 
 const mapScope = (scope: MapObject, deep: boolean = true): MapObject => {
   return Object.keys(scope).reduce((flags, field) => {
     if (!flags) {
-      flags = assign({}, scope[field]);
-      return flags;
+      flags = assign({}, scope[field])
+      return flags
     }
 
     // scope.
-    const isScope = field.indexOf('$') === 0;
+    const isScope = field.indexOf('$') === 0
     if (deep && isScope) {
-      return combine(mapScope(scope[field]), flags);
+      return combine(mapScope(scope[field]), flags)
     } else if (!deep && isScope) {
-      return flags;
+      return flags
     }
 
-    flags = combine(flags, scope[field]);
+    flags = combine(flags, scope[field])
 
-    return flags;
-  }, null);
-};
+    return flags
+  }, null)
+}
 
 /**
  * Maps fields to computed functions.
@@ -65,49 +65,49 @@ const mapScope = (scope: MapObject, deep: boolean = true): MapObject => {
 const mapFields = (fields?: Array<any> | Object): Object | Function => {
   if (!fields) {
     return function () {
-      return mapScope(this.$validator.flags);
-    };
+      return mapScope(this.$validator.flags)
+    }
   }
 
-  const normalized = normalize(fields);
+  const normalized = normalize(fields)
   return Object.keys(normalized).reduce((prev, curr) => {
-    const field = normalized[curr];
+    const field = normalized[curr]
     prev[curr] = function mappedField () {
       // if field exists
       if (this.$validator.flags[field]) {
-        return this.$validator.flags[field];
+        return this.$validator.flags[field]
       }
 
       // scopeless fields were selected.
       if (normalized[curr] === '*') {
-        return mapScope(this.$validator.flags, false);
+        return mapScope(this.$validator.flags, false)
       }
 
       // if it has a scope defined
-      const index = field.indexOf('.');
+      const index = field.indexOf('.')
       if (index <= 0) {
-        return {};
+        return {}
       }
 
-      let [scope, ...name] = field.split('.');
+      let [scope, ...name] = field.split('.')
 
-      scope = this.$validator.flags[`$${scope}`];
-      name = name.join('.');
+      scope = this.$validator.flags[`$${scope}`]
+      name = name.join('.')
 
       // an entire scope was selected: scope.*
       if (name === '*' && scope) {
-        return mapScope(scope);
+        return mapScope(scope)
       }
 
       if (scope && scope[name]) {
-        return scope[name];
+        return scope[name]
       }
 
-      return {};
-    };
+      return {}
+    }
 
-    return prev;
-  }, {});
-};
+    return prev
+  }, {})
+}
 
-export default mapFields;
+export default mapFields

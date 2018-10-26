@@ -1,19 +1,19 @@
-import * as Rules from './rules';
-import ReeValidate from './plugin';
-import { assign } from './utils';
-import en from '../locale/en';
+import * as Rules from './rules'
+import ReeValidate from './plugin'
+import { assign } from './utils'
+import en from '../locale/en'
 
 // rules plugin definition.
 const rulesPlugin = ({ Validator }) => {
   Object.keys(Rules).forEach(rule => {
-    Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }));
-  });
+    Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }))
+  })
 
   // Merge the english messages.
-  Validator.localize('en', en);
-};
+  Validator.localize('en', en)
+}
 
-ReeValidate.use(rulesPlugin);
-ReeValidate.Rules = Rules;
+ReeValidate.use(rulesPlugin)
+ReeValidate.Rules = Rules
 
-export default ReeValidate;
+export default ReeValidate

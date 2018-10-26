@@ -1,12 +1,12 @@
-import ReeValidate from './plugin';
-import Validator from './core/validator';
-import ErrorBag from './core/errorBag';
-import mapFields from './core/mapFields';
-import { ValidationProvider } from './components';
+import ReeValidate from './plugin'
+import Validator from './core/validator'
+import ErrorBag from './core/errorBag'
+import mapFields from './core/mapFields'
+import { ValidationProvider } from './components'
 
-const version = '__VERSION__';
-const install = ReeValidate.install;
-const use = ReeValidate.use;
+const version = '__VERSION__'
+const install = ReeValidate.install
+const use = ReeValidate.use
 
 export {
   install,
@@ -16,6 +16,6 @@ export {
   ErrorBag,
   version,
   ValidationProvider
-};
+}
 
-export default ReeValidate;
+export default ReeValidate

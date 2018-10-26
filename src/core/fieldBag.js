@@ -1,21 +1,12 @@
 // @flow
-import Field from './field';
-import { find, createError } from '../utils';
+import Field from './field'
+import { createError, find } from '../utils'
 
 export default class FieldBag {
-  items: Array<Field>;
+  items: Array<Field>
 
   constructor (items = []) {
-    this.items = items || [];
-  }
-
-  [typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] () {
-    let index = 0;
-    return {
-      next: () => {
-        return { value: this.items[index++], done: index > this.items.length };
-      }
-    };
+    this.items = items || []
   }
 
   /**
@@ -23,14 +14,23 @@ export default class FieldBag {
    */
 
   get length (): number {
-    return this.items.length;
+    return this.items.length
+  }
+
+  [typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] () {
+    let index = 0
+    return {
+      next: () => {
+        return { value: this.items[index++], done: index > this.items.length }
+      }
+    }
   }
 
   /**
    * Finds the first field that matches the provided matcher object.
    */
   find (matcher: Object): ?Field {
-    return find(this.items, item => item.matches(matcher));
+    return find(this.items, item => item.matches(matcher))
   }
 
   /**
@@ -39,54 +39,54 @@ export default class FieldBag {
   filter (matcher: Object | Array<any>): Array<Field> {
     // multiple matchers to be tried.
     if (Array.isArray(matcher)) {
-      return this.items.filter(item => matcher.some(m => item.matches(m)));
+      return this.items.filter(item => matcher.some(m => item.matches(m)))
     }
 
-    return this.items.filter(item => item.matches(matcher));
+    return this.items.filter(item => item.matches(matcher))
   }
 
   /**
    * Maps the field items using the mapping function.
    */
   map (mapper: (f: Field) => any): Array<Field> {
-    return this.items.map(mapper);
+    return this.items.map(mapper)
   }
 
   /**
    * Finds and removes the first field that matches the provided matcher object, returns the removed item.
    */
   remove (matcher: Object | Field): Field | null {
-    let item = null;
+    let item = null
     if (matcher instanceof Field) {
-      item = matcher;
+      item = matcher
     } else {
-      item = this.find(matcher);
+      item = this.find(matcher)
     }
 
-    if (!item) return null;
+    if (!item) return null
 
-    const index = this.items.indexOf(item);
-    this.items.splice(index, 1);
+    const index = this.items.indexOf(item)
+    this.items.splice(index, 1)
 
-    return item;
+    return item
   }
 
   /**
    * Adds a field item to the list.
    */
   push (item: ?Field) {
-    if (! (item instanceof Field)) {
-      throw createError('FieldBag only accepts instances of Field that has an id defined.');
+    if (!(item instanceof Field)) {
+      throw createError('FieldBag only accepts instances of Field that has an id defined.')
     }
 
     if (!item.id) {
-      throw createError('Field id must be defined.');
+      throw createError('Field id must be defined.')
     }
 
     if (this.find({ id: item.id })) {
-      throw createError(`Field with id ${item.id} is already added.`);
+      throw createError(`Field with id ${item.id} is already added.`)
     }
 
-    this.items.push(item);
+    this.items.push(item)
   }
 }

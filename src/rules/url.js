@@ -1,22 +1,22 @@
-import isURL from 'validator/lib/isURL';
-import { isNullOrUndefined } from '../utils';
+import isURL from 'validator/lib/isURL'
+import { isNullOrUndefined } from '../utils'
 
 const validate = (value, options = {}) => {
   if (isNullOrUndefined(value)) {
-    value = '';
+    value = ''
   }
 
   if (Array.isArray(value)) {
-    return value.every(val => isURL(val, options));
+    return value.every(val => isURL(val, options))
   }
 
-  return isURL(value, options);
-};
+  return isURL(value, options)
+}
 
 export {
   validate
-};
+}
 
 export default {
   validate
-};
+}

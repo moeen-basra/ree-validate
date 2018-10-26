@@ -1,11 +1,19 @@
 // @flow
-import ReeValidate from './plugin';
-import RuleContainer from './core/ruleContainer';
-import { normalizeEvents, isEvent } from './utils/events';
-import { createFlags, assign, isCallable, normalizeRules, warn } from './utils';
-import { findModel, findModelNodes, findModelConfig, addListenerToVNode, addListenerToObject, getInputEventName, normalizeSlots } from './utils/vnode';
+import ReeValidate from './plugin'
+import RuleContainer from './core/ruleContainer'
+import { isEvent, normalizeEvents } from './utils/events'
+import { assign, createFlags, isCallable, normalizeRules, warn } from './utils'
+import {
+  addListenerToObject,
+  addListenerToVNode,
+  findModel,
+  findModelConfig,
+  findModelNodes,
+  getInputEventName,
+  normalizeSlots
+} from './utils/vnode'
 
-let $validator = null;
+let $validator = null
 
 function createValidationCtx (ctx) {
   return {
@@ -13,20 +21,20 @@ function createValidationCtx (ctx) {
     flags: ctx.flags,
     classes: ctx.classes,
     get valid () {
-      return ctx.isValid;
+      return ctx.isValid
     },
     aria: {
       'aria-invalid': ctx.flags.invalid ? 'true' : 'false',
       'aria-required': ctx.isRequired ? 'true' : 'false'
     }
-  };
+  }
 }
 
 function onRenderUpdate (model) {
-  let validateNow = this.value !== model.value || this._needsValidation;
-  let shouldRevalidate = this.flags.validated;
+  let validateNow = this.value !== model.value || this._needsValidation
+  let shouldRevalidate = this.flags.validated
   if (!this.initialized) {
-    this.initialValue = model.value;
+    this.initialValue = model.value
   }
 
   if (validateNow) {
@@ -35,81 +43,81 @@ function onRenderUpdate (model) {
       this.setFlags({
         valid,
         invalid: !valid
-      });
-    };
+      })
+    }
 
-    this.syncValue(model.value);
-    this.validate().then(this.immediate || shouldRevalidate ? this.applyResult : silentHandler);
+    this.syncValue(model.value)
+    this.validate().then(this.immediate || shouldRevalidate ? this.applyResult : silentHandler)
   }
 
-  this._needsValidation = false;
+  this._needsValidation = false
 }
 
 // Adds all plugin listeners to the vnode.
 function addListeners (node) {
-  const model = findModel(node);
+  const model = findModel(node)
   // cache the input eventName.
-  this._inputEventName = this._inputEventName || getInputEventName(node, model);
+  this._inputEventName = this._inputEventName || getInputEventName(node, model)
 
-  onRenderUpdate.call(this, model);
+  onRenderUpdate.call(this, model)
 
   const onInput = (e) => {
     // track and keep the value updated.
-    this.syncValue(e);
+    this.syncValue(e)
     // set the flags.
-    this.setFlags({ dirty: true, pristine: false });
-  };
+    this.setFlags({ dirty: true, pristine: false })
+  }
 
-  addListenerToVNode(node, this._inputEventName, onInput);
+  addListenerToVNode(node, this._inputEventName, onInput)
 
   // add the validation listeners.
   this.normalizedEvents.forEach(evt => {
-    addListenerToVNode(node, evt, () => this.validate().then(this.applyResult));
-  });
+    addListenerToVNode(node, evt, () => this.validate().then(this.applyResult))
+  })
 
   // touched, untouched flags listener.
   const setFlagsAfterBlur = () => {
-    this.setFlags({ touched: true, untouched: false });
-  };
+    this.setFlags({ touched: true, untouched: false })
+  }
 
-  addListenerToVNode(node, 'blur', setFlagsAfterBlur);
+  addListenerToVNode(node, 'blur', setFlagsAfterBlur)
 
-  this.initialized = true;
+  this.initialized = true
 }
 
 function createValuesLookup (ctx) {
-  let providers = ctx.$parent.$_reeValidate;
+  let providers = ctx.$parent.$_reeValidate
 
   return ctx.fieldDeps.reduce((acc, depName) => {
     if (providers[depName]) {
-      acc[depName] = providers[depName].value;
+      acc[depName] = providers[depName].value
       const unwatch = providers[depName].$watch('value', () => {
-        ctx.validate(ctx.value).then(ctx.applyResult);
-        unwatch();
-      });
+        ctx.validate(ctx.value).then(ctx.applyResult)
+        unwatch()
+      })
     }
 
-    return acc;
-  }, {});
+    return acc
+  }, {})
 }
 
 function updateParentReference (ctx) {
-  const { id, vid, $parent } = ctx;
+  const { id, vid, $parent } = ctx
   // Nothing has changed.
   if (id === vid && $parent.$_reeValidate[id]) {
-    return;
+    return
   }
 
   // vid was changed.
   if (id !== vid && $parent.$_reeValidate[id] === ctx) {
-    delete $parent.$_reeValidate[id];
+    delete $parent.$_reeValidate[id]
   }
 
-  $parent.$_reeValidate[vid] = ctx;
-  ctx.id = vid;
+  $parent.$_reeValidate[vid] = ctx
+  ctx.id = vid
 }
 
-let id = 0;
+let id = 0
 
 export const ValidationProvider = {
   $__veeInject: false,
@@ -143,7 +151,7 @@ export const ValidationProvider = {
     rules: {
       deep: true,
       handler () {
-        this._needsValidation = true;
+        this._needsValidation = true
       }
     }
   },
@@ -158,122 +166,122 @@ export const ValidationProvider = {
   methods: {
     setFlags (flags) {
       Object.keys(flags).forEach(flag => {
-        this.flags[flag] = flags[flag];
-      });
+        this.flags[flag] = flags[flag]
+      })
     },
     syncValue (e) {
-      const value = isEvent(e) ? e.target.value : e;
+      const value = isEvent(e) ? e.target.value : e
 
-      this.value = value;
+      this.value = value
     },
     validate () {
-      this.setFlags({ pending: true });
+      this.setFlags({ pending: true })
 
       return $validator.verify(this.value, this.rules, {
         name: this.name,
         values: createValuesLookup(this)
       }).then(result => {
-        this.setFlags({ pending: false });
+        this.setFlags({ pending: false })
 
-        return result;
-      });
+        return result
+      })
     },
     applyResult ({ errors }) {
-      this.messages = errors;
+      this.messages = errors
       this.setFlags({
         valid: !errors.length,
         changed: this.value !== this.initialValue,
         invalid: !!errors.length,
         validated: true
-      });
+      })
     },
     registerField () {
       if (!$validator) {
         /* istanbul ignore next */
         if (process.env.NODE_ENV !== 'production') {
           if (!ReeValidate.instance) {
-            warn('You must install ree-validate first before using this component.');
+            warn('You must install ree-validate first before using this component.')
           }
         }
 
-        $validator = ReeValidate.instance._validator;
+        $validator = ReeValidate.instance._validator
       }
 
       if (!this.$parent.$_reeValidate) {
-        this.$parent.$_reeValidate = {};
+        this.$parent.$_reeValidate = {}
       }
 
-      updateParentReference(this);
+      updateParentReference(this)
     }
   },
   computed: {
     isValid () {
-      return this.flags.valid;
+      return this.flags.valid
     },
     fieldDeps () {
-      const rules = normalizeRules(this.rules);
+      const rules = normalizeRules(this.rules)
 
       return Object.keys(rules).filter(RuleContainer.isTargetRule).map(rule => {
-        return rules[rule][0];
-      });
+        return rules[rule][0]
+      })
     },
     normalizedEvents () {
       return normalizeEvents(this.events).map(e => {
         if (e === 'input') {
-          return this._inputEventName;
+          return this._inputEventName
         }
 
-        return e;
-      });
+        return e
+      })
     },
     isRequired () {
-      const rules = normalizeRules(this.rules);
+      const rules = normalizeRules(this.rules)
 
-      return !!rules.required;
+      return !!rules.required
     },
     classes () {
-      const names = ReeValidate.config.classNames;
+      const names = ReeValidate.config.classNames
       return Object.keys(this.flags).reduce((classes, flag) => {
-        const className = (names && names[flag]) || flag;
+        const className = (names && names[flag]) || flag
         if (className) {
-          classes[className] = this.flags[flag];
+          classes[className] = this.flags[flag]
         }
 
-        return classes;
-      }, {});
+        return classes
+      }, {})
     }
   },
   render (h) {
-    this.registerField();
-    const ctx = createValidationCtx(this);
+    this.registerField()
+    const ctx = createValidationCtx(this)
 
     // Graceful handle no scoped slots.
     if (!this.$scopedSlots.default) {
       if (process.env.NODE_ENV !== 'production') {
-        warn('ValidationProvider needs a scoped slot to work properly.');
+        warn('ValidationProvider needs a scoped slot to work properly.')
       }
 
-      return h(this.tag);
+      return h(this.tag)
     }
 
-    const nodes = this.$scopedSlots.default(ctx);
+    const nodes = this.$scopedSlots.default(ctx)
     // Handle multi-root slot.
-    const inputs = findModelNodes(Array.isArray(nodes) ? { children: nodes } : nodes);
+    const inputs = findModelNodes(Array.isArray(nodes) ? { children: nodes } : nodes)
     // Add the listener on the vnode
     inputs.forEach(input => {
-      addListeners.call(this, input);
-    });
+      addListeners.call(this, input)
+    })
 
-    return h(this.tag, nodes);
+    return h(this.tag, nodes)
   },
   beforeDestroy () {
     // cleanup reference.
-    delete this.$parent.$_reeValidate[this.vid];
+    delete this.$parent.$_reeValidate[this.vid]
   },
   // Creates an HoC with validation capablities.
   wrap (component, ctxToProps = null) {
-    const options = isCallable(component) ? component.options : component;
-    options.$__veeInject = false;
+    const options = isCallable(component) ? component.options : component
+    options.$__veeInject = false
     const hoc = {
       name: `${options.name || 'AnonymousHoc'}WithValidation`,
       props: assign({}, this.props),
@@ -281,44 +289,44 @@ export const ValidationProvider = {
       computed: assign({}, this.computed),
       methods: assign({}, this.methods),
       $__veeInject: false
-    };
+    }
 
     // Default ctx converts ctx props to component props.
     if (!ctxToProps) {
-      ctxToProps = ctx => ctx;
+      ctxToProps = ctx => ctx
     }
 
-    const eventName = (options.model && options.model.event) || 'input';
+    const eventName = (options.model && options.model.event) || 'input'
 
     hoc.render = function (h) {
-      this.registerField();
-      const vctx = createValidationCtx(this);
-      const listeners = assign({}, this.$listeners);
+      this.registerField()
+      const vctx = createValidationCtx(this)
+      const listeners = assign({}, this.$listeners)
 
-      const model = findModel(this.$vnode);
-      this._inputEventName = this._inputEventName || getInputEventName(this.$vnode, model);
-      onRenderUpdate.call(this, model);
+      const model = findModel(this.$vnode)
+      this._inputEventName = this._inputEventName || getInputEventName(this.$vnode, model)
+      onRenderUpdate.call(this, model)
       addListenerToObject(listeners, eventName, (e) => {
-        this.syncValue(e);
-      });
+        this.syncValue(e)
+      })
       this.normalizedEvents.forEach((evt, idx) => {
         addListenerToObject(listeners, evt, (e) => {
-          this.validate().then(this.applyResult);
-        });
-      });
+          this.validate().then(this.applyResult)
+        })
+      })
 
       // Props are any attrs not associated with ValidationProvider Plus the model prop.
       // WARNING: Accidental prop overwrite will probably happen.
-      const { prop } = findModelConfig(this.$vnode) || { prop: 'value' };
-      const props = assign({}, this.$attrs, { [prop]: model.value }, ctxToProps(vctx));
+      const { prop } = findModelConfig(this.$vnode) || { prop: 'value' }
+      const props = assign({}, this.$attrs, { [prop]: model.value }, ctxToProps(vctx))
 
       return h(options, {
         attrs: this.$attrs,
         props,
         on: listeners
-      }, normalizeSlots(this.$slots, this.$vnode.context));
-    };
+      }, normalizeSlots(this.$slots, this.$vnode.context))
+    }
 
-    return hoc;
+    return hoc
   }
-};
+}

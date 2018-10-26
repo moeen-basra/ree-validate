@@ -1,6 +1,6 @@
 // @flow
-import { createError } from './utils';
-import DefaultDictionary from './localization/default';
+import { createError } from './utils'
+import DefaultDictionary from './localization/default'
 
 const drivers = {
   default: new DefaultDictionary({
@@ -10,27 +10,27 @@ const drivers = {
       custom: {}
     }
   })
-};
+}
 
-let currentDriver = 'default';
+let currentDriver = 'default'
 
 export default class DictionaryResolver {
   static _checkDriverName (driver) {
     if (!driver) {
-      throw createError('you must provide a name to the dictionary driver');
+      throw createError('you must provide a name to the dictionary driver')
     }
   }
 
   static setDriver (driver, implementation = null) {
-    this._checkDriverName(driver);
+    this._checkDriverName(driver)
     if (implementation) {
-      drivers[driver] = implementation;
+      drivers[driver] = implementation
     }
 
-    currentDriver = driver;
+    currentDriver = driver
   }
 
   static getDriver () {
-    return drivers[currentDriver];
+    return drivers[currentDriver]
   }
 };

@@ -1,11 +1,11 @@
 // @flow
-import dictionary from './dictionary';
-import { assign, getPath, warn, isCallable } from './utils';
-import Validator from './core/validator';
-import ErrorBag from './core/errorBag';
-import mapFields from './core/mapFields';
-import { ValidationProvider } from './components';
-import I18nDictionary from './localization/i18n';
+import dictionary from './dictionary'
+import { assign, getPath, isCallable, warn } from './utils'
+import Validator from './core/validator'
+import ErrorBag from './core/errorBag'
+import mapFields from './core/mapFields'
+import { ValidationProvider } from './components'
+import I18nDictionary from './localization/i18n'
 
 const defaultConfig = {
   locale: 'en',
@@ -22,9 +22,9 @@ const defaultConfig = {
   validity: false,
   i18n: null,
   i18nRootKey: 'validation'
-};
+}
 
-export let currentConfig = assign({}, defaultConfig);
+export let currentConfig = assign({}, defaultConfig)
 
 class ReeValidate {
   static version: string
@@ -33,81 +33,81 @@ class ReeValidate {
   _validator: Validator
 
   constructor (config) {
-    this.configure(config);
-    this._validator = new Validator(null, { fastExit: config && config.fastExit });
-    this._initI18n(this.config);
+    this.configure(config)
+    this._validator = new Validator(null, { fastExit: config && config.fastExit })
+    this._initI18n(this.config)
+  }
+
+  static get i18nDriver (): IDictionary {
+    return dictionary.getDriver()
+  }
+
+  static get config () {
+    return currentConfig
+  }
+
+  get i18nDriver (): IDictionary {
+    return dictionary.getDriver()
+  }
+
+  get config () {
+    return currentConfig
   }
 
   static setI18nDriver (driver: string, instance): void {
-    dictionary.setDriver(driver, instance);
+    dictionary.setDriver(driver, instance)
   }
 
   static configure (cfg) {
-    currentConfig = assign({}, currentConfig, cfg);
+    currentConfig = assign({}, currentConfig, cfg)
   }
 
   static use (plugin: (ctx: PluginContext, options?: any) => any, options?: any = {}) {
     if (!isCallable(plugin)) {
-      return warn('The plugin must be a callable function');
+      return warn('The plugin must be a callable function')
     }
 
-    plugin({ Validator, ErrorBag, Rules: Validator.rules }, options);
+    plugin({ Validator, ErrorBag, Rules: Validator.rules }, options)
   };
 
-  get i18nDriver (): IDictionary {
-    return dictionary.getDriver();
-  }
-
-  static get i18nDriver (): IDictionary {
-    return dictionary.getDriver();
-  }
-
-  get config () {
-    return currentConfig;
-  }
-
-  static get config () {
-    return currentConfig;
-  }
-
   _initI18n (config) {
-    const { dictionary, i18n, i18nRootKey, locale } = config;
+    const { dictionary, i18n, i18nRootKey, locale } = config
     const onLocaleChanged = () => {
-      this._validator.errors.regenerate();
-    };
+      this._validator.errors.regenerate()
+    }
 
     // i18 is being used for localization.
     if (i18n) {
-      ReeValidate.setI18nDriver('i18n', new I18nDictionary(i18n, i18nRootKey));
-      i18n._vm.$watch('locale', onLocaleChanged);
+      ReeValidate.setI18nDriver('i18n', new I18nDictionary(i18n, i18nRootKey))
+      i18n._vm.$watch('locale', onLocaleChanged)
     } else if (typeof window !== 'undefined') {
-      this._vm.$on('localeChanged', onLocaleChanged);
+      this._vm.$on('localeChanged', onLocaleChanged)
     }
 
     if (dictionary) {
-      this.i18nDriver.merge(dictionary);
+      this.i18nDriver.merge(dictionary)
     }
 
     if (locale && !i18n) {
-      this._validator.localize(locale);
+      this._validator.localize(locale)
     }
   }
 
   configure (cfg) {
-    ReeValidate.configure(cfg);
+    ReeValidate.configure(cfg)
   }
 
   resolveConfig (ctx) {
-    const selfConfig = getPath('$options.$_reeValidate', ctx, {});
+    const selfConfig = getPath('$options.$_reeValidate', ctx, {})
 
-    return assign({}, this.config, selfConfig);
+    return assign({}, this.config, selfConfig)
   }
 }
 
-ReeValidate.version = '__VERSION__';
-ReeValidate.Validator = Validator;
-ReeValidate.ErrorBag = ErrorBag;
-ReeValidate.mapFields = mapFields;
-ReeValidate.ValidationProvider = ValidationProvider;
+ReeValidate.version = '__VERSION__'
+ReeValidate.Validator = Validator
+ReeValidate.ErrorBag = ErrorBag
+ReeValidate.mapFields = mapFields
+ReeValidate.ValidationProvider = ValidationProvider
 
-export default ReeValidate;
+export default ReeValidate
