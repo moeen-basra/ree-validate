@@ -1,3 +1,4 @@
+// @flow
 const RULES = {};
 
 export default class RuleContainer {

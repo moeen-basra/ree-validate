@@ -1,4 +1,4 @@
-// VNode Utils
+// @flow
 import { find, isCallable, isNullOrUndefined, isTextInput } from './index';
 
 // Gets the model object on the vnode.

@@ -1,3 +1,4 @@
+// @flow
 import ReeValidate from './plugin';
 import RuleContainer from './core/ruleContainer';
 import { normalizeEvents, isEvent } from './utils/events';
@@ -77,7 +78,7 @@ function addListeners (node) {
 }
 
 function createValuesLookup (ctx) {
-  let providers = ctx.$parent.$_veeValidate;
+  let providers = ctx.$parent.$_reeValidate;
 
   return ctx.fieldDeps.reduce((acc, depName) => {
     if (providers[depName]) {
@@ -95,16 +96,16 @@ function createValuesLookup (ctx) {
 function updateParentReference (ctx) {
   const { id, vid, $parent } = ctx;
   // Nothing has changed.
-  if (id === vid && $parent.$_veeValidate[id]) {
+  if (id === vid && $parent.$_reeValidate[id]) {
     return;
   }
 
   // vid was changed.
-  if (id !== vid && $parent.$_veeValidate[id] === ctx) {
-    delete $parent.$_veeValidate[id];
+  if (id !== vid && $parent.$_reeValidate[id] === ctx) {
+    delete $parent.$_reeValidate[id];
   }
 
-  $parent.$_veeValidate[vid] = ctx;
+  $parent.$_reeValidate[vid] = ctx;
   ctx.id = vid;
 }
 
@@ -198,8 +199,8 @@ export const ValidationProvider = {
         $validator = ReeValidate.instance._validator;
       }
 
-      if (!this.$parent.$_veeValidate) {
-        this.$parent.$_veeValidate = {};
+      if (!this.$parent.$_reeValidate) {
+        this.$parent.$_reeValidate = {};
       }
 
       updateParentReference(this);
@@ -267,7 +268,7 @@ export const ValidationProvider = {
   },
   beforeDestroy () {
     // cleanup reference.
-    delete this.$parent.$_veeValidate[this.vid];
+    delete this.$parent.$_reeValidate[this.vid];
   },
   // Creates an HoC with validation capablities.
   wrap (component, ctxToProps = null) {

@@ -1,3 +1,4 @@
+// @flow
 import RuleContainer from './ruleContainer';
 import { isEvent, addEventListener } from '../utils/events';
 import {
@@ -21,8 +22,6 @@ import {
   isCheckboxOrRadioInput,
   includes
 } from '../utils';
-
-// @flow
 
 const DEFAULT_OPTIONS = {
   targetOf: null,
@@ -95,7 +94,7 @@ export default class Field {
     this.flags = createFlags();
     this.vm = options.vm;
     this.componentInstance = options.component;
-    this.ctorConfig = this.componentInstance ? getPath('$options.$_veeValidate', this.componentInstance) : undefined;
+    this.ctorConfig = this.componentInstance ? getPath('$options.$_reeValidate', this.componentInstance) : undefined;
     this.update(options);
     // set initial value.
     this.initialValue = this.value;
@@ -207,7 +206,7 @@ export default class Field {
    */
   _cacheId (options: FieldOptions): void {
     if (this.el && !options.targetOf) {
-      this.el._veeValidateId = this.id;
+      this.el._reeValidateId = this.id;
     }
   }
 
@@ -647,7 +646,7 @@ export default class Field {
     const els = document.querySelectorAll(`input[name="${this.el.name}"]`);
     toArray(els).forEach(el => {
       // skip if it is added by v-validate and is not the current element.
-      if (el._veeValidateId && el !== this.el) {
+      if (el._reeValidateId && el !== this.el) {
         return;
       }
 

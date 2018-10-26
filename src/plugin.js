@@ -99,7 +99,7 @@ class ReeValidate {
   }
 
   resolveConfig (ctx) {
-    const selfConfig = getPath('$options.$_veeValidate', ctx, {});
+    const selfConfig = getPath('$options.$_reeValidate', ctx, {});
 
     return assign({}, this.config, selfConfig);
   }

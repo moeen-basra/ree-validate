@@ -1,6 +1,5 @@
-import { isCallable, merge } from '../utils';
-
 // @flow
+import { isCallable, merge } from '../utils';
 
 let LOCALE: string = 'en';
 

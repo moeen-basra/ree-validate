@@ -1,6 +1,5 @@
-import { assign, includes } from '../utils';
-
 // @flow
+import { assign, includes } from '../utils';
 
 const normalize = (fields: Array<any> | Object): Object => {
   if (Array.isArray(fields)) {

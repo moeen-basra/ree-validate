@@ -1,6 +1,5 @@
-import { parse, isValid, format as formatDate } from 'date-fns';
-
 // @flow
+import { parse, isValid, format as formatDate } from 'date-fns';
 
 /**
  * Custom parse behavior on top of date-fns parse function.

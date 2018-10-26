@@ -1,3 +1,4 @@
+// @flow
 import { assign } from '../utils';
 import ErrorBag from './errorBag';
 import FieldBag from './fieldBag';

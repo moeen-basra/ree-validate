@@ -1,3 +1,4 @@
+// @flow
 import { createError } from './utils';
 import DefaultDictionary from './localization/default';
 

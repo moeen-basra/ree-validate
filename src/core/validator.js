@@ -1,3 +1,4 @@
+// @flow
 import ErrorBag from './errorBag';
 import FieldBag from './fieldBag';
 import RuleContainer from './ruleContainer';
@@ -16,8 +17,6 @@ import {
   normalizeRules,
   toArray
 } from '../utils';
-
-// @flow
 
 export default class Validator {
   errors: ErrorBag;

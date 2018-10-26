@@ -1,7 +1,6 @@
+// @flow
 import Field from './field';
 import { find, createError } from '../utils';
-
-// @flow
 
 export default class FieldBag {
   items: Array<Field>;

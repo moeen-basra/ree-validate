@@ -1,6 +1,5 @@
-import { find, isNullOrUndefined, isCallable, values, parseSelector } from '../utils';
-
 // @flow
+import { find, isNullOrUndefined, isCallable, values, parseSelector } from '../utils';
 
 export default class ErrorBag {
   items: FieldError[];

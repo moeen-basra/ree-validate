@@ -1,6 +1,5 @@
-import { warn, isCallable, isObject, merge, getPath, isNullOrUndefined } from '../utils';
-
 // @flow
+import { warn, isCallable, isObject, merge, getPath, isNullOrUndefined } from '../utils';
 
 const normalizeValue = (value: any) => {
   if (isObject(value)) {
