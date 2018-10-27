@@ -57,11 +57,7 @@ export default class Validator {
    * Setter for the validator locale.
    */
   static set locale (value) {
-    const hasChanged = value !== ReeValidate.i18nDriver.locale
     ReeValidate.i18nDriver.locale = value
-    if (hasChanged && ReeValidate.instance && ReeValidate.instance._vm) {
-      ReeValidate.instance._vm.$emit('localeChanged')
-    }
   }
 
   get rules () {
@@ -201,7 +197,7 @@ export default class Validator {
 
     // validate the field initially
     if (field.immediate) {
-      this.validate(`#${field.id}`, value || field.value, { vmId: fieldOpts.vmId })
+      this.validate(`#${field.id}`, value || field.value)
     } else {
       this._validate(field, value || field.value, { initial: true }).then(result => {
         field.flags.valid = result.valid
@@ -232,7 +228,7 @@ export default class Validator {
     if (!field) return
 
     field.destroy()
-    this.errors.remove(field.name, field.scope, field.vmId)
+    this.errors.remove(field.name, field.scope)
     this.fields.remove(field)
   }
 
@@ -245,14 +241,10 @@ export default class Validator {
 
   reset (matcher) {
     // two ticks
-    return ReeValidate.instance._vm.$nextTick().then(() => {
-      return ReeValidate.instance._vm.$nextTick()
-    }).then(() => {
-      this.fields.filter(matcher).forEach(field => {
-        field.waitFor(null)
-        field.reset() // reset field flags.
-        this.errors.remove(field.name, field.scope)
-      })
+    this.fields.filter(matcher).forEach(field => {
+      field.waitFor(null)
+      field.reset() // reset field flags.
+      this.errors.remove(field.name, field.scope)
     })
   }
 
@@ -277,17 +269,17 @@ export default class Validator {
   /**
    * Validates a value against a registered field validations.
    */
-  validate (fieldDescriptor: string, value?: any, { silent, vmId } = {}): Promise<boolean> {
+  validate (fieldDescriptor: string, value?: any, { silent, scope } = {}): Promise<boolean> {
     if (this.paused) return Promise.resolve(true)
 
     // overload to validate all.
     if (isNullOrUndefined(fieldDescriptor)) {
-      return this.validateScopes({ silent, vmId })
+      return this.validateScopes({ silent, scope })
     }
 
     // overload to validate scope-less fields.
     if (fieldDescriptor === '*') {
-      return this.validateAll(undefined, { silent, vmId })
+      return this.validateAll(undefined, { silent })
     }
 
     // if scope validation was requested.
@@ -313,7 +305,7 @@ export default class Validator {
       if (!silent && field.isWaitingFor(validationPromise)) {
         // allow next validation to mutate the state.
         field.waitFor(null)
-        this._handleValidationResults([result], vmId)
+        this._handleValidationResults([result], scope)
       }
 
       return result.valid
@@ -341,32 +333,32 @@ export default class Validator {
   /**
    * Validates each value against the corresponding field validations.
    */
-  validateAll (values?: string | MapObject, { silent, vmId } = {}): Promise<boolean> {
+  validateAll (values?: string | MapObject, { silent, scope } = {}): Promise<boolean> {
     if (this.paused) return Promise.resolve(true)
 
     let matcher = null
     let providedValues = false
 
     if (typeof values === 'string') {
-      matcher = { scope: values, vmId }
+      matcher = { scope: values }
     } else if (isObject(values)) {
       matcher = Object.keys(values).map(key => {
-        return { name: key, vmId: vmId, scope: null }
+        return { name: key, scope }
       })
       providedValues = true
     } else if (Array.isArray(values)) {
       matcher = values.map(key => {
-        return { name: key, vmId: vmId }
+        return { name: key, scope }
       })
     } else {
-      matcher = { scope: null, vmId: vmId }
+      matcher = { scope: null }
     }
 
     return Promise.all(
       this.fields.filter(matcher).map(field => this._validate(field, providedValues ? values[field.name] : field.value))
     ).then(results => {
       if (!silent) {
-        this._handleValidationResults(results, vmId)
+        this._handleValidationResults(results)
       }
 
       return results.every(t => t.valid)
@@ -376,14 +368,14 @@ export default class Validator {
   /**
    * Validates all scopes.
    */
-  validateScopes ({ silent, vmId } = {}): Promise<boolean> {
+  validateScopes ({ silent, scope } = {}): Promise<boolean> {
     if (this.paused) return Promise.resolve(true)
 
     return Promise.all(
-      this.fields.filter({ vmId }).map(field => this._validate(field, field.value))
+      this.fields.filter({ scope }).map(field => this._validate(field, field.value))
     ).then(results => {
       if (!silent) {
-        this._handleValidationResults(results, vmId)
+        this._handleValidationResults(results, scope)
       }
 
       return results.every(t => t.valid)
@@ -419,7 +411,7 @@ export default class Validator {
    * Perform cleanup.
    */
   destroy () {
-    ReeValidate.instance._vm.$off('localeChanged')
+    // ReeValidate.instance._vm.$off('localeChanged')
   }
 
   /**
@@ -599,7 +591,7 @@ export default class Validator {
   _createFieldError (field: Field, rule: MapObject, data: MapObject, targetName?: string): FieldError {
     return {
       id: field.id,
-      vmId: field.vmId,
+      // vmId: field.vmId,
       field: field.name,
       msg: this._formatErrorMessage(field, rule, data, targetName),
       rule: rule.name,
@@ -619,18 +611,18 @@ export default class Validator {
     }
 
     if (!isNullOrUndefined(scope)) {
-      return this.fields.find({ name, scope, vmId: uid })
+      return this.fields.find({ name, scope })
     }
 
     if (includes(name, '.')) {
       const [fieldScope, ...fieldName] = name.split('.')
-      const field = this.fields.find({ name: fieldName.join('.'), scope: fieldScope, vmId: uid })
+      const field = this.fields.find({ name: fieldName.join('.'), scope: fieldScope })
       if (field) {
         return field
       }
     }
 
-    return this.fields.find({ name, scope: null, vmId: uid })
+    return this.fields.find({ name, scope: null })
   }
 
   /**
@@ -647,12 +639,12 @@ export default class Validator {
   /**
    * Handles validation results.
    */
-  _handleValidationResults (results, vmId) {
+  _handleValidationResults (results) {
     const matchers = results.map(result => ({ id: result.id }))
     this.errors.removeById(matchers.map(m => m.id))
     // remove by name and scope to remove any custom errors added.
     results.forEach(result => {
-      this.errors.remove(result.field, result.scope, vmId)
+      this.errors.remove(result.field, result.scope)
     })
     const allErrors = results.reduce((prev, curr) => {
       prev.push(...curr.errors)
