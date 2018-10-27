@@ -5,7 +5,6 @@ import mapFields from './core/mapFields'
 import Validator from './core/Validator'
 import ErrorBag from './core/ErrorBag'
 import { assign } from './utils'
-import { ValidationProvider } from './components'
 
 const version = '__VERSION__'
 
@@ -28,7 +27,6 @@ export {
   ErrorBag,
   Rules,
   version,
-  ValidationProvider
 }
 
 export default ReeValidate

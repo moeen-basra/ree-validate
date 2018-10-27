@@ -4,7 +4,6 @@ import { assign, getPath, isCallable, warn } from './utils'
 import Validator from './core/Validator'
 import ErrorBag from './core/ErrorBag'
 import mapFields from './core/mapFields'
-import { ValidationProvider } from './components'
 import I18nDictionary from './localization/i18n'
 
 const defaultConfig = {
@@ -108,6 +107,5 @@ ReeValidate.version = '__VERSION__'
 ReeValidate.Validator = Validator
 ReeValidate.ErrorBag = ErrorBag
 ReeValidate.mapFields = mapFields
-ReeValidate.ValidationProvider = ValidationProvider
 
 export default ReeValidate
