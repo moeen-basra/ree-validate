@@ -39,14 +39,12 @@ export default class ErrorBag {
     if (Array.isArray(error)) {
       return error.map(e => {
         e.scope = !isNullOrUndefined(e.scope) ? e.scope : null
-        e.vmId = !isNullOrUndefined(e.vmId) ? e.vmId : (this.vmId || null)
 
         return e
       })
     }
 
     error.scope = !isNullOrUndefined(error.scope) ? error.scope : null
-    error.vmId = !isNullOrUndefined(error.vmId) ? error.vmId : (this.vmId || null)
 
     return [error]
   }
@@ -84,10 +82,6 @@ export default class ErrorBag {
       let matchesVM = true
       if (!isNullOrUndefined(scope)) {
         matchesScope = item.scope === scope
-      }
-
-      if (!isNullOrUndefined(this.vmId)) {
-        matchesVM = item.vmId === this.vmId
       }
 
       return matchesVM && matchesScope
