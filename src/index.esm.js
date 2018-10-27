@@ -1,4 +1,4 @@
-import ReeValidate from './plugin'
+import ReeValidate from './ReeValidate'
 import en from '../locale/en'
 import * as Rules from './rules'
 import mapFields from './core/mapFields'

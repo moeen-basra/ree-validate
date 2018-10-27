@@ -3,7 +3,7 @@ import ErrorBag from './errorBag'
 import FieldBag from './fieldBag'
 import RuleContainer from './ruleContainer'
 import Field from './field'
-import ReeValidate from '../plugin'
+import ReeValidate from '../ReeValidate'
 import {
   assign,
   createError,

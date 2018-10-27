@@ -1,3 +1,3 @@
-import ReeValidate from './plugin'
+import ReeValidate from './ReeValidate'
 
 export default ReeValidate

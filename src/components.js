@@ -1,5 +1,5 @@
 // @flow
-import ReeValidate from './plugin'
+import ReeValidate from './ReeValidate'
 import RuleContainer from './core/ruleContainer'
 import { isEvent, normalizeEvents } from './utils/events'
 import { assign, createFlags, isCallable, normalizeRules, warn } from './utils'

@@ -1,5 +1,5 @@
 import * as Rules from './rules'
-import ReeValidate from './plugin'
+import ReeValidate from './ReeValidate'
 import { assign } from './utils'
 import en from '../locale/en'
 

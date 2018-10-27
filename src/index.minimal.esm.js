@@ -1,4 +1,4 @@
-import ReeValidate from './plugin'
+import ReeValidate from './ReeValidate'
 import Validator from './core/validator'
 import ErrorBag from './core/errorBag'
 import mapFields from './core/mapFields'
