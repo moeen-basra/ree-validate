@@ -1,6 +1,6 @@
 // @flow
 import dictionary from './dictionary'
-import { assign, getPath, isCallable, warn } from './utils'
+import { assign, isCallable, warn } from './utils'
 import Validator from './core/Validator'
 import ErrorBag from './core/ErrorBag'
 import mapFields from './core/mapFields'
@@ -71,16 +71,9 @@ class ReeValidate {
 
   _initI18n (config) {
     const { dictionary, i18n, i18nRootKey, locale } = config
-    const onLocaleChanged = () => {
-      this._validator.errors.regenerate()
-    }
-
     // i18 is being used for localization.
     if (i18n) {
       ReeValidate.setI18nDriver('i18n', new I18nDictionary(i18n, i18nRootKey))
-      i18n._vm.$watch('locale', onLocaleChanged)
-    } else if (typeof window !== 'undefined') {
-      this._vm.$on('localeChanged', onLocaleChanged)
     }
 
     if (dictionary) {
@@ -97,9 +90,7 @@ class ReeValidate {
   }
 
   resolveConfig (ctx) {
-    const selfConfig = getPath('$options.$_reeValidate', ctx, {})
-
-    return assign({}, this.config, selfConfig)
+    return assign({}, this.config)
   }
 }
 
