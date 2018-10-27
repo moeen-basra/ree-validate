@@ -16,6 +16,7 @@ export const detectPassiveSupport = () => {
     const opts = Object.defineProperty({}, 'passive', {
       get () {
         supportsPassive = true
+        return null
       }
     })
     window.addEventListener('testPassive', null, opts)
