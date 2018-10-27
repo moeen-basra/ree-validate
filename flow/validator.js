@@ -1,5 +1,5 @@
-import type Validator from '../src/core/validator';
-import type ErrorBag from '../src/core/errorBag';
+import type Validator from '../src/core/Validator';
+import type ErrorBag from '../src/core/ErrorBag';
 
 declare type ResultObject = {
   valid: boolean,

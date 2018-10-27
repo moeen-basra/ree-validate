@@ -1,5 +1,5 @@
 // @flow
-import Field from './field'
+import Field from './Field'
 import { createError, find } from '../utils'
 
 export default class FieldBag {

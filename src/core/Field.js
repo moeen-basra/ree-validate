@@ -1,5 +1,5 @@
 // @flow
-import RuleContainer from './ruleContainer'
+import RuleContainer from './RuleContainer'
 import { addEventListener, isEvent } from '../utils/events'
 import {
   assign,

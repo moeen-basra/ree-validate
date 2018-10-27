@@ -1,8 +1,8 @@
 // @flow
-import ErrorBag from './errorBag'
-import FieldBag from './fieldBag'
-import RuleContainer from './ruleContainer'
-import Field from './field'
+import ErrorBag from './ErrorBag'
+import FieldBag from './FieldBag'
+import RuleContainer from './RuleContainer'
+import Field from './Field'
 import ReeValidate from '../ReeValidate'
 import {
   assign,

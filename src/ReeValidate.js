@@ -1,8 +1,8 @@
 // @flow
 import dictionary from './dictionary'
 import { assign, getPath, isCallable, warn } from './utils'
-import Validator from './core/validator'
-import ErrorBag from './core/errorBag'
+import Validator from './core/Validator'
+import ErrorBag from './core/ErrorBag'
 import mapFields from './core/mapFields'
 import { ValidationProvider } from './components'
 import I18nDictionary from './localization/i18n'

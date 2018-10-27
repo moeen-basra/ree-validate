@@ -1,7 +1,7 @@
 // @flow
 import { assign } from '../utils'
-import ErrorBag from './errorBag'
-import FieldBag from './fieldBag'
+import ErrorBag from './ErrorBag'
+import FieldBag from './FieldBag'
 
 export default class ScopedValidator {
   constructor (base, vm) {
