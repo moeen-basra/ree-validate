@@ -4,8 +4,7 @@ import { find, isCallable, isNullOrUndefined, parseSelector, values } from '../u
 export default class ErrorBag {
   items: FieldError[]
 
-  constructor (errorBag = null, id = null) {
-    this.vmId = id || null
+  constructor (errorBag = null) {
     // make this bag a mirror of the provided one, sharing the same items reference.
     if (errorBag && errorBag instanceof ErrorBag) {
       this.items = errorBag.items
@@ -76,17 +75,14 @@ export default class ErrorBag {
   /**
    * Gets all error messages from the internal array.
    */
-  all (scope: string): Array<string> {
+  all (scope: ?string): Array<string> {
     const filterFn = (item) => {
       let matchesScope = true
-      let matchesVM = true
       if (!isNullOrUndefined(scope)) {
         matchesScope = item.scope === scope
       }
-
-      return matchesVM && matchesScope
+      return matchesScope
     }
-
     return this.items.filter(filterFn).map(e => e.msg)
   }
 
@@ -96,16 +92,10 @@ export default class ErrorBag {
   any (scope: ?string): boolean {
     const filterFn = (item) => {
       let matchesScope = true
-      let matchesVM = true
       if (!isNullOrUndefined(scope)) {
         matchesScope = item.scope === scope
       }
-
-      if (!isNullOrUndefined(this.vmId)) {
-        matchesVM = item.vmId === this.vmId
-      }
-
-      return matchesVM && matchesScope
+      return matchesScope
     }
 
     return !!this.items.filter(filterFn).length
@@ -115,13 +105,12 @@ export default class ErrorBag {
    * Removes all items from the internal array.
    */
   clear (scope?: ?string) {
-    let matchesVM = isNullOrUndefined(this.vmId) ? () => true : (i) => i.vmId === this.vmId
     if (isNullOrUndefined(scope)) {
       scope = null
     }
 
     for (let i = 0; i < this.items.length; ++i) {
-      if (matchesVM(this.items[i]) && this.items[i].scope === scope) {
+      if (this.items[i].scope === scope) {
         this.items.splice(i, 1)
         --i
       }
@@ -135,10 +124,6 @@ export default class ErrorBag {
     const isSingleField = !isNullOrUndefined(field) && !field.includes('*')
     const groupErrors = items => {
       const errors = items.reduce((collection, error) => {
-        if (!isNullOrUndefined(this.vmId) && error.vmId !== this.vmId) {
-          return collection
-        }
-
         if (!collection[error.field]) {
           collection[error.field] = []
         }
@@ -184,10 +169,6 @@ export default class ErrorBag {
    * Gets the internal array length.
    */
   count (): number {
-    if (this.vmId) {
-      return this.items.filter(e => e.vmId === this.vmId).length
-    }
-
     return this.items.length
   }
 
@@ -264,7 +245,7 @@ export default class ErrorBag {
   /**
    * Removes all error messages associated with a specific field.
    */
-  remove (field: string, scope: ?string, vmId: any) {
+  remove (field: string, scope: ?string) {
     if (isNullOrUndefined(field)) {
       return
     }
@@ -272,9 +253,7 @@ export default class ErrorBag {
     const selector = isNullOrUndefined(scope) ? String(field) : `${scope}.${field}`
     const { isPrimary } = this._makeCandidateFilters(selector)
     const shouldRemove = (item) => {
-      if (isNullOrUndefined(vmId)) return isPrimary(item)
-
-      return isPrimary(item) && item.vmId === vmId
+      return isPrimary(item)
     }
 
     for (let i = 0; i < this.items.length; ++i) {
@@ -289,7 +268,6 @@ export default class ErrorBag {
     let matchesRule = () => true
     let matchesScope = () => true
     let matchesName = () => true
-    let matchesVM = () => true
 
     const { id, rule, scope, name } = parseSelector(selector)
 
@@ -316,18 +294,14 @@ export default class ErrorBag {
       matchesName = item => item.field === name
     }
 
-    if (!isNullOrUndefined(this.vmId)) {
-      matchesVM = (item) => item.vmId === this.vmId
-    }
-
     // matches the first candidate.
     const isPrimary = (item) => {
-      return matchesVM(item) && matchesName(item) && matchesRule(item) && matchesScope(item)
+      return matchesName(item) && matchesRule(item) && matchesScope(item)
     }
 
     // matches a second candidate, which is a field with a name containing the '.' character.
     const isAlt = (item) => {
-      return matchesVM(item) && matchesRule(item) && item.field === `${scope}.${name}`
+      return matchesRule(item) && item.field === `${scope}.${name}`
     }
 
     return {
