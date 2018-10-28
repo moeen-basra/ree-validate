@@ -25,10 +25,8 @@ const DEFAULT_OPTIONS = {
   listen: true,
   name: null,
   rules: {},
-  // vm: null,
   classes: false,
   validity: true,
-  // aria: true,
   events: 'change|blur',
   delay: 0,
   classNames: {
@@ -48,7 +46,6 @@ export default class Field {
   events: string[]
   rules: { [string]: Object }
   validity: boolean
-  ctorConfig: ?Object
   flags: { [string]: boolean }
   alias: ?string
   getter: () => any
@@ -70,7 +67,6 @@ export default class Field {
     this.events = []
     this.delay = 0
     this.rules = {}
-    // this._cacheId(options)
     this.classNames = assign({}, DEFAULT_OPTIONS.classNames)
     options = assign({}, DEFAULT_OPTIONS, options)
     this._delay = !isNullOrUndefined(options.delay) ? options.delay : 0 // cache initial delay
@@ -184,7 +180,6 @@ export default class Field {
     this.name = (!isNullOrUndefined(options.name) ? String(options.name) : options.name) || this.name || null
     this.rules = options.rules !== undefined ? normalizeRules(options.rules) : this.rules
     this._bails = options.bails !== undefined ? options.bails : this._bails
-    // this.model = options.model || this.model
     this.listen = options.listen !== undefined ? options.listen : this.listen
     this.classes = (options.classes || this.classes || false) && !this.componentInstance
     this.classNames = isObject(options.classNames) ? merge(this.classNames, options.classNames) : this.classNames
@@ -284,10 +279,8 @@ export default class Field {
 
     if (!fields.length) return
 
-    // must be contained within the same component, so we use the vm root element constrain our dom search.
     fields.forEach(({ selector, name }) => {
       const options: FieldOptions = {
-        // vm: this.vm,
         classes: this.classes,
         classNames: this.classNames,
         delay: this.delay,
@@ -410,7 +403,6 @@ export default class Field {
       this._cancellationToken.cancelled = true
     }
 
-    // this.unwatch()
     this.dependencies.forEach(d => d.field.destroy())
     this.dependencies = []
   }

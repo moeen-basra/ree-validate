@@ -591,7 +591,6 @@ export default class Validator {
   _createFieldError (field: Field, rule: MapObject, data: MapObject, targetName?: string): FieldError {
     return {
       id: field.id,
-      // vmId: field.vmId,
       field: field.name,
       msg: this._formatErrorMessage(field, rule, data, targetName),
       rule: rule.name,
