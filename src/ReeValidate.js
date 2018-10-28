@@ -17,7 +17,6 @@ const defaultConfig = {
   events: 'input',
   inject: true,
   fastExit: true,
-  aria: true,
   validity: false,
   i18n: null,
   i18nRootKey: 'validation'

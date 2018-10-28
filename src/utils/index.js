@@ -15,7 +15,7 @@ export const isDateInput = (el: HTMLInputElement) => {
 /**
  * Gets the data attribute. the name must be kebab-case.
  */
-export const getDataAttribute = (el: HTMLElement, name: string) => el.getAttribute(`data-vv-${name}`)
+// export const getDataAttribute = (el: HTMLElement, name: string) => el.getAttribute(`data-vv-${name}`)
 
 /**
  * Checks if the values are either null or undefined.
@@ -29,7 +29,7 @@ export const isNullOrUndefined = (...values): boolean => {
 /**
  * Sets the data attribute.
  */
-export const setDataAttribute = (el: HTMLElement, name: string, value: string): void => el.setAttribute(`data-vv-${name}`, value)
+// export const setDataAttribute = (el: HTMLElement, name: string, value: string): void => el.setAttribute(`data-vv-${name}`, value)
 
 /**
  * Creates the default flags object.
@@ -77,35 +77,6 @@ export const isEqual = (lhs: any, rhs: any): boolean => {
   }
 
   return lhs === rhs
-}
-
-/**
- * Determines the input field scope.
- */
-export const getScope = (el: HTMLInputElement) => {
-  let scope = getDataAttribute(el, 'scope')
-  if (isNullOrUndefined(scope)) {
-    let form = getForm(el)
-
-    if (form) {
-      scope = getDataAttribute(form, 'scope')
-    }
-  }
-
-  return !isNullOrUndefined(scope) ? scope : null
-}
-
-/**
- * Get the closest form element.
- */
-export const getForm = (el: HTMLInputElement) => {
-  if (isNullOrUndefined(el)) return null
-
-  if (el.tagName === 'FORM') return el
-
-  if (!isNullOrUndefined(el.form)) return el.form
-
-  return !isNullOrUndefined(el.parentNode) ? getForm(el.parentNode) : null
 }
 
 /**
@@ -396,9 +367,8 @@ export const uniqId = (): string => {
   }
 
   id++
-  const newId = idTemplate.replace('{id}', String(id))
 
-  return newId
+  return idTemplate.replace('{id}', String(id))
 }
 
 /**
@@ -415,15 +385,15 @@ export const find = (arrayLike: { length: number } | any[], predicate: (any) => 
   return undefined
 }
 
-export const isBuiltInComponent = (vnode: Object): boolean => {
-  if (!vnode) {
-    return false
-  }
-
-  const tag = vnode.componentOptions.tag
-
-  return /^(keep-alive|transition|transition-group)$/.test(tag)
-}
+// export const isBuiltInComponent = (vnode: Object): boolean => {
+//   if (!vnode) {
+//     return false
+//   }
+//
+//   const tag = vnode.componentOptions.tag
+//
+//   return /^(keep-alive|transition|transition-group)$/.test(tag)
+// }
 
 export const makeEventsArray = (events: string) => {
   return (typeof events === 'string' && events.length) ? events.split('|') : []
@@ -486,70 +456,6 @@ export const merge = (target: MapObject, source: MapObject): MapObject => {
   })
 
   return target
-}
-
-export const fillRulesFromElement = (el: HTMLInputElement, rules: string | { [string]: boolean | any[] }) => {
-  if (el.required) {
-    rules = appendRule('required', rules)
-  }
-
-  if (isTextInput(el)) {
-    if (el.type === 'email') {
-      rules = appendRule(`email${el.multiple ? ':multiple' : ''}`, rules)
-    }
-
-    if (el.pattern) {
-      rules = appendRule({ regex: el.pattern }, rules)
-    }
-
-    // 524288 is the max on some browsers and test environments.
-    if (el.maxLength >= 0 && el.maxLength < 524288) {
-      rules = appendRule(`max:${el.maxLength}`, rules)
-    }
-
-    if (el.minLength > 0) {
-      rules = appendRule(`min:${el.minLength}`, rules)
-    }
-
-    if (el.type === 'number') {
-      rules = appendRule('decimal', rules)
-      if (el.min !== '') {
-        rules = appendRule(`min_value:${el.min}`, rules)
-      }
-
-      if (el.max !== '') {
-        rules = appendRule(`max_value:${el.max}`, rules)
-      }
-    }
-
-    return rules
-  }
-
-  if (isDateInput(el)) {
-    const timeFormat = el.step && Number(el.step) < 60 ? 'HH:mm:ss' : 'HH:mm'
-
-    if (el.type === 'date') {
-      return appendRule('date_format:YYYY-MM-DD', rules)
-    }
-
-    if (el.type === 'datetime-local') {
-      return appendRule(`date_format:YYYY-MM-DDT${timeFormat}`, rules)
-    }
-
-    if (el.type === 'month') {
-      return appendRule('date_format:YYYY-MM', rules)
-    }
-
-    if (el.type === 'week') {
-      return appendRule('date_format:YYYY-[W]WW', rules)
-    }
-
-    if (el.type === 'time') {
-      return appendRule(`date_format:${timeFormat}`, rules)
-    }
-  }
-
-  return rules
 }
 
 export const values = (obj) => {
