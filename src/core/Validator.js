@@ -9,7 +9,6 @@ import {
   createError,
   find,
   getPath,
-  includes,
   isCallable,
   isEmptyArray,
   isNullOrUndefined,
@@ -611,14 +610,6 @@ export default class Validator {
 
     if (!isNullOrUndefined(scope)) {
       return this.fields.find({ name, scope })
-    }
-
-    if (includes(name, '.')) {
-      const [fieldScope, ...fieldName] = name.split('.')
-      const field = this.fields.find({ name: fieldName.join('.'), scope: fieldScope })
-      if (field) {
-        return field
-      }
     }
 
     return this.fields.find({ name, scope: null })

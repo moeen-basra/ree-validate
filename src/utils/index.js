@@ -385,16 +385,6 @@ export const find = (arrayLike: { length: number } | any[], predicate: (any) => 
   return undefined
 }
 
-// export const isBuiltInComponent = (vnode: Object): boolean => {
-//   if (!vnode) {
-//     return false
-//   }
-//
-//   const tag = vnode.componentOptions.tag
-//
-//   return /^(keep-alive|transition|transition-group)$/.test(tag)
-// }
-
 export const makeEventsArray = (events: string) => {
   return (typeof events === 'string' && events.length) ? events.split('|') : []
 }

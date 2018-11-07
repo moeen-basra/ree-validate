@@ -1,6 +1,3 @@
-import type Validator from '../src/core/Validator';
-import type ErrorBag from '../src/core/ErrorBag';
-
 declare type ResultObject = {
   valid: boolean,
   data: Object
