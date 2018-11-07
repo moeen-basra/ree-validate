@@ -26,7 +26,6 @@ export let currentConfig = assign({}, defaultConfig)
 
 class ReeValidate {
   static version: string
-  static install: () => void
   static Validator: Function<Validator>
   _validator: Validator
 

@@ -17,11 +17,9 @@ const rulesPlugin = ({ Validator }) => {
   Validator.localize('en', en)
 }
 
-const install = ReeValidate.install
 ReeValidate.use(rulesPlugin)
 
 export {
-  install,
   mapFields,
   Validator,
   ErrorBag,
