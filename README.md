@@ -160,7 +160,7 @@ export default Page
 
 ```
 
-### Changing the local for ReeValidate
+### Changing the locale for ReeValidate
 
 ```
 import React, { Component } from 'react'
