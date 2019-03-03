@@ -17,10 +17,10 @@ const paramNames = ['locale']
 
 export {
   validate,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
-  paramNames
+  paramNames,
 }

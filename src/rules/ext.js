@@ -5,9 +5,9 @@ const validate = (files, extensions) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

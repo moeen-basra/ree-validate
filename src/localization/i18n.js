@@ -112,9 +112,9 @@ export default class I18nDictionary implements IDictionary {
     this.merge({
       [locale]: {
         messages: {
-          [key]: value
-        }
-      }
+          [key]: value,
+        },
+      },
     })
   }
 
@@ -122,9 +122,9 @@ export default class I18nDictionary implements IDictionary {
     this.merge({
       [locale]: {
         attributes: {
-          [key]: value
-        }
-      }
+          [key]: value,
+        },
+      },
     })
   }
 };

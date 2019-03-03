@@ -1,6 +1,6 @@
 const validate = (value, { targetValue }) => String(value) === String(targetValue)
 const options = {
-  hasTarget: true
+  hasTarget: true,
 }
 
 const paramNames = ['targetValue']
@@ -8,11 +8,11 @@ const paramNames = ['targetValue']
 export {
   validate,
   options,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
   options,
-  paramNames
+  paramNames,
 }

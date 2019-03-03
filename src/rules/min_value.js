@@ -11,9 +11,9 @@ const validate = (value, [min]) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

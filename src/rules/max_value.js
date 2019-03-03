@@ -11,9 +11,9 @@ const validate = (value, [max]) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

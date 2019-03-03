@@ -2,16 +2,16 @@
 const RULES = {}
 
 export default class RuleContainer {
-  static get rules () {
-    return RULES
-  }
-
   static add (name, { validate, options, paramNames }) {
     RULES[name] = {
       validate,
       options,
-      paramNames
+      paramNames,
     }
+  }
+
+  static get rules () {
+    return RULES
   }
 
   static has (name) {
@@ -20,6 +20,10 @@ export default class RuleContainer {
 
   static isImmediate (name) {
     return !!(RULES[name] && RULES[name].options.immediate)
+  }
+
+  static isRequireRule (name) {
+    return !!(RULES[name] && RULES[name].options.computesRequired)
   }
 
   static isTargetRule (name) {

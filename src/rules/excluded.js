@@ -5,9 +5,9 @@ const validate = (...args) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

@@ -34,9 +34,9 @@ const validate = (value, [length, max = undefined]) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

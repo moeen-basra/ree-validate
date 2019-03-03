@@ -14,9 +14,9 @@ const validate = (value, options = {}) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

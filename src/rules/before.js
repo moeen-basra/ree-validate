@@ -20,7 +20,7 @@ const validate = (value, { targetValue, inclusion = false, format } = {}) => {
 
 const options = {
   hasTarget: true,
-  isDate: true
+  isDate: true,
 }
 
 const paramNames = ['targetValue', 'inclusion', 'format']
@@ -28,11 +28,11 @@ const paramNames = ['targetValue', 'inclusion', 'format']
 export {
   validate,
   options,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
   options,
-  paramNames
+  paramNames,
 }

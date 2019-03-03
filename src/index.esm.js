@@ -8,16 +8,12 @@ import { assign } from './utils'
 
 const version = '__VERSION__'
 
-const rulesPlugin = ({ Validator }) => {
-  Object.keys(Rules).forEach(rule => {
-    Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }))
-  })
+Object.keys(Rules).forEach(rule => {
+  ReeValidate.Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }))
+})
 
-  // Merge the english messages.
-  Validator.localize('en', en)
-}
-
-ReeValidate.use(rulesPlugin)
+// Merge the english messages.
+ReeValidate.Validator.localize('en', en)
 
 export {
   mapFields,
@@ -26,5 +22,8 @@ export {
   Rules,
   version,
 }
+
+ReeValidate.version = version
+ReeValidate.mapFields = mapFields
 
 export default ReeValidate

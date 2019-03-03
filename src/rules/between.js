@@ -10,10 +10,10 @@ const paramNames = ['min', 'max']
 
 export {
   validate,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
-  paramNames
+  paramNames,
 }

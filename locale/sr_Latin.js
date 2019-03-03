@@ -1,22 +1,23 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 const messages = {
   _default: (field) => `Polje ${field} nije validno.`,
   after: (field, [target]) => `Polje ${field} mora biti posle ${target}.`,
+  alpha: (field) => `Polje ${field} može sadržati samo slova.`,
   alpha_dash: (field) => `Polje ${field} može sadržati alfanumeričke karaktere i povlake.`,
   alpha_num: (field) => `Polje ${field} može sadržati samo alfanumeričke karaktere.`,
   alpha_spaces: (field) => `Polje ${field} može sadržati samo alfanumeričke karaktere i razmake.`,
-  alpha: (field) => `Polje ${field} može sadržati samo slova.`,
   before: (field, [target]) => `Polje ${field} mora biti pre ${target}.`,
   between: (field, [min, max]) => `Polje ${field} mora biti između ${min} i ${max}.`,
   confirmed: (field) => `Potvrda polja ${field} se ne poklapa.`,
   credit_card: (field) => `Polje ${field} nije validno.`,
   date_between: (field, [min, max]) => `Polje ${field} mora biti između ${min} i ${max}.`,
   date_format: (field, [format]) => `Polje ${field} mora biti u formatu ${format}.`,
-  decimal: (field, [decimals = '*'] = []) => `Polje ${field} mora biti broj i može sadržati ${decimals === '*' ? '' : decimals} decimalnih mesta.`,
+  decimal: (field, [decimals = '*'] = []) => `Polje ${field} mora biti broj i može sadržati${decimals === '*' ? '' : ' ' + decimals} decimalnih mesta.`,
   digits: (field, [length]) => `Polje ${field} mora biti broj i sadržati tačno ${length} cifara.`,
   dimensions: (field, [width, height]) => `Polje ${field} mora biti ${width} x ${height} piksela.`,
   email: (field) => `Polje ${field} mora biti validan imejl.`,
+  excluded: (field) => `Polje ${field} mora imati validnu vrednost.`,
   ext: (field) => `Polje ${field} mora biti validan fajl.`,
   image: (field) => `Polje ${field} mora biti slika.`,
   included: (field) => `Polje ${field} mora biti validna vrednost.`,
@@ -26,22 +27,21 @@ const messages = {
   mimes: (field) => `Polje ${field} mora biti validan tip fajla.`,
   min: (field, [length]) => `Polje ${field} mora sadržati najmanje ${length} karaktera.`,
   min_value: (field, [min]) => `Polje ${field} ne sme biti manje od ${min}.`,
-  excluded: (field) => `Polje ${field} mora imati validnu vrednost.`,
   numeric: (field) => `Polje ${field} mora biti broj.`,
   regex: (field) => `Format polja ${field} nije validan.`,
   required: (field) => `Polje ${field} je obavezno.`,
   size: (field, [size]) => `Polje ${field} mora biti manje od ${formatFileSize(size)}.`,
-  url: (field) => `Polje ${field} nije validna veb adresa.`
-};
+  url: (field) => `Polje ${field} nije validna veb adresa.`,
+}
 
 const locale = {
   name: 'sr_Latin',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale });
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

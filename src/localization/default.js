@@ -107,7 +107,7 @@ export default class Dictionary implements IDictionary {
     if (!this.hasLocale(locale)) {
       this.container[locale] = {
         messages: {},
-        attributes: {}
+        attributes: {},
       }
     }
 
@@ -118,7 +118,7 @@ export default class Dictionary implements IDictionary {
     if (!this.hasLocale(locale)) {
       this.container[locale] = {
         messages: {},
-        attributes: {}
+        attributes: {},
       }
     }
 

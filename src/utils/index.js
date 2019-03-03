@@ -15,7 +15,16 @@ export const isDateInput = (el: HTMLInputElement) => {
 /**
  * Gets the data attribute. the name must be kebab-case.
  */
-// export const getDataAttribute = (el: HTMLElement, name: string) => el.getAttribute(`data-vv-${name}`)
+export const getDataAttribute = (el: HTMLElement, name: string) => el.getAttribute(`data-vv-${name}`)
+
+export const isNaN = (value: any) => {
+  if ('isNaN' in Number) {
+    return Number.isNaN(value)
+  }
+
+  // eslint-disable-next-line
+  return value === value
+}
 
 /**
  * Checks if the values are either null or undefined.
@@ -44,7 +53,7 @@ export const createFlags = (): Object => ({
   validated: false,
   pending: false,
   required: false,
-  changed: false
+  changed: false,
 })
 
 /**
@@ -74,6 +83,10 @@ export const isEqual = (lhs: any, rhs: any): boolean => {
     }) && Object.keys(rhs).every(key => {
       return isEqual(lhs[key], rhs[key])
     })
+  }
+
+  if (isNaN(lhs) && isNaN(rhs)) {
+    return true
   }
 
   return lhs === rhs
@@ -134,7 +147,7 @@ export const parseRule = (rule: string): Object => {
 /**
  * Debounces a function.
  */
-export const debounce = (fn: () => any, wait: number = 0, immediate: boolean = false, token: { cancelled: boolean } = { cancelled: false }) => {
+export const debounce = (fn: () => any, wait: number = 0, token: { cancelled: boolean } = { cancelled: false }) => {
   if (wait === 0) {
     return fn
   }
@@ -145,14 +158,13 @@ export const debounce = (fn: () => any, wait: number = 0, immediate: boolean = f
     const later = () => {
       timeout = null
 
-      if (!immediate && !token.cancelled) fn(...args)
+      // check if the fn call was cancelled.
+      if (!token.cancelled) fn(...args)
     }
-    /* istanbul ignore next */
-    const callNow = immediate && !timeout
+
     clearTimeout(timeout)
     timeout = setTimeout(later, wait)
-    /* istanbul ignore next */
-    if (callNow) fn(...args)
+    if (!timeout) fn(...args)
   }
 }
 
@@ -368,7 +380,20 @@ export const uniqId = (): string => {
 
   id++
 
-  return idTemplate.replace('{id}', String(id))
+  const newId = idTemplate.replace('{id}', String(id))
+
+  return newId
+}
+
+export const findIndex = (arrayLike: { length: number } | any[], predicate: (any) => boolean): number => {
+  const array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike)
+  for (let i = 0; i < array.length; i++) {
+    if (predicate(array[i])) {
+      return i
+    }
+  }
+
+  return -1
 }
 
 /**
@@ -376,13 +401,9 @@ export const uniqId = (): string => {
  */
 export const find = (arrayLike: { length: number } | any[], predicate: (any) => boolean): any => {
   const array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike)
-  for (let i = 0; i < array.length; i++) {
-    if (predicate(array[i])) {
-      return array[i]
-    }
-  }
+  const idx = findIndex(array, predicate)
 
-  return undefined
+  return idx === -1 ? undefined : array[idx]
 }
 
 export const makeEventsArray = (events: string) => {
@@ -470,7 +491,7 @@ export const parseSelector = (selector) => {
       id: selector.slice(1),
       rule,
       name: null,
-      scope: null
+      scope: null,
     }
   }
 
@@ -486,7 +507,7 @@ export const parseSelector = (selector) => {
     id: null,
     scope,
     name,
-    rule
+    rule,
   }
 }
 

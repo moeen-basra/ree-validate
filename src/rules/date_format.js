@@ -5,7 +5,7 @@ const validate = (value, { format }) => {
 }
 
 const options = {
-  isDate: true
+  isDate: true,
 }
 
 const paramNames = ['format']
@@ -13,11 +13,11 @@ const paramNames = ['format']
 export {
   validate,
   options,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
   options,
-  paramNames
+  paramNames,
 }

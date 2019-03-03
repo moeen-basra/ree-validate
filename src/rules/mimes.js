@@ -5,9 +5,9 @@ const validate = (files, mimes) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

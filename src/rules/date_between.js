@@ -32,7 +32,7 @@ const validate = (value, { min, max, inclusivity = '()', format } = {}) => {
 }
 
 const options = {
-  isDate: true
+  isDate: true,
 }
 
 const paramNames = ['min', 'max', 'inclusivity', 'format']
@@ -40,11 +40,11 @@ const paramNames = ['min', 'max', 'inclusivity', 'format']
 export {
   validate,
   options,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
   options,
-  paramNames
+  paramNames,
 }

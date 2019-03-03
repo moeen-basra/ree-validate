@@ -16,4 +16,7 @@ export {
   version,
 }
 
+ReeValidate.version = version
+ReeValidate.mapFields = mapFields
+
 export default ReeValidate

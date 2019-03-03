@@ -7,9 +7,9 @@ const validate = (value) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

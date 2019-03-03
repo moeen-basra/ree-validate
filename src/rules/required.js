@@ -18,9 +18,9 @@ const validate = (value, [invalidateFalse = false] = []) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

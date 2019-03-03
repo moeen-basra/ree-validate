@@ -1,9 +1,9 @@
 const validate = (files) => files.every(file => /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name))
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

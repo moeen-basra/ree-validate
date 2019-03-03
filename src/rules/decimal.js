@@ -29,10 +29,10 @@ const paramNames = ['decimals', 'separator']
 
 export {
   validate,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
-  paramNames
+  paramNames,
 }

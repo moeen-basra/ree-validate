@@ -17,10 +17,10 @@ const paramNames = ['version']
 
 export {
   validate,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
-  paramNames
+  paramNames,
 }

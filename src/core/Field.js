@@ -1,6 +1,6 @@
 // @flow
 import RuleContainer from './RuleContainer'
-import { addEventListener } from '../utils/events'
+import { addEventListener, normalizeEvents } from '../utils/events'
 import {
   assign,
   createFlags,
@@ -10,12 +10,11 @@ import {
   isObject,
   isTextInput,
   makeDelayObject,
-  makeEventsArray,
   merge,
   normalizeRules,
   toggleClass,
   uniqId,
-  warn
+  warn,
 } from '../utils'
 
 const DEFAULT_OPTIONS = {
@@ -35,8 +34,8 @@ const DEFAULT_OPTIONS = {
     valid: 'valid', // model is valid
     invalid: 'invalid', // model is invalid
     pristine: 'pristine', // control has not been interacted with
-    dirty: 'dirty' // control has been interacted with
-  }
+    dirty: 'dirty', // control has been interacted with
+  },
 }
 
 export default class Field {
@@ -58,6 +57,7 @@ export default class Field {
   delay: number | Object
   listen: boolean
   value: any
+  _alias: ?string
   _delay: number | Object
 
   constructor (options: FieldOptions | MapObject = {}) {
@@ -67,6 +67,7 @@ export default class Field {
     this.events = []
     this.delay = 0
     this.rules = {}
+    this.forceRequired = false
     this.classNames = assign({}, DEFAULT_OPTIONS.classNames)
     options = assign({}, DEFAULT_OPTIONS, options)
     this._delay = !isNullOrUndefined(options.delay) ? options.delay : 0 // cache initial delay
@@ -78,19 +79,10 @@ export default class Field {
     this.updated = false
   }
 
-  _alias: ?string
-
-  /**
-   * Gets the display name (user-friendly name).
-   */
-  get alias (): ?string {
-    return this._alias
-  }
-
   get validator (): any {
     return {
       validate: () => {
-      }
+      },
     }
   }
 
@@ -100,6 +92,13 @@ export default class Field {
 
   get isDisabled (): boolean {
     return false
+  }
+
+  /**
+   * Gets the display name (user-friendly name).
+   */
+  get alias (): ?string {
+    return this._alias
   }
 
   /**
@@ -170,6 +169,7 @@ export default class Field {
   update (options: Object) {
     this.targetOf = options.targetOf || null
     this.immediate = options.immediate || this.immediate || false
+    this.persist = options.persist || this.persist || false
 
     // update errors scope if the field scope was changed.
     if (!isNullOrUndefined(options.scope) && options.scope !== this.scope && isCallable(this.validator.update)) {
@@ -185,13 +185,13 @@ export default class Field {
     this.classNames = isObject(options.classNames) ? merge(this.classNames, options.classNames) : this.classNames
     this.getter = isCallable(options.getter) ? options.getter : this.getter
     this._alias = options.alias || this._alias
-    this.events = (options.events) ? makeEventsArray(options.events) : this.events
+    this.events = (options.events) ? normalizeEvents(options.events) : this.events
     this.delay = makeDelayObject(this.events, options.delay || this.delay, this._delay)
     this.updateDependencies()
     this.addActionListeners()
 
     if (process.env.NODE_ENV !== 'production' && !this.name && !this.targetOf) {
-      warn('A field is missing a "name" or "data-vv-name" attribute')
+      warn('A field is missing a "name"')
     }
 
     // update required flag flags
@@ -238,7 +238,7 @@ export default class Field {
       valid: 'invalid',
       invalid: 'valid',
       touched: 'untouched',
-      untouched: 'touched'
+      untouched: 'touched',
     }
 
     Object.keys(flags).forEach(flag => {
@@ -287,7 +287,7 @@ export default class Field {
         scope: this.scope,
         events: this.events.join('|'),
         immediate: this.immediate,
-        targetOf: this.id
+        targetOf: this.id,
       }
 
       this.dependencies.push({ name, field: new Field(options) })

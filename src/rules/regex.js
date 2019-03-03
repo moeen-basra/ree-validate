@@ -14,10 +14,10 @@ const paramNames = ['expression']
 
 export {
   validate,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate,
-  paramNames
+  paramNames,
 }

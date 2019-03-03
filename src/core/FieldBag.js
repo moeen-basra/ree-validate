@@ -9,21 +9,21 @@ export default class FieldBag {
     this.items = items || []
   }
 
+  [typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] () {
+    let index = 0
+    return {
+      next: () => {
+        return { value: this.items[index++], done: index > this.items.length }
+      },
+    }
+  }
+
   /**
    * Gets the current items length.
    */
 
   get length (): number {
     return this.items.length
-  }
-
-  [typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] () {
-    let index = 0
-    return {
-      next: () => {
-        return { value: this.items[index++], done: index > this.items.length }
-      }
-    }
   }
 
   /**

@@ -6,6 +6,8 @@ export const isEvent = (evt: any): boolean => {
 }
 
 export const normalizeEvents = (evts: string | string[]): string[] => {
+  if (!evts) return []
+
   return (typeof evts === 'string' ? evts.split('|') : evts)
 }
 
@@ -17,7 +19,7 @@ export const detectPassiveSupport = () => {
       get () {
         supportsPassive = true
         return null
-      }
+      },
     })
     window.addEventListener('testPassive', null, opts)
     window.removeEventListener('testPassive', null, opts)

@@ -14,9 +14,9 @@ const validate = (files, [size]) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

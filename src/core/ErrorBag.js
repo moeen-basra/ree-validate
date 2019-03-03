@@ -18,7 +18,7 @@ export default class ErrorBag {
     return {
       next: () => {
         return { value: this.items[index++], done: index > this.items.length }
-      }
+      },
     }
   }
 
@@ -27,7 +27,7 @@ export default class ErrorBag {
    */
   add (error: FieldError | FieldError[]) {
     this.items.push(
-      ...this._normalizeError(error)
+      ...this._normalizeError(error),
     )
   }
 
@@ -251,9 +251,10 @@ export default class ErrorBag {
     }
 
     const selector = isNullOrUndefined(scope) ? String(field) : `${scope}.${field}`
-    const { isPrimary } = this._makeCandidateFilters(selector)
+    const { isPrimary, isAlt } = this._makeCandidateFilters(selector)
+    const matches = item => isPrimary(item) || isAlt(item)
     const shouldRemove = (item) => {
-      return isPrimary(item)
+      return matches(item)
     }
 
     for (let i = 0; i < this.items.length; ++i) {
@@ -279,7 +280,7 @@ export default class ErrorBag {
     if (id) {
       return {
         isPrimary: item => matchesRule(item) && (item => id === item.id),
-        isAlt: () => false
+        isAlt: () => false,
       }
     }
 
@@ -306,7 +307,7 @@ export default class ErrorBag {
 
     return {
       isPrimary,
-      isAlt
+      isAlt,
     }
   }
 

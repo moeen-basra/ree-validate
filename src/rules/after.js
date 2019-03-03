@@ -20,7 +20,7 @@ const afterValidator = (value, { targetValue, inclusion = false, format } = {}) 
 
 const options = {
   hasTarget: true,
-  isDate: true
+  isDate: true,
 }
 
 // required to convert from a list of array values to an object.
@@ -29,11 +29,11 @@ const paramNames = ['targetValue', 'inclusion', 'format']
 export {
   afterValidator as validate,
   options,
-  paramNames
+  paramNames,
 }
 
 export default {
   validate: afterValidator,
   options,
-  paramNames
+  paramNames,
 }

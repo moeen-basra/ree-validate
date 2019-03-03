@@ -1,4 +1,3 @@
-// @flow
 import { createError } from './utils'
 import DefaultDictionary from './localization/default'
 
@@ -7,9 +6,9 @@ const drivers = {
     en: {
       messages: {},
       attributes: {},
-      custom: {}
-    }
-  })
+      custom: {},
+    },
+  }),
 }
 
 let currentDriver = 'default'

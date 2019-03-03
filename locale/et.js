@@ -1,17 +1,17 @@
-import { formatFileSize, isDefinedGlobally } from './utils';
+import { formatFileSize, isDefinedGlobally } from './utils'
 
 // http://stackoverflow.com/a/1026087/1470607
 function capitalizeFirstLetter (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const messages = {
   _default: (field) => `${capitalizeFirstLetter(field)} ei oma sobivat väärtust.`,
   after: (field, [target]) => `${capitalizeFirstLetter(field)} peab olema hiljem kui ${target}.`,
+  alpha: (field) => `${capitalizeFirstLetter(field)} võib sisaldada ainult tähti.`,
   alpha_dash: (field) => `${capitalizeFirstLetter(field)} võib sisaldada ainult tähti, numbreid, kriipse ja alakriipse.`,
   alpha_num: (field) => `${capitalizeFirstLetter(field)} võib sisaldada ainult tähti ja numbreid.`,
   alpha_spaces: (field) => `${capitalizeFirstLetter(field)} võib sisaldada ainult tähti ja tühikuid.`,
-  alpha: (field) => `${capitalizeFirstLetter(field)} võib sisaldada ainult tähti.`,
   before: (field, [target]) => `${capitalizeFirstLetter(field)} peab olema varem kui ${target}.`,
   between: (field, [min, max]) => `${capitalizeFirstLetter(field)} peab jääma vahemikku ${min} kuni ${max}.`,
   confirmed: (field) => `${capitalizeFirstLetter(field)} on kontrollist erinev.`,
@@ -22,6 +22,7 @@ const messages = {
   digits: (field, [length]) => `${capitalizeFirstLetter(field)} peab koosnema täpselt ${length}-st numbrist.`,
   dimensions: (field, [width, height]) => `${capitalizeFirstLetter(field)} peab olema ${width} korda ${height} pikslit suur.`,
   email: (field) => `${capitalizeFirstLetter(field)} peab olema e-maili aadress.`,
+  excluded: (field) => `${capitalizeFirstLetter(field)} ei oma sobivat väärtust.`,
   ext: (field) => `${capitalizeFirstLetter(field)} peab olema sobiv fail.`,
   image: (field) => `${capitalizeFirstLetter(field)} peab olema pilt.`,
   included: (field) => `${capitalizeFirstLetter(field)} ei oma sobivat väärtust.`,
@@ -31,22 +32,21 @@ const messages = {
   mimes: (field) => `${capitalizeFirstLetter(field)} peab olema sobivat tüüpi fail.`,
   min: (field, [length]) => `${capitalizeFirstLetter(field)} peab olema vähemalt ${length} tähemärki pikk.`,
   min_value: (field, [min]) => `${capitalizeFirstLetter(field)} peab olema ${min} või suurem.`,
-  excluded: (field) => `${capitalizeFirstLetter(field)} ei oma sobivat väärtust.`,
   numeric: (field) => `${capitalizeFirstLetter(field)} võib sisaldada ainult numbreid.`,
   regex: (field) => `${capitalizeFirstLetter(field)} pole sobival kujul.`,
   required: (field) => `${capitalizeFirstLetter(field)} on nõutud väli.`,
   size: (field, [size]) => `${capitalizeFirstLetter(field)} peab olema väiksem kui ${formatFileSize(size)}.`,
-  url: (field) => `${capitalizeFirstLetter(field)} peab olema URL.`
-};
+  url: (field) => `${capitalizeFirstLetter(field)} peab olema URL.`,
+}
 
 const locale = {
   name: 'et',
   messages,
-  attributes: {}
-};
-
-if (isDefinedGlobally()) {
-  ReeValidate.Validator.localize({ [locale.name]: locale });
+  attributes: {},
 }
 
-export default locale;
+if (isDefinedGlobally()) {
+  ReeValidate.Validator.localize({ [locale.name]: locale })
+}
+
+export default locale

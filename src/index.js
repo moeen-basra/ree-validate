@@ -1,19 +1,19 @@
 import * as Rules from './rules'
 import ReeValidate from './ReeValidate'
+import mapFields from './core/mapFields'
 import { assign } from './utils'
 import en from '../locale/en'
 
-// rules plugin definition.
-const rulesPlugin = ({ Validator }) => {
-  Object.keys(Rules).forEach(rule => {
-    Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }))
-  })
+Object.keys(Rules).forEach(rule => {
+  ReeValidate.Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }))
+})
 
-  // Merge the english messages.
-  Validator.localize('en', en)
-}
+ReeValidate.Validator.localize({
+  en,
+})
 
-ReeValidate.use(rulesPlugin)
+ReeValidate.version = '__VERSION__'
 ReeValidate.Rules = Rules
+ReeValidate.mapFields = mapFields
 
 export default ReeValidate

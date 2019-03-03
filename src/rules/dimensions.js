@@ -4,7 +4,7 @@ const validateImage = (file, width, height) => {
     const image = new Image()
     image.onerror = () => resolve({ valid: false })
     image.onload = () => resolve({
-      valid: image.width === Number(width) && image.height === Number(height)
+      valid: image.width === Number(width) && image.height === Number(height),
     })
 
     image.src = URL.createObjectURL(file)
@@ -26,9 +26,9 @@ const validate = (files, [width, height]) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }

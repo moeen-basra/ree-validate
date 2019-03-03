@@ -3,9 +3,9 @@ const validate = (value, [other] = []) => {
 }
 
 export {
-  validate
+  validate,
 }
 
 export default {
-  validate
+  validate,
 }
