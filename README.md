@@ -37,7 +37,7 @@ class Page extends Component {
   constructor(props) {
     super(props)
     
-    this.validator = new ReeValidate({
+    this.validator = new ReeValidate.Validator({
       email: 'required|email',
       password: 'required|min:3',
     })
@@ -75,21 +75,19 @@ class Page extends Component {
     console.log(formData)
   }
   
-  validateAndSubmit(e) {
+  async validateAndSubmit(e) {
     e.preventDefault()
     
     const { formData } = this.state
     const { errors } = this.validator
 
-    this.validator.validateAll(formData)
-      .then(success => {
-        if (success) {
-          this.submit(formData)
-        } else {
-          this.setState({ errors })
-        }
-      })
+    const valid = this.validator.validateAll(formData)
     
+    if (valid) {
+        this.submit(formData)
+    } else {
+        this.setState({ errors })        
+    }    
   }
   
   render() {
@@ -176,7 +174,7 @@ class Page extends Component {
     constructor(props) {
         super(props)
 
-        this.validator = new ReeValidate({
+        this.validator = new ReeValidate.Validator({
             email: 'required|email',
             password: 'required|min:6'
         })
@@ -190,6 +188,200 @@ class Page extends Component {
 }
 
 export default Page
+```
+
+### HOC
+
+You can also use the following hoc
+
+note: it is not yet part of the package
+
+```jsx harmony
+import * as React from 'react'
+import { Validator } from 'ree-validate'
+
+export default function withValidator(Component, fields){
+  class withValidator extends React.Component{
+
+    validator = new Validator()
+
+    _isMounted = false
+
+    constructor(props: any) {
+      super(props)
+
+      this.attachRules(fields)
+
+      this.state = {
+        errors: this.validator.errors,
+      }
+    }
+
+    componentDidMount() {
+      this._isMounted = true
+    }
+
+    componentWillUnmount() {
+      this._isMounted = false
+    }
+
+    validateAll = async (data: any) => {
+      const { errors } = this.validator
+
+      for (let fieldName in data) {
+        if (data.hasOwnProperty(fieldName)) {
+          if (errors.has(fieldName)) {
+            errors.remove(fieldName)
+          }
+        }
+      }
+
+      const isValid = await this.validator.validateAll(data)
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+
+      return isValid
+    }
+    validateOne = async ({ name, value }: { name: string, value: any }) => {
+      const { errors } = this.validator
+
+      if (errors.has(name)) {
+        errors.remove(name)
+      }
+
+      const isValid = await this.validator.validate(name, value)
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+
+      return isValid
+    }
+
+    validate = (data: any, multi: boolean = true) => {
+      if (multi) {
+        return this.validateAll(data)
+      }
+      return this.validateOne(data)
+    }
+
+    clearErrors = (fieldName: ?string) => {
+      const { errors } = this.validator
+
+      if (fieldName) {
+        errors.remove(fieldName)
+      } else {
+        errors.clear()
+      }
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+    }
+
+    attachRules = (field: Field | Array<Field>) => {
+      if (isArray(field)) {
+        field.forEach((f: Field) => {
+          this.attachRules(f)
+        })
+      } else {
+        this.detachRules(field)
+
+        this.validator.attach(field)
+      }
+    }
+
+    detachRules = (field: Field | Array<Field>) => {
+      if (isArray(field)) {
+        field.forEach((f: Field) => {
+          this.detachRules(f)
+        })
+      } else {
+        if (this.validator.fields.find({ name: field.name })) {
+          this.validator.detach(field.name)
+        }
+      }
+    }
+
+    addErrors = (field: string, message: any) => {
+      const { errors } = this.validator
+
+      if (errors.has(field)) {
+        errors.remove(field)
+      }
+
+      errors.add(field, message)
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+    }
+
+    render() {
+      return <Component {...this.props}
+                        validator={this.validator}
+                        validate={this.validate}
+                        attachRules={this.attachRules}
+                        detachRules={this.detachRules}
+                        errors={this.state.errors}
+                        addErrors={this.addErrors}
+                        clearErrors={this.clearErrors}/>
+    }
+  }
+
+  withValidator.displayName = `withValidator_${Component.displayName || Component.name}`
+
+  return withValidator
+}
+
+```
+
+then use this hoc as following
+
+```jsx harmony
+class Page extends React.Component<*, State> {
+  static displayName = 'Login Page'
+
+  state = {
+    form: {
+      username: null,
+      password: null,
+    },
+  }
+
+  handleChange = async (name: string, value: any) => {
+    const isValid = await this.props.validateOne(name, value)
+    
+    console.log(this.props.errors)
+  }
+
+  handleSubmit = async (evt) => {
+    evt.preventDefault()
+
+    const isValid = await this.props.validateAll(this.state.form)
+
+    console.log(this.props.errors)
+  }
+
+  render() {
+    console.log(this.props)
+  }
+}
+
+export default withValidator(Page, [
+  {
+    name: 'username',
+    rules: 'required',
+    alias: 'Username',
+  },
+  {
+    name: 'password',
+    rules: 'required',
+    alias: 'Password',
+  },
+])
 ```
 
 ### Available Validation Rules
