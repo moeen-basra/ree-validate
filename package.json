@@ -7,7 +7,6 @@
   "module": "dist/ree-validate.esm.js",
   "unpkg": "dist/ree-validate.js",
   "main": "dist/ree-validate.js",
-  "typings": "types/index.d.ts",
   "homepage": "https://github.com/moeen-basra/ree-validate",
   "repository": "https://github.com/moeen-basra/ree-validate",
   "scripts": {
@@ -94,5 +93,6 @@
       "git add",
       "jest --maxWorkers=1 --bail --findRelatedTests"
     ]
-  }
+  },
+  "dependencies": {}
 }
