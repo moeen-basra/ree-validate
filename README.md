@@ -1,6 +1,4 @@
-ree-validate is a plugin for [React.js](https://facebook.github.io/react/) that allows you to validate input fields, and display errors.
-
-This is an extended version of VeeValidate [VeeValidate](http://vee-validate.logaretm.com/)
+VeeValidate is a library for [React.js](https://facebook.github.io/react/) that allows you to validate input fields, and display errors.
 
 This plugin is inspired by [PHP Framework Laravel's validation](https://laravel.com/).
 
@@ -433,6 +431,6 @@ This library uses ES6 Promises so be sure to provide a polyfill for it for the b
 ### Credits
 - Some validations/test scenarios are provided/based on [validator.js](https://github.com/chriso/validator.js).
 - Inspired by Laravel's [validation syntax](https://laravel.com/docs/5.4/validation).
-- Originally written by [Abdelrahman Ismail](https://github.com/Abdelrahman3D)
+- [VeeValidate](https://baianat.github.io/vee-validate/)
 
 ### license MIT
