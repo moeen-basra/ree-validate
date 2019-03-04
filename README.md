@@ -386,38 +386,45 @@ export default withValidator(Page, [
 
 ### Available Validation Rules
 
-[Available Validation Rules](http://vee-validate.logaretm.com/index.html#available-rules)
+ReeValidate comes with a bunch of validation rules out of the box and they are all localized and cover most validation needs:
 
-    after
-    alpha
-    alpha_dash
-    alpha_num
-    alpha_spaces
-    before
-    between
-    confirmed
-    credit_card
-    date_between
-    date_format
-    decimal
-    digits
-    dimensions
-    email
-    ext
-    image
-    in
-    ip
-    max
-    max_value
-    mimes
-    min
-    min_value
-    not_in
-    numeric
-    regex
-    required
-    size
-    url
+```
+after
+alpha
+alpha_dash
+alpha_num
+alpha_spaces
+before
+between
+confirmed
+credit_card
+date_between
+date_format
+decimal
+digits
+dimensions
+email
+ext
+image
+included
+integer
+ip
+is
+is_not
+length
+max
+max_value
+mimes
+min
+min_value
+excluded
+numeric
+regex
+required
+required_if
+size
+url
+```
 
 ### Compatability
 
