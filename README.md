@@ -1,14 +1,4 @@
-<p align="center">
-  <a href="https://github.com/moeen-basra/ree-validate.git" target="_blank">
-    <img width="200" src="http://www.unixstickers.com/image/data/stickers/react/badge/React-JS.sh.png">
-  </a>
-</p>
-
-<br>
-
-ree-validate is a plugin for [React.js](https://facebook.github.io/react/) that allows you to validate input fields, and display errors.
-
-This is an extended version of VeeValidate [VeeValidate](http://vee-validate.logaretm.com/)
+VeeValidate is a library for [React.js](https://facebook.github.io/react/) that allows you to validate input fields, and display errors.
 
 This plugin is inspired by [PHP Framework Laravel's validation](https://laravel.com/).
 
@@ -18,6 +8,11 @@ This plugin is inspired by [PHP Framework Laravel's validation](https://laravel.
 
 ```
 npm install ree-validate --save
+```
+
+#### yarn
+```
+yarn add ree-validate
 ```
 
 ### Getting Started
@@ -40,7 +35,7 @@ class Page extends Component {
   constructor(props) {
     super(props)
     
-    this.validator = new ReeValidate({
+    this.validator = new ReeValidate.Validator({
       email: 'required|email',
       password: 'required|min:3',
     })
@@ -78,21 +73,19 @@ class Page extends Component {
     console.log(formData)
   }
   
-  validateAndSubmit(e) {
+  async validateAndSubmit(e) {
     e.preventDefault()
     
     const { formData } = this.state
     const { errors } = this.validator
 
-    this.validator.validateAll(formData)
-      .then(success => {
-        if (success) {
-          this.submit(formData)
-        } else {
-          this.setState({ errors })
-        }
-      })
+    const valid = this.validator.validateAll(formData)
     
+    if (valid) {
+        this.submit(formData)
+    } else {
+        this.setState({ errors })        
+    }    
   }
   
   render() {
@@ -179,7 +172,7 @@ class Page extends Component {
     constructor(props) {
         super(props)
 
-        this.validator = new ReeValidate({
+        this.validator = new ReeValidate.Validator({
             email: 'required|email',
             password: 'required|min:6'
         })
@@ -195,40 +188,241 @@ class Page extends Component {
 export default Page
 ```
 
+### HOC
+
+You can also use the following hoc
+
+note: it is not yet part of the package
+
+```jsx harmony
+import * as React from 'react'
+import { Validator } from 'ree-validate'
+
+export default function withValidator(Component, fields){
+  class withValidator extends React.Component{
+
+    validator = new Validator()
+
+    _isMounted = false
+
+    constructor(props: any) {
+      super(props)
+
+      this.attachRules(fields)
+
+      this.state = {
+        errors: this.validator.errors,
+      }
+    }
+
+    componentDidMount() {
+      this._isMounted = true
+    }
+
+    componentWillUnmount() {
+      this._isMounted = false
+    }
+
+    validateAll = async (data: any) => {
+      const { errors } = this.validator
+
+      for (let fieldName in data) {
+        if (data.hasOwnProperty(fieldName)) {
+          if (errors.has(fieldName)) {
+            errors.remove(fieldName)
+          }
+        }
+      }
+
+      const isValid = await this.validator.validateAll(data)
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+
+      return isValid
+    }
+    validateOne = async ({ name, value }: { name: string, value: any }) => {
+      const { errors } = this.validator
+
+      if (errors.has(name)) {
+        errors.remove(name)
+      }
+
+      const isValid = await this.validator.validate(name, value)
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+
+      return isValid
+    }
+
+    validate = (data: any, multi: boolean = true) => {
+      if (multi) {
+        return this.validateAll(data)
+      }
+      return this.validateOne(data)
+    }
+
+    clearErrors = (fieldName: ?string) => {
+      const { errors } = this.validator
+
+      if (fieldName) {
+        errors.remove(fieldName)
+      } else {
+        errors.clear()
+      }
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+    }
+
+    attachRules = (field: Field | Array<Field>) => {
+      if (isArray(field)) {
+        field.forEach((f: Field) => {
+          this.attachRules(f)
+        })
+      } else {
+        this.detachRules(field)
+
+        this.validator.attach(field)
+      }
+    }
+
+    detachRules = (field: Field | Array<Field>) => {
+      if (isArray(field)) {
+        field.forEach((f: Field) => {
+          this.detachRules(f)
+        })
+      } else {
+        if (this.validator.fields.find({ name: field.name })) {
+          this.validator.detach(field.name)
+        }
+      }
+    }
+
+    addErrors = (field: string, message: any) => {
+      const { errors } = this.validator
+
+      if (errors.has(field)) {
+        errors.remove(field)
+      }
+
+      errors.add(field, message)
+
+      if (this._isMounted) {
+        this.setState({ errors })
+      }
+    }
+
+    render() {
+      return <Component {...this.props}
+                        validator={this.validator}
+                        validate={this.validate}
+                        attachRules={this.attachRules}
+                        detachRules={this.detachRules}
+                        errors={this.state.errors}
+                        addErrors={this.addErrors}
+                        clearErrors={this.clearErrors}/>
+    }
+  }
+
+  withValidator.displayName = `withValidator_${Component.displayName || Component.name}`
+
+  return withValidator
+}
+
+```
+
+then use this hoc as following
+
+```jsx harmony
+class Page extends React.Component<*, State> {
+  static displayName = 'Login Page'
+
+  state = {
+    form: {
+      username: null,
+      password: null,
+    },
+  }
+
+  handleChange = async (name: string, value: any) => {
+    const isValid = await this.props.validateOne(name, value)
+    
+    console.log(this.props.errors)
+  }
+
+  handleSubmit = async (evt) => {
+    evt.preventDefault()
+
+    const isValid = await this.props.validateAll(this.state.form)
+
+    console.log(this.props.errors)
+  }
+
+  render() {
+    console.log(this.props)
+  }
+}
+
+export default withValidator(Page, [
+  {
+    name: 'username',
+    rules: 'required',
+    alias: 'Username',
+  },
+  {
+    name: 'password',
+    rules: 'required',
+    alias: 'Password',
+  },
+])
+```
+
 ### Available Validation Rules
 
-[Available Validation Rules](http://vee-validate.logaretm.com/index.html#available-rules)
+ReeValidate comes with a bunch of validation rules out of the box and they are all localized and cover most validation needs:
 
-    after
-    alpha
-    alpha_dash
-    alpha_num
-    alpha_spaces
-    before
-    between
-    confirmed
-    credit_card
-    date_between
-    date_format
-    decimal
-    digits
-    dimensions
-    email
-    ext
-    image
-    in
-    ip
-    max
-    max_value
-    mimes
-    min
-    min_value
-    not_in
-    numeric
-    regex
-    required
-    size
-    url
+```
+after
+alpha
+alpha_dash
+alpha_num
+alpha_spaces
+before
+between
+confirmed
+credit_card
+date_between
+date_format
+decimal
+digits
+dimensions
+email
+ext
+image
+included
+integer
+ip
+is
+is_not
+length
+max
+max_value
+mimes
+min
+min_value
+excluded
+numeric
+regex
+required
+required_if
+size
+url
+```
 
 ### Compatability
 
@@ -237,6 +431,6 @@ This library uses ES6 Promises so be sure to provide a polyfill for it for the b
 ### Credits
 - Some validations/test scenarios are provided/based on [validator.js](https://github.com/chriso/validator.js).
 - Inspired by Laravel's [validation syntax](https://laravel.com/docs/5.4/validation).
-- Originally written by [Abdelrahman Ismail](https://github.com/Abdelrahman3D)
+- [VeeValidate](https://baianat.github.io/vee-validate/)
 
 ### license MIT

@@ -1,8 +1,8 @@
 {
   "name": "ree-validate",
-  "version": "3.0.2",
+  "version": "3.3.0",
   "description": "Simple React.js input validation plugin",
-  "author": "Moeen Basra <moeen@gmail.com>",
+  "author": "Moeen Basra <m.basra@live.com>",
   "license": "MIT",
   "module": "dist/ree-validate.esm.js",
   "unpkg": "dist/ree-validate.js",
@@ -11,17 +11,13 @@
   "repository": "https://github.com/moeen-basra/ree-validate",
   "scripts": {
     "test": "jest",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint src tests --fix",
     "flow": "flow",
-    "build:locale": "babel-node build/locale.js",
-    "build:main": "babel-node build/main.js",
-    "build:minimal": "babel-node build/minimal.js",
-    "build:esm": "babel-node build/esm.js",
-    "build:minimal-esm": "babel-node build/minimal.esm.js",
-    "build:bundle": "npm run build:main && npm run build:minimal && npm run build:esm && npm run build:minimal-esm",
-    "build": "npm run build:bundle && npm run build:locale",
-    "cover": "jest --coverage",
-    "precommit": "npm run lint && npm run flow && npm run test"
+    "build:locale": "node scripts/locale.js",
+    "build:umd": "node scripts/umd.js",
+    "build:esm": "node scripts/esm.js",
+    "build": "npm run build:umd && npm run build:esm && npm run build:locale",
+    "cover": "jest --coverage"
   },
   "keywords": [
     "ReactJS",
@@ -33,75 +29,63 @@
   ],
   "files": [
     "dist/*.js",
-    "dist/locale/*.js"
+    "dist/locale/*.js",
+    "types/*.d.ts"
   ],
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-flow-strip-types": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@commitlint/cli": "^8.3.3",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "chalk": "^2.4.2",
+    "cross-env": "^5.2.0",
+    "date-fns": "^2.0.0-alpha.27",
+    "eslint": "^5.15.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-flowtype": "^3.4.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "filesize": "^4.1.2",
+    "flow-bin": "^0.94.0",
+    "flush-promises": "^1.0.2",
+    "gzip-size": "^5.0.0",
+    "i18n-react": "^0.6.4",
+    "jest": "^24.1.0",
+    "lint-staged": "^8.1.5",
+    "mkdirp": "^0.5.1",
+    "polish-plurals": "^1.1.0",
+    "rollup": "^1.4.0",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-replace": "^2.1.0",
+    "uglify-js": "^3.4.9",
+    "validator": "^10.11.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
   "eslintIgnore": [
-    "tests",
     "locale",
     "dist",
     "flow"
   ],
-  "jest": {
-    "testMatch": [
-      "**/tests/**/*.js"
-    ],
-    "testPathIgnorePatterns": [
-      "/helpers/"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/index.*.js",
-      "!src/use.js",
-      "!src/messages.js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add",
+      "jest --maxWorkers=1 --bail --findRelatedTests"
+    ]
   },
-  "dependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.26.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.2",
-    "babel-eslint": "^8.2.3",
-    "babel-jest": "^22.4.3",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "chalk": "^2.4.1",
-    "cross-env": "^5.1.4",
-    "date-fns": "^1.29.0",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-flowtype": "^2.46.3",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "flow-bin": "^0.70.0",
-    "flush-promises": "^1.0.0",
-    "i18next": "^11.2.3",
-    "jest": "^22.4.3",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-i18next": "^7.6.0",
-    "react-test-renderer": "^16.3.2",
-    "regenerator-runtime": "^0.11.1",
-    "rollup": "^0.58.2",
-    "rollup-plugin-buble": "^0.19.2",
-    "rollup-plugin-commonjs": "^9.1.0",
-    "rollup-plugin-flow": "^1.1.1",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-replace": "^2.0.0",
-    "uglify-js": "^3.3.22",
-    "validator": "^9.4.1"
-  }
+  "dependencies": {}
 }

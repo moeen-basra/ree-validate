@@ -2,14 +2,17 @@
   "env": {
     "browser": true,
     "commonjs": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "extends": [
     "standard",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "plugin:jest/recommended"
   ],
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "jest"
   ],
   "rules": {
     "indent": [
@@ -24,12 +27,8 @@
       "error",
       "never"
     ],
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
+    "comma-dangle": 0,
     "space-unary-ops": 0,
-    "space-before-function-paren": 0,
     "import/no-extraneous-dependencies": 0,
     "no-new": 0,
     "no-global-assign": 0,

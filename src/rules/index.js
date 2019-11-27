@@ -8,31 +8,34 @@ import before from './before'
 import between from './between'
 import confirmed from './confirmed'
 import credit_card from './credit_card'
-import decimal from './decimal'
 import date_between from './date_between'
 import date_format from './date_format'
+import decimal from './decimal'
 import digits from './digits'
 import dimensions from './dimensions'
 import email from './email'
+import excluded from './excluded'
 import ext from './ext'
 import image from './image'
-import In from './in'
-import ip from './ip'
-import length from './length'
+import included from './included'
 import integer from './integer'
+import ip from './ip'
+import is from './is'
+import is_not from './is_not'
+import length from './length'
 import max from './max'
 import max_value from './max_value'
 import mimes from './mimes'
 import min from './min'
 import min_value from './min_value'
-import not_in from './notIn'
 import numeric from './numeric'
 import regex from './regex'
 import required from './required'
+import required_if from './required_if'
 import size from './size'
 import url from './url'
 
-export default {
+export {
   after,
   alpha_dash,
   alpha_num,
@@ -50,19 +53,22 @@ export default {
   email,
   ext,
   image,
-  in: In,
+  included,
   integer,
   length,
   ip,
+  is_not,
+  is,
   max,
   max_value,
   mimes,
   min,
   min_value,
-  not_in,
+  excluded,
   numeric,
   regex,
   required,
+  required_if,
   size,
   url,
 }

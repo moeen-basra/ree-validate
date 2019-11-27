@@ -5,4 +5,5 @@ coverage
 .idea
 .vscode
 .vs
-package-lock.json
+yarn-error.log
+dist

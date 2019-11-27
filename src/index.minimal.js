@@ -1,15 +1,7 @@
-import Validator from './core/validator'
-import use from './use'
-import ErrorBag from './core/errorBag'
+import ReeValidate from './ReeValidate'
 import mapFields from './core/mapFields'
 
-const version = '__VERSION__'
+ReeValidate.version = '__VERSION__'
+ReeValidate.mapFields = mapFields
 
-export {
-  use,
-  mapFields,
-  ErrorBag,
-  version,
-}
-
-export default Validator
+export default ReeValidate

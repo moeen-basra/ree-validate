@@ -1,74 +1,33 @@
-import { assign, getPath } from './core/utils'
-import Dictionary from './core/localization/default'
-import I18nDictionary from './core/localization/i18n'
+import { assign, getPath } from './utils'
 
-// @flow
-
-const defaultConfig = {
+const DEFAULT_CONFIG = {
   locale: 'en',
   delay: 0,
   errorBagName: 'errors',
   dictionary: null,
-  strict: true,
   fieldsBagName: 'fields',
   classes: false,
   classNames: null,
-  events: 'input|blur',
+  events: 'input',
   inject: true,
   fastExit: true,
   aria: true,
   validity: false,
+  useConstraintAttrs: true,
   i18n: null,
   i18nRootKey: 'validation',
 }
 
-let currentConfig = assign({}, defaultConfig)
-const dependencies = {
-  dictionary: new Dictionary({
-    en: {
-      messages: {},
-      attributes: {},
-      custom: {},
-    },
-  }),
+export let currentConfig = assign({}, DEFAULT_CONFIG)
+
+export const resolveConfig = (ctx) => {
+  const selfConfig = getPath('$options.$_reeValidate', ctx, {})
+
+  return assign({}, currentConfig, selfConfig)
 }
 
-export default class Config {
-  static get default () {
-    return defaultConfig
-  }
+export const getConfig = () => currentConfig
 
-  static get current () {
-    return currentConfig
-  }
-
-  static dependency (key) {
-    return dependencies[key]
-  }
-
-  /**
-   * Merges the config with a new one.
-   */
-  static merge (config) {
-    currentConfig = assign({}, currentConfig, config)
-    if (currentConfig.i18n) {
-      Config.register('dictionary', new I18nDictionary(currentConfig.i18n, currentConfig.i18nRootKey))
-    }
-  }
-
-  /**
-   * Registers a dependency.
-   */
-  static register (key: string, value: any) {
-    dependencies[key] = value
-  }
-
-  /**
-   * Resolves the working config from a Vue instance.
-   */
-  static resolve (context: Object): MapObject {
-    const selfConfig = getPath('$options.$_reeValidate', context, {})
-
-    return assign({}, Config.current, selfConfig)
-  }
-};
+export const setConfig = (newConf) => {
+  currentConfig = assign({}, currentConfig, newConf)
+}
