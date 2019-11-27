@@ -1,6 +1,6 @@
 {
   "name": "ree-validate",
-  "version": "3.3.0",
+  "version": "3.0.2",
   "description": "Simple React.js input validation plugin",
   "author": "Moeen Basra <m.basra@live.com>",
   "license": "MIT",
