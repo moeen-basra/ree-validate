@@ -1,10 +1,9 @@
-// @flow
 import { find, isCallable, isNullOrUndefined, parseSelector, values } from '../utils'
 
 export default class ErrorBag {
   items: FieldError[]
 
-  constructor (errorBag = null) {
+  constructor(errorBag?: ErrorBag) {
     // make this bag a mirror of the provided one, sharing the same items reference.
     if (errorBag && errorBag instanceof ErrorBag) {
       this.items = errorBag.items
@@ -13,28 +12,26 @@ export default class ErrorBag {
     }
   }
 
-  [typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] () {
+  [typeof Symbol === 'function' ? Symbol.iterator : '@@iterator']() {
     let index = 0
     return {
       next: () => {
         return { value: this.items[index++], done: index > this.items.length }
-      },
+      }
     }
   }
 
   /**
    * Adds an error to the internal array.
    */
-  add (error: FieldError | FieldError[]) {
-    this.items.push(
-      ...this._normalizeError(error),
-    )
+  add(error: FieldError | FieldError[]): void {
+    this.items.push(...this._normalizeError(error))
   }
 
   /**
    * Normalizes passed errors to an error array.
    */
-  _normalizeError (error: FieldError | FieldError[]): FieldError[] {
+  _normalizeError(error: FieldError | FieldError[]): FieldError[] {
     if (Array.isArray(error)) {
       return error.map(e => {
         e.scope = !isNullOrUndefined(e.scope) ? e.scope : null
@@ -51,7 +48,7 @@ export default class ErrorBag {
   /**
    * Regenrates error messages if they have a generator function.
    */
-  regenerate (): void {
+  regenerate(): void {
     this.items.forEach(i => {
       i.msg = isCallable(i.regenerate) ? i.regenerate() : i.msg
     })
@@ -60,7 +57,7 @@ export default class ErrorBag {
   /**
    * Updates a field error with the new field scope.
    */
-  update (id: string, error: FieldError) {
+  update(id: string, error: FieldError): void {
     const item = find(this.items, i => i.id === id)
     if (!item) {
       return
@@ -75,8 +72,8 @@ export default class ErrorBag {
   /**
    * Gets all error messages from the internal array.
    */
-  all (scope: ?string): Array<string> {
-    const filterFn = (item) => {
+  all(scope: ?string): Array<string> {
+    const filterFn = item => {
       let matchesScope = true
       if (!isNullOrUndefined(scope)) {
         matchesScope = item.scope === scope
@@ -89,8 +86,8 @@ export default class ErrorBag {
   /**
    * Checks if there are any errors in the internal array.
    */
-  any (scope: ?string): boolean {
-    const filterFn = (item) => {
+  any(scope: ?string): boolean {
+    const filterFn = item => {
       let matchesScope = true
       if (!isNullOrUndefined(scope)) {
         matchesScope = item.scope === scope
@@ -104,7 +101,7 @@ export default class ErrorBag {
   /**
    * Removes all items from the internal array.
    */
-  clear (scope?: ?string) {
+  clear(scope?: ?string): void {
     if (isNullOrUndefined(scope)) {
       scope = null
     }
@@ -120,7 +117,7 @@ export default class ErrorBag {
   /**
    * Collects errors into groups or for a specific field.
    */
-  collect (field?: string, scope?: string | null, map?: boolean = true) {
+  collect(field?: string, scope?: string | null, map = true): Array {
     const isSingleField = !isNullOrUndefined(field) && !field.includes('*')
     const groupErrors = items => {
       const errors = items.reduce((collection, error) => {
@@ -148,17 +145,20 @@ export default class ErrorBag {
     const selector = isNullOrUndefined(scope) ? String(field) : `${scope}.${field}`
     const { isPrimary, isAlt } = this._makeCandidateFilters(selector)
 
-    let collected = this.items.reduce((prev, curr) => {
-      if (isPrimary(curr)) {
-        prev.primary.push(curr)
-      }
+    let collected = this.items.reduce(
+      (prev, curr) => {
+        if (isPrimary(curr)) {
+          prev.primary.push(curr)
+        }
 
-      if (isAlt(curr)) {
-        prev.alt.push(curr)
-      }
+        if (isAlt(curr)) {
+          prev.alt.push(curr)
+        }
 
-      return prev
-    }, { primary: [], alt: [] })
+        return prev
+      },
+      { primary: [], alt: [] }
+    )
 
     collected = collected.primary.length ? collected.primary : collected.alt
 
@@ -168,14 +168,14 @@ export default class ErrorBag {
   /**
    * Gets the internal array length.
    */
-  count (): number {
+  count(): number {
     return this.items.length
   }
 
   /**
    * Finds and fetches the first error message for the specified field id.
    */
-  firstById (id: string): string | null {
+  firstById(id: string): string | null {
     const error = find(this.items, i => i.id === id)
 
     return error ? error.msg : undefined
@@ -184,7 +184,7 @@ export default class ErrorBag {
   /**
    * Gets the first error message for a specific field.
    */
-  first (field: string, scope?: ?string = null) {
+  first(field: string, scope?: string): ?string {
     const selector = isNullOrUndefined(scope) ? field : `${scope}.${field}`
     const match = this._match(selector)
 
@@ -194,7 +194,7 @@ export default class ErrorBag {
   /**
    * Returns the first error rule for the specified field
    */
-  firstRule (field: string, scope?: string): string | null {
+  firstRule(field: string, scope?: string): ?string {
     const errors = this.collect(field, scope, false)
 
     return (errors.length && errors[0].rule) || undefined
@@ -203,14 +203,14 @@ export default class ErrorBag {
   /**
    * Checks if the internal array has at least one error for the specified field.
    */
-  has (field: string, scope?: ?string = null): boolean {
+  has(field: string, scope?: string): boolean {
     return !!this.first(field, scope)
   }
 
   /**
    * Gets the first error message for a specific field and a rule.
    */
-  firstByRule (name: string, rule: string, scope?: string | null = null) {
+  firstByRule(name: string, rule: string, scope?: string): ?string {
     const error = this.collect(name, scope, false).filter(e => e.rule === rule)[0]
 
     return (error && error.msg) || undefined
@@ -219,7 +219,7 @@ export default class ErrorBag {
   /**
    * Gets the first error message for a specific field that not match the rule.
    */
-  firstNot (name: string, rule?: string = 'required', scope?: string | null = null) {
+  firstNot(name: string, rule = 'required', scope?: string): ?string {
     const error = this.collect(name, scope, false).filter(e => e.rule !== rule)[0]
 
     return (error && error.msg) || undefined
@@ -228,10 +228,10 @@ export default class ErrorBag {
   /**
    * Removes errors by matching against the id or ids.
    */
-  removeById (id: string | string[]) {
-    let condition = (item) => item.id === id
+  removeById(id: string | string[]): ?string {
+    let condition = item => item.id === id
     if (Array.isArray(id)) {
-      condition = (item) => id.indexOf(item.id) !== -1
+      condition = item => id.indexOf(item.id) !== -1
     }
 
     for (let i = 0; i < this.items.length; ++i) {
@@ -245,7 +245,7 @@ export default class ErrorBag {
   /**
    * Removes all error messages associated with a specific field.
    */
-  remove (field: string, scope: ?string) {
+  remove(field: string, scope: ?string): void {
     if (isNullOrUndefined(field)) {
       return
     }
@@ -253,7 +253,7 @@ export default class ErrorBag {
     const selector = isNullOrUndefined(scope) ? String(field) : `${scope}.${field}`
     const { isPrimary, isAlt } = this._makeCandidateFilters(selector)
     const matches = item => isPrimary(item) || isAlt(item)
-    const shouldRemove = (item) => {
+    const shouldRemove = item => {
       return matches(item)
     }
 
@@ -265,7 +265,7 @@ export default class ErrorBag {
     }
   }
 
-  _makeCandidateFilters (selector) {
+  _makeCandidateFilters(selector: any): any {
     let matchesRule = () => true
     let matchesScope = () => true
     let matchesName = () => true
@@ -273,14 +273,14 @@ export default class ErrorBag {
     const { id, rule, scope, name } = parseSelector(selector)
 
     if (rule) {
-      matchesRule = (item) => item.rule === rule
+      matchesRule = item => item.rule === rule
     }
 
     // match by id, can be combined with rule selection.
     if (id) {
       return {
         isPrimary: item => matchesRule(item) && (item => id === item.id),
-        isAlt: () => false,
+        isAlt: () => false
       }
     }
 
@@ -296,22 +296,22 @@ export default class ErrorBag {
     }
 
     // matches the first candidate.
-    const isPrimary = (item) => {
+    const isPrimary = item => {
       return matchesName(item) && matchesRule(item) && matchesScope(item)
     }
 
     // matches a second candidate, which is a field with a name containing the '.' character.
-    const isAlt = (item) => {
+    const isAlt = item => {
       return matchesRule(item) && item.field === `${scope}.${name}`
     }
 
     return {
       isPrimary,
-      isAlt,
+      isAlt
     }
   }
 
-  _match (selector: string) {
+  _match(selector: string): boolean {
     if (isNullOrUndefined(selector)) {
       return undefined
     }
@@ -339,5 +339,5 @@ export default class ErrorBag {
 
       return prev.primary || prev.alt
     }, {})
-  };
+  }
 }

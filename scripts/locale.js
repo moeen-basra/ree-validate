@@ -15,7 +15,7 @@ let cache
 
 const mkdirp = promisify(mkdirpNode)
 
-async function build () {
+async function build() {
   await mkdirp(path.join(paths.dist, 'locale'))
   console.log(chalk.cyan('Building locales...'))
 

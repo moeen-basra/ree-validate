@@ -1,4 +1,4 @@
-# Contributing to Ree-Validate
+# Contributing to Vee-Validate
 
 First of all, thanks for taking interest into contributing to this repository, below is what you need to know about the project.
 
@@ -21,11 +21,13 @@ yarn
 As you can see we have:
 
 - `src` contains the working code for the repository:
-  - `core`: contains files that are the 
-  - `localization`: contains the dictionary class 
+  - `core`: contains files that are the
   - `rules`: contains validation rules that are available to the validator instances.
   - `utils`: contains commonly used utility functions.
+- `dist`: contains the unminified and the minified build of the repository.
+- `docs`: contains the src and built files for the documentation, we use [vuepress](https://vuepress.vuejs.org/) to generate the docs content.
 - `locale`: contains the localized messages files.
+- `tests`: contains the test files for the project, it uses [jest](https://github.com/facebook/jest) for testing. it contains a similar folder structure as the `src` folder.
 - `scripts`: has all our custom scripts used to bundle the project, release the docs and localization files generation.
 
 ### Issues
@@ -41,6 +43,26 @@ The code style is enforced with `eslint` and is checked automatically whenever y
 ### Commit Style
 
 Commit messages are enforced with `commitlint` which is configured to help you write a suitable commit message, the checks are run automatically when you commit.
+
+### Contributing To The Docs
+
+If you want to contribute to the docs you can find it in the `docs` folder.
+
+Our docs require `./dist/ree-validate.esm` as dependency to run successfully in your local machine. You can generate this dependency by executing the following command from the root of the repository:
+
+```bash
+yarn build
+# or
+npm run build
+```
+
+And then you can run vuepress local dev server by running:
+
+```bash
+yarn docs:dev
+# or
+npm run docs:dev
+```
 
 ### Pull Requests
 
