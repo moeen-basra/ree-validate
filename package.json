@@ -59,7 +59,7 @@
     "gzip-size": "^5.1.1",
     "i18n-react": "^0.6.4",
     "jest": "^24.9.0",
-    "lint-staged": "^8.2.1",
+    "lint-staged": "^13.1.0",
     "mkdirp": "^0.5.1",
     "polish-plurals": "^1.1.0",
     "rollup": "^1.32.1",
